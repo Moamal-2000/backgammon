@@ -1,9 +1,13 @@
+import BackgammonBoard from "@/components/BackgammonBoard/BackgammonBoard";
 import s from "./page.module.scss";
 
 export default function Home() {
   return (
     <main className={s.home}>
-      <h1>Home page</h1>
+      <div className="container" data-container>
+        <h1>Backgammon game!</h1>
+        <BackgammonBoard />
+      </div>
     </main>
   );
 }

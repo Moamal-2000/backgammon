@@ -1,1 +1,9 @@
 .home {}
+
+.home [data-container] {
+  padding: 70px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #373737;
+}
