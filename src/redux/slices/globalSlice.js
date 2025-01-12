@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  name: "Not Moamal",
-};
+const initialState = {};
 
 const globalSlice = createSlice({
   initialState,
