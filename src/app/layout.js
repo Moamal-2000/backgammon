@@ -1,7 +1,5 @@
-import GlobalContextProvider from "@/context/GlobalContext";
-import { store } from "@/redux/store";
-import { Provider } from "react-redux";
 import "../styles/globals.scss";
+import RootProviders from "./RootProviders";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,12 +8,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <Provider store={store}>
-      <GlobalContextProvider>
-        <html lang="en">
-          <body>{children}</body>
-        </html>
-      </GlobalContextProvider>
-    </Provider>
+    <RootProviders>
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </RootProviders>
   );
 }
