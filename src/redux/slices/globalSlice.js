@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {}
+const initialState = {
+  name: "Not Moamal",
+};
 
-export const globalSlice = createSlice({
+const globalSlice = createSlice({
   initialState,
   name: "globalSlice",
-  reducers: {}
-})
+  reducers: {
+    updateGlobalState: (state, { payload }) => {
+      state[payload.key] = payload.value;
+    },
+  },
+});
 
 export default globalSlice.reducer;
+export const { updateGlobalState } = globalSlice.actions;
