@@ -1,6 +1,6 @@
 export const boardArea = [
   {
-    pieces: ["black"],
+    pieces: ["black", "black", "black"],
     place: 1,
     placeColor: "black",
   },
@@ -25,7 +25,7 @@ export const boardArea = [
     placeColor: "black",
   },
   {
-    pieces: ["white"],
+    pieces: ["white", "white", "white", "white", "white"],
     place: 6,
     placeColor: "white",
   },

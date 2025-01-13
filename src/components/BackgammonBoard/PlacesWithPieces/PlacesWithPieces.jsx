@@ -42,15 +42,14 @@ const PlacesWithPieces = ({ placesData }) => {
           from: selectedPlace,
           dataPlace: data.place,
           playerTurn: playerTurn,
-          shouldEat: shouldEat,
+          shouldEat,
         })
       );
       return;
     }
 
-    if (placeHasPieces && isPlayerPiece) {
+    if (placeHasPieces && isPlayerPiece)
       dispatch(updateGameState({ key: "selectedPlace", value: data.place }));
-    }
   }
 
   return placesData.map((data) => (

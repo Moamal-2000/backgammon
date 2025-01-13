@@ -4,10 +4,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: true,
-  playerTurn: "black",
+  gameStart: false,
+  showBeginDices: false,
+  playerTurn: "",
   deadPieces: { black: [], white: [] },
   outPieces: { black: [], white: [] },
+  diceMoves: [],
 };
 
 const gameSlice = createSlice({

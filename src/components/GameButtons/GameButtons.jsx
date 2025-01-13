@@ -10,6 +10,11 @@ const GameButtons = () => {
 
   function startTheGame() {
     dispatch(updateGameState({ key: "gameStart", value: true }));
+    dispatch(updateGameState({ key: "showBeginDices", value: true }));
+
+    setTimeout(() => {
+      dispatch(updateGameState({ key: "showBeginDices", value: false }));
+    }, 2000);
   }
 
   function restartGame() {

@@ -1,12 +1,18 @@
 "use client";
 
+import { getDiceNumbers } from "@/functions/helper";
 import { useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
 import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
 
 const BackgammonBoard = () => {
-  const { boardArea } = useSelector((state) => state.game);
+  const { boardArea, gameStart, showBeginDices } = useSelector(
+    (state) => state.game
+  );
   const pieces = getPiecesData(boardArea);
+  const { firstDice, secondDice } = getDiceNumbers(true);
+  const shouldShowBeginDices = gameStart && showBeginDices;
+  const showGameDices = gameStart && !showBeginDices;
 
   return (
     <div className={s.board}>
@@ -19,7 +25,8 @@ const BackgammonBoard = () => {
           <PlacesWithPieces placesData={pieces.leftBottom} />
         </div>
 
-        <p className={s.dice}>6</p>
+        {shouldShowBeginDices && <p className={s.dice}>{firstDice}</p>}
+        {showGameDices && <p className={s.dice}>{firstDice}</p>}
       </div>
 
       <div className={s.rightTable}>
@@ -31,7 +38,12 @@ const BackgammonBoard = () => {
           <PlacesWithPieces placesData={pieces.rightBottom} />
         </div>
 
-        <p className={`${s.dice} ${s.black}`}>6</p>
+        {shouldShowBeginDices && (
+          <p className={`${s.dice} ${s.black}`}>{secondDice}</p>
+        )}
+        {showGameDices && (
+          <p className={`${s.dice} ${s.black}`}>{secondDice}</p>
+        )}
       </div>
     </div>
   );
@@ -46,17 +58,4 @@ function getPiecesData(boardArea) {
     leftTop: boardArea.slice(12, 18),
     rightTop: boardArea.slice(18, 24),
   };
-}
-
-function getDiceNumbers() {
-  const DICE_NUMBERS = 6;
-
-  return {
-    firstDice: calcRandomNumber(DICE_NUMBERS),
-    secondDice: calcRandomNumber(DICE_NUMBERS),
-  };
-}
-
-function calcRandomNumber(number) {
-  return Math.floor(Math.random() * number + 1);
 }
