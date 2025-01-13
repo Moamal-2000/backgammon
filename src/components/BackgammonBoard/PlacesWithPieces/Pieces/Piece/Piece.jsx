@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import u from "../../utilsClasses.module.scss";
 
 const Piece = ({ data, piece, isLastPiece }) => {
-  const { selectPlace } = useSelector((state) => state.game);
-  const selectClass = data.place === selectPlace ? u.select : "";
+  const { selectedPlace } = useSelector((state) => state.game);
+  const selectClass = data.place === selectedPlace ? u.select : "";
 
   return (
     <div

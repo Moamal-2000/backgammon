@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   boardArea,
-  selectPlace: null,
+  selectedPlace: null,
   gameStart: false,
   playerTurn: "black",
   deadPieces: { black: [], white: [] },
@@ -17,16 +17,16 @@ const gameSlice = createSlice({
     updateGameState: (state, { payload }) => {
       state[payload.key] = payload.value;
     },
-    movePiece: (state, action) => {
+    movePiece: ({ boardArea }, action) => {
       const { from, dataPlace, playerTurn } = action.payload;
 
-      const fromPlace = state.boardArea.find((item) => item.place === from);
-      const toPlace = state.boardArea.find((item) => item.place === dataPlace);
+      const fromPlace = boardArea.find((item) => item.place === from);
+      const toPlace = boardArea.find((item) => item.place === dataPlace);
 
       if (fromPlace) fromPlace.pieces.pop();
       if (toPlace) toPlace.pieces.push(playerTurn);
 
-      state.selectPlace = null;
+      state.selectedPlace = null;
     },
   },
 });

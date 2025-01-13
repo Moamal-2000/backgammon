@@ -6,7 +6,7 @@ import Pieces from "./Pieces/Pieces";
 import s from "./PlacesWithPieces.module.scss";
 
 const PlacesWithPieces = ({ placesData }) => {
-  const { playerTurn, selectPlace, boardArea } = useSelector(
+  const { playerTurn, selectedPlace, boardArea } = useSelector(
     (state) => state.game
   );
   const dispatch = useDispatch();
@@ -14,17 +14,26 @@ const PlacesWithPieces = ({ placesData }) => {
   function handlePlaceClick(data) {
     const placeHasPieces = data.pieces.length > 0;
     const isPlayerPiece = playerTurn === data.pieces?.[0];
-    const unSelectPlace = data.place === selectPlace;
+    const unSelectPlace = data.place === selectedPlace;
+    const toPlaceData = boardArea.find((item) => item.place === data.place);
+    const hasMoreThanPieceExist = toPlaceData.pieces.length > 1;
+    const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
+    const isEmptyPlace = toPlaceData.pieces.length === 0;
+    const isBlackMoveForward =
+      selectedPlace < data.place && playerTurn === "black";
+    const isValidMove =
+      (!hasMoreThanPieceExist || isSamePieceColor || isEmptyPlace) &&
+      isBlackMoveForward;
 
     if (unSelectPlace) {
-      dispatch(updateGameState({ key: "selectPlace", value: null }));
+      dispatch(updateGameState({ key: "selectedPlace", value: null }));
       return;
     }
 
-    if (selectPlace) {
+    if (selectedPlace && isValidMove) {
       dispatch(
         movePiece({
-          from: selectPlace,
+          from: selectedPlace,
           dataPlace: data.place,
           playerTurn: playerTurn,
         })
@@ -33,11 +42,7 @@ const PlacesWithPieces = ({ placesData }) => {
     }
 
     if (placeHasPieces && isPlayerPiece) {
-      dispatch(updateGameState({ key: "selectPlace", value: data.place }));
-    }
-
-    if (placeHasPieces && isPlayerPiece) {
-      dispatch(updateGameState({ key: "selectPlace", value: data.place }));
+      dispatch(updateGameState({ key: "selectedPlace", value: data.place }));
     }
   }
 
