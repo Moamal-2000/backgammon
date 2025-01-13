@@ -1,0 +1,38 @@
+.piece {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 2px #000;
+  position: relative;
+  z-index: 1;
+
+  &.black {
+    background-color: #161515;
+  }
+
+  &.white {
+    background-color: #fff;
+  }
+}
+
+.piece::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: 104%;
+  height: 104%;
+  border-radius: 50%;
+  z-index: 1;
+  background-color: transparent;
+  border: solid 6px transparent;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.piece.select::before {
+  background-color: rgba(255, 218, 54, .818);
+  border: solid 6px rgb(255, 218, 54);
+}
