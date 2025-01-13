@@ -20,6 +20,7 @@ const PlacesWithPieces = ({ placesData }) => {
     const hasMoreThanPieceExist = toPlaceData.pieces.length > 1;
     const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
     const isEmptyPlace = toPlaceData.pieces.length === 0;
+    const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
 
     const isBlackMoveForward =
       selectedPlace < data.place && playerTurn === "black";
@@ -41,6 +42,7 @@ const PlacesWithPieces = ({ placesData }) => {
           from: selectedPlace,
           dataPlace: data.place,
           playerTurn: playerTurn,
+          shouldEat: shouldEat,
         })
       );
       return;
