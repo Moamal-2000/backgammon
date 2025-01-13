@@ -1,6 +1,9 @@
+import { boardArea } from "@/data/staticData";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  boardArea,
+};
 
 const gameSlice = createSlice({
   initialState,
