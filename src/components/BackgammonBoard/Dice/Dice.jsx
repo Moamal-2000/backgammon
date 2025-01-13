@@ -1,3 +1,5 @@
+"use client";
+
 import s from "./Dice.module.scss";
 
 const Dice = ({ shouldShowBeginDices, showGameDices, diceNumber, color }) => {
