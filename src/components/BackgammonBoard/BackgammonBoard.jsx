@@ -3,6 +3,7 @@
 import { getDiceNumbers } from "@/functions/helper";
 import { useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
+import Dice from "./Dice/Dice";
 import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
 
 const BackgammonBoard = () => {
@@ -25,8 +26,11 @@ const BackgammonBoard = () => {
           <PlacesWithPieces placesData={pieces.leftBottom} />
         </div>
 
-        {shouldShowBeginDices && <p className={s.dice}>{firstDice}</p>}
-        {showGameDices && <p className={s.dice}>{firstDice}</p>}
+        <Dice
+          shouldShowBeginDices={shouldShowBeginDices}
+          showGameDices={showGameDices}
+          diceNumber={firstDice}
+        />
       </div>
 
       <div className={s.rightTable}>
@@ -38,12 +42,12 @@ const BackgammonBoard = () => {
           <PlacesWithPieces placesData={pieces.rightBottom} />
         </div>
 
-        {shouldShowBeginDices && (
-          <p className={`${s.dice} ${s.black}`}>{secondDice}</p>
-        )}
-        {showGameDices && (
-          <p className={`${s.dice} ${s.black}`}>{secondDice}</p>
-        )}
+        <Dice
+          shouldShowBeginDices={shouldShowBeginDices}
+          showGameDices={showGameDices}
+          diceNumber={secondDice}
+          color="black"
+        />
       </div>
     </div>
   );
