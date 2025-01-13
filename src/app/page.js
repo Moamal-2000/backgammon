@@ -1,4 +1,5 @@
 import BackgammonBoard from "@/components/BackgammonBoard/BackgammonBoard";
+import GameButtons from "@/components/GameButtons/GameButtons";
 import s from "./page.module.scss";
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
       <div className="container" data-container>
         <h1>Backgammon game!</h1>
         <BackgammonBoard />
+        <GameButtons />
       </div>
     </main>
   );
