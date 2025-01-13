@@ -2,70 +2,31 @@
 
 import { useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
+import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
 
-// "black": "⚫",
-// "white": "⚪",
 const BackgammonBoard = () => {
   const { boardArea } = useSelector((state) => state.game);
   const pieces = getPiecesData(boardArea);
-
-  console.log(pieces);
 
   return (
     <div className={s.board}>
       <div className={s.leftTable}>
         <div className={`${s.top} ${s.reverse}`}>
-          {pieces.leftTop.map((data) => (
-            <div
-              className={`${s.place} ${s[data.placeColor]}`}
-              key={data.place}
-            >
-              {data.pieces.map((piece, index) => (
-                <div className={`${s.piece} ${s[piece]}`} key={index} />
-              ))}
-            </div>
-          ))}
+          <PlacesWithPieces placesData={pieces.leftTop} />
         </div>
 
         <div className={s.bottom}>
-          {pieces.leftBottom.map((data) => (
-            <div
-              className={`${s.place} ${s[data.placeColor]}`}
-              key={data.place}
-            >
-              {data.pieces.map((piece, index) => (
-                <div className={`${s.piece} ${s[piece]}`} key={index} />
-              ))}
-            </div>
-          ))}
+          <PlacesWithPieces placesData={pieces.leftBottom} />
         </div>
       </div>
 
       <div className={s.rightTable}>
         <div className={`${s.top} ${s.reverse}`}>
-          {pieces.rightTop.map((data) => (
-            <div
-              className={`${s.place} ${s[data.placeColor]}`}
-              key={data.place}
-            >
-              {data.pieces.map((piece, index) => (
-                <div className={`${s.piece} ${s[piece]}`} key={index} />
-              ))}
-            </div>
-          ))}
+          <PlacesWithPieces placesData={pieces.rightTop} />
         </div>
 
         <div className={s.bottom}>
-          {pieces.rightBottom.map((data) => (
-            <div
-              className={`${s.place} ${s[data.placeColor]}`}
-              key={data.place}
-            >
-              {data.pieces.map((piece, index) => (
-                <div className={`${s.piece} ${s[piece]}`} key={index} />
-              ))}
-            </div>
-          ))}
+          <PlacesWithPieces placesData={pieces.rightBottom} />
         </div>
       </div>
     </div>
