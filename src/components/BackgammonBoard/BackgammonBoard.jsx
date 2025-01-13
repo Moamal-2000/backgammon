@@ -18,6 +18,8 @@ const BackgammonBoard = () => {
         <div className={s.bottom}>
           <PlacesWithPieces placesData={pieces.leftBottom} />
         </div>
+
+        <p className={s.dice}>6</p>
       </div>
 
       <div className={s.rightTable}>
@@ -28,6 +30,8 @@ const BackgammonBoard = () => {
         <div className={s.bottom}>
           <PlacesWithPieces placesData={pieces.rightBottom} />
         </div>
+
+        <p className={`${s.dice} ${s.black}`}>6</p>
       </div>
     </div>
   );
