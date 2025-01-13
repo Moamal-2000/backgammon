@@ -1,8 +1,8 @@
 @use "../../styles/mixins" as m;
 
 .board {
-  background-color: #fff;
-  border: solid 20px #000;
+  background-color: #d9ad7a;
+  border: solid 20px #9e611f;
   width: 800px;
   height: 680px;
   display: flex;
@@ -24,12 +24,12 @@
   translate: -50% 0;
   width: 40px;
   height: 100%;
-  background-color: #000;
+  background-color: #9e611f;
 }
 
 .leftTable,
 .rightTable {
-  background-color: #fff;
+  background-color: #d9ad7a;
   width: calc(50% - 20px);
   height: 100%;
   display: flex;
@@ -43,20 +43,50 @@
 }
 
 .board .top.reverse {
-  rotate: 180deg;
+  transform: rotateX(180deg);
 }
 
 .place {
   flex: 1;
-  height: 240px;
+  height: 250px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+.place::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
   border-style: solid;
   border-width: 0 30px 250px 30px;
 }
 
-.place.black {
-  border-color: #fff #fff #808080 #fff;
+.place.black::before {
+  border-color: #d9ad7a #d9ad7a #4c4543 #d9ad7a;
 }
 
-.place.white {
-  border-color: #fff #fff #d5d5d5 #fff;
+.place.white::before {
+  border-color: #d9ad7a #d9ad7a #f5ebd0 #d9ad7a;
+}
+
+.piece {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  border: solid 2px #000;
+}
+
+.piece.black {
+  background-color: #161515;
+}
+
+.piece.white {
+  background-color: #fff;
 }
