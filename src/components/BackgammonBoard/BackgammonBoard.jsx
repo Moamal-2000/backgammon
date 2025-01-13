@@ -43,3 +43,16 @@ function getPiecesData(boardArea) {
     rightTop: boardArea.slice(18, 24),
   };
 }
+
+function getDiceNumbers() {
+  const DICE_NUMBERS = 6;
+
+  return {
+    firstDice: calcRandomNumber(DICE_NUMBERS),
+    secondDice: calcRandomNumber(DICE_NUMBERS),
+  };
+}
+
+function calcRandomNumber(number) {
+  return Math.floor(Math.random() * number + 1);
+}
