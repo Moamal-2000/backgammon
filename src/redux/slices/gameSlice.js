@@ -17,15 +17,16 @@ const gameSlice = createSlice({
     updateGameState: (state, { payload }) => {
       state[payload.key] = payload.value;
     },
-    movePiece: ({ boardArea }, action) => {
+    movePiece: (state, action) => {
       const { from, dataPlace, playerTurn } = action.payload;
 
-      const fromPlace = boardArea.find((item) => item.place === from);
-      const toPlace = boardArea.find((item) => item.place === dataPlace);
+      const fromPlace = state.boardArea.find((item) => item.place === from);
+      const toPlace = state.boardArea.find((item) => item.place === dataPlace);
 
       if (fromPlace) fromPlace.pieces.pop();
       if (toPlace) toPlace.pieces.push(playerTurn);
 
+      state.playerTurn = state.playerTurn === "black" ? "white" : "black";
       state.selectedPlace = null;
     },
   },

@@ -6,12 +6,13 @@ import Pieces from "./Pieces/Pieces";
 import s from "./PlacesWithPieces.module.scss";
 
 const PlacesWithPieces = ({ placesData }) => {
-  const { playerTurn, selectedPlace, boardArea } = useSelector(
+  const { playerTurn, selectedPlace, boardArea, gameStart } = useSelector(
     (state) => state.game
   );
   const dispatch = useDispatch();
 
   function handlePlaceClick(data) {
+    if (!gameStart) return;
     const placeHasPieces = data.pieces.length > 0;
     const isPlayerPiece = playerTurn === data.pieces?.[0];
     const unSelectPlace = data.place === selectedPlace;
@@ -19,11 +20,15 @@ const PlacesWithPieces = ({ placesData }) => {
     const hasMoreThanPieceExist = toPlaceData.pieces.length > 1;
     const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
     const isEmptyPlace = toPlaceData.pieces.length === 0;
+
     const isBlackMoveForward =
       selectedPlace < data.place && playerTurn === "black";
+    const isWhiteMoveForward =
+      selectedPlace > data.place && playerTurn === "white";
+
     const isValidMove =
       (!hasMoreThanPieceExist || isSamePieceColor || isEmptyPlace) &&
-      isBlackMoveForward;
+      isBlackMoveForward | isWhiteMoveForward;
 
     if (unSelectPlace) {
       dispatch(updateGameState({ key: "selectedPlace", value: null }));
