@@ -17,8 +17,19 @@ const gameSlice = createSlice({
     updateGameState: (state, { payload }) => {
       state[payload.key] = payload.value;
     },
+    movePiece: (state, action) => {
+      const { from, dataPlace, playerTurn } = action.payload;
+
+      const fromPlace = state.boardArea.find((item) => item.place === from);
+      const toPlace = state.boardArea.find((item) => item.place === dataPlace);
+
+      if (fromPlace) fromPlace.pieces.pop();
+      if (toPlace) toPlace.pieces.push(playerTurn);
+
+      state.selectPlace = null;
+    },
   },
 });
 
 export default gameSlice.reducer;
-export const { updateGameState } = gameSlice.actions;
+export const { updateGameState, movePiece } = gameSlice.actions;
