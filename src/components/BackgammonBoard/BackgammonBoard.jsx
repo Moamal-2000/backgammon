@@ -1,7 +1,9 @@
 "use client";
 
 import { getDiceNumbers } from "@/functions/helper";
-import { useSelector } from "react-redux";
+import { updateGameState } from "@/redux/slices/gameSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
 import Dice from "./Dice/Dice";
 import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
@@ -10,10 +12,16 @@ const BackgammonBoard = () => {
   const { boardArea, gameStart, showBeginDices } = useSelector(
     (state) => state.game
   );
+  const dispatch = useDispatch();
   const pieces = getPiecesData(boardArea);
   const { firstDice, secondDice } = getDiceNumbers(true);
   const shouldShowBeginDices = gameStart && showBeginDices;
   const showGameDices = gameStart && !showBeginDices;
+
+  useEffect(() => {
+    const wonPlayer = firstDice > secondDice ? "white" : "black";
+    dispatch(updateGameState({ key: "playerTurn", value: wonPlayer }));
+  }, []);
 
   return (
     <div className={s.board}>
