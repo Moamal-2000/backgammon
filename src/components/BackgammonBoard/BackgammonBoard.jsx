@@ -9,9 +9,7 @@ import Dice from "./Dice/Dice";
 import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
 
 const BackgammonBoard = () => {
-  const { boardArea, gameStart, showBeginDices } = useSelector(
-    (state) => state.game
-  );
+  const { boardArea, gameStart, showBeginDices } = useSelector((s) => s.game);
   const dispatch = useDispatch();
   const pieces = getPiecesData(boardArea);
   const { firstDice, secondDice } = getDiceNumbers(true);

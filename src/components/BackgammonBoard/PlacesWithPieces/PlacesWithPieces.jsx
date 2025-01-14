@@ -7,7 +7,7 @@ import s from "./PlacesWithPieces.module.scss";
 
 const PlacesWithPieces = ({ placesData }) => {
   const { playerTurn, selectedPlace, boardArea, gameStart } = useSelector(
-    (state) => state.game
+    (s) => s.game
   );
   const dispatch = useDispatch();
 
