@@ -2,24 +2,34 @@
 
 import { getDiceNumbers } from "@/functions/helper";
 import { updateGameState } from "@/redux/slices/gameSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
 import Dice from "./Dice/Dice";
 import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
 
 const BackgammonBoard = () => {
-  const { boardArea, gameStart, showBeginDices } = useSelector((s) => s.game);
+  const { boardArea, gameStart, showBeginDices, diceMoves, beginDice } =
+    useSelector((s) => s.game);
   const dispatch = useDispatch();
   const pieces = getPiecesData(boardArea);
-  const { firstDice, secondDice } = getDiceNumbers(true);
   const shouldShowBeginDices = gameStart && showBeginDices;
-  const showGameDices = gameStart && !showBeginDices;
+  const showGameDices = gameStart && !showBeginDices && diceMoves.length !== 0;
+  const gameStarted = useRef(false);
 
   useEffect(() => {
+    if (!gameStart || gameStarted.current) return;
+
+    const { firstDice, secondDice } = getDiceNumbers(true);
     const wonPlayer = firstDice > secondDice ? "white" : "black";
+
     dispatch(updateGameState({ key: "playerTurn", value: wonPlayer }));
-  }, []);
+    dispatch(
+      updateGameState({ key: "beginDice", value: [firstDice, secondDice] })
+    );
+
+    gameStarted.current = true;
+  }, [gameStart]);
 
   return (
     <div className={s.board}>
@@ -35,7 +45,7 @@ const BackgammonBoard = () => {
         <Dice
           shouldShowBeginDices={shouldShowBeginDices}
           showGameDices={showGameDices}
-          diceNumber={firstDice}
+          beginDiceNumber={beginDice[0]}
         />
       </div>
 
@@ -51,7 +61,7 @@ const BackgammonBoard = () => {
         <Dice
           shouldShowBeginDices={shouldShowBeginDices}
           showGameDices={showGameDices}
-          diceNumber={secondDice}
+          beginDiceNumber={beginDice[1]}
           color="black"
         />
       </div>

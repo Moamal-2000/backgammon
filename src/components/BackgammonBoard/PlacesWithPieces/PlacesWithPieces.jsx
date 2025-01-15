@@ -6,9 +6,14 @@ import Pieces from "./Pieces/Pieces";
 import s from "./PlacesWithPieces.module.scss";
 
 const PlacesWithPieces = ({ placesData }) => {
-  const { playerTurn, selectedPlace, boardArea, gameStart } = useSelector(
-    (s) => s.game
-  );
+  const {
+    playerTurn,
+    selectedPlace,
+    boardArea,
+    gameStart,
+    diceMoves,
+    isDiceThrew,
+  } = useSelector((s) => s.game);
   const dispatch = useDispatch();
 
   function handlePlaceClick(data) {
@@ -22,6 +27,11 @@ const PlacesWithPieces = ({ placesData }) => {
     const isEmptyPlace = toPlaceData.pieces.length === 0;
     const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
 
+    const moves = Math.abs(toPlaceData.place - selectedPlace);
+    const isOneOfDiceMoves = diceMoves.includes(moves);
+    const isDiceEmpty = diceMoves.length === 0;
+    const restDiceMoves = diceMoves.filter((number) => number !== moves);
+
     const isBlackMoveForward =
       selectedPlace < data.place && playerTurn === "black";
     const isWhiteMoveForward =
@@ -29,7 +39,10 @@ const PlacesWithPieces = ({ placesData }) => {
 
     const isValidMove =
       (!hasMoreThanPieceExist || isSamePieceColor || isEmptyPlace) &&
-      isBlackMoveForward | isWhiteMoveForward;
+      (isBlackMoveForward || isWhiteMoveForward) &&
+      isOneOfDiceMoves &&
+      isDiceThrew &&
+      !isDiceEmpty;
 
     if (unSelectPlace) {
       dispatch(updateGameState({ key: "selectedPlace", value: null }));
@@ -45,6 +58,8 @@ const PlacesWithPieces = ({ placesData }) => {
           shouldEat,
         })
       );
+      dispatch(updateGameState({ key: "diceMoves", value: restDiceMoves }));
+
       return;
     }
 

@@ -34,7 +34,7 @@ export function getBoardArea() {
   }));
 }
 
-const rollDice = (diceCount) => {
+export const rollDice = (diceCount) => {
   const now = new Date().getTime();
   const results = [];
 

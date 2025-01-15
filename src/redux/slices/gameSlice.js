@@ -6,10 +6,12 @@ const initialState = {
   selectedPlace: null,
   gameStart: true,
   showBeginDices: false,
-  playerTurn: "black",
+  playerTurn: "",
   deadPieces: { black: [], white: [] },
   outPieces: { black: [], white: [] },
   diceMoves: [],
+  beginDice: [],
+  isDiceThrew: false,
 };
 
 const gameSlice = createSlice({
@@ -29,7 +31,6 @@ const gameSlice = createSlice({
       if (toPlace) toPlace.pieces.push(playerTurn);
       if (shouldEat) toPlace.pieces.shift();
 
-      state.playerTurn = state.playerTurn === "black" ? "white" : "black";
       state.selectedPlace = null;
     },
   },
