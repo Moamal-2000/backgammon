@@ -1,5 +1,6 @@
 "use client";
 
+import { getRestMoves } from "@/functions/helper";
 import { movePiece, updateGameState } from "@/redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Pieces from "./Pieces/Pieces";
@@ -30,7 +31,7 @@ const PlacesWithPieces = ({ placesData }) => {
     const moves = Math.abs(toPlaceData.place - selectedPlace);
     const isOneOfDiceMoves = diceMoves.includes(moves);
     const isDiceEmpty = diceMoves.length === 0;
-    const restDiceMoves = diceMoves.filter((number) => number !== moves);
+    const restDiceMoves = getRestMoves(diceMoves, moves);
 
     const isBlackMoveForward =
       selectedPlace < data.place && playerTurn === "black";

@@ -25,8 +25,13 @@ const GameButtons = () => {
   function handleThrowDice() {
     if (isDiceThrew) return;
 
+    const diceNumbers = rollDice(2);
+    const isDouble = diceNumbers[0] === diceNumbers[1];
+
+    if (isDouble) diceNumbers.push(...diceNumbers);
+
     dispatch(updateGameState({ key: "isDiceThrew", value: true }));
-    dispatch(updateGameState({ key: "diceMoves", value: rollDice(2) }));
+    dispatch(updateGameState({ key: "diceMoves", value: diceNumbers }));
   }
 
   return (

@@ -46,3 +46,19 @@ export const rollDice = (diceCount) => {
 
   return results;
 };
+
+export function getRestMoves(moves, playedMove) {
+  const restMoves = [];
+  let isPlayedMoveRemoved = false;
+
+  for (let i = 0; i < moves.length; i++) {
+    if (moves[i] === playedMove && !isPlayedMoveRemoved) {
+      isPlayedMoveRemoved = true;
+      continue;
+    }
+
+    restMoves.push(moves[i]);
+  }
+
+  return restMoves;
+}
