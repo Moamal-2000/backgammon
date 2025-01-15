@@ -32,9 +32,9 @@ const gameSlice = createSlice({
       if (fromPlace) fromPlace.pieces.pop();
       if (toPlace) toPlace.pieces.push(playerTurn);
       if (shouldEat) toPlace.pieces.shift();
+      if (allMovesUsed)
+        state.playerTurn = playerTurn === "white" ? "black" : "white";
 
-      state.playerTurn =
-        allMovesUsed && playerTurn === "black" ? "white" : "black";
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;
     },
