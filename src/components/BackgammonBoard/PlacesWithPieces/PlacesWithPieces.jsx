@@ -31,7 +31,6 @@ const PlacesWithPieces = ({ placesData }) => {
     const moves = Math.abs(toPlaceData.place - selectedPlace);
     const isOneOfDiceMoves = diceMoves.includes(moves);
     const isDiceEmpty = diceMoves.length === 0;
-    const restDiceMoves = getRestMoves(diceMoves, moves);
 
     const isBlackMoveForward =
       selectedPlace < data.place && playerTurn === "black";
@@ -51,12 +50,15 @@ const PlacesWithPieces = ({ placesData }) => {
     }
 
     if (selectedPlace && isValidMove) {
+      const restDiceMoves = getRestMoves(diceMoves, moves);
+
       dispatch(
         movePiece({
           from: selectedPlace,
           dataPlace: data.place,
           playerTurn: playerTurn,
           shouldEat,
+          restDiceMoves,
         })
       );
       dispatch(updateGameState({ key: "diceMoves", value: restDiceMoves }));

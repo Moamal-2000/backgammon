@@ -60,5 +60,7 @@ export function getRestMoves(moves, playedMove) {
     restMoves.push(moves[i]);
   }
 
+  console.log('restMoves:', restMoves);
+
   return restMoves;
 }
