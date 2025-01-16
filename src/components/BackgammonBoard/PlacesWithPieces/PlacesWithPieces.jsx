@@ -1,6 +1,6 @@
 "use client";
 
-import { getRestMoves } from "@/functions/helper";
+import { getPlaceData, getRestMoves, isValidMove } from "@/functions/helper";
 import { movePiece, updateGameState } from "@/redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Pieces from "./Pieces/Pieces";
@@ -17,45 +17,47 @@ const PlacesWithPieces = ({ placesData }) => {
   } = useSelector((s) => s.game);
   const dispatch = useDispatch();
 
-  function handlePlaceClick(data) {
+  function handlePlaceClick(fromPlaceData) {
     if (!gameStart) return;
-    const placeHasPieces = data.pieces.length > 0;
-    const isPlayerPiece = playerTurn === data.pieces?.[0];
-    const unSelectPlace = data.place === selectedPlace;
-    const toPlaceData = boardArea.find((item) => item.place === data.place);
-    const hasMoreThanPieceExist = toPlaceData.pieces.length > 1;
-    const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
-    const isEmptyPlace = toPlaceData.pieces.length === 0;
-    const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
 
-    const moves = Math.abs(toPlaceData.place - selectedPlace);
-    const isOneOfDiceMoves = diceMoves.includes(moves);
-    const isDiceEmpty = diceMoves.length === 0;
+    const {
+      toPlaceData,
+      moves,
+      placeHasPieces,
+      isPlayerPiece,
+      unSelectPlace,
+      isSamePieceColor,
+      shouldEat,
+    } = getPlaceData({
+      fromPlaceData,
+      boardArea,
+      selectedPlace,
+      playerTurn,
+    });
 
-    const isBlackMoveForward =
-      selectedPlace < data.place && playerTurn === "black";
-    const isWhiteMoveForward =
-      selectedPlace > data.place && playerTurn === "white";
-
-    const isValidMove =
-      (!hasMoreThanPieceExist || isSamePieceColor || isEmptyPlace) &&
-      (isBlackMoveForward || isWhiteMoveForward) &&
-      isOneOfDiceMoves &&
-      isDiceThrew &&
-      !isDiceEmpty;
+    const isCurrentMoveValid = isValidMove({
+      fromPlaceData,
+      toPlaceData,
+      isDiceThrew,
+      playerTurn,
+      selectedPlace,
+      diceMoves,
+      isSamePieceColor,
+      moves,
+    });
 
     if (unSelectPlace) {
       dispatch(updateGameState({ key: "selectedPlace", value: null }));
       return;
     }
 
-    if (selectedPlace && isValidMove) {
+    if (isCurrentMoveValid) {
       const restDiceMoves = getRestMoves(diceMoves, moves);
 
       dispatch(
         movePiece({
           from: selectedPlace,
-          dataPlace: data.place,
+          dataPlace: fromPlaceData.place,
           playerTurn: playerTurn,
           shouldEat,
           restDiceMoves,
@@ -67,7 +69,9 @@ const PlacesWithPieces = ({ placesData }) => {
     }
 
     if (placeHasPieces && isPlayerPiece)
-      dispatch(updateGameState({ key: "selectedPlace", value: data.place }));
+      dispatch(
+        updateGameState({ key: "selectedPlace", value: fromPlaceData.place })
+      );
   }
 
   return placesData.map((data) => (

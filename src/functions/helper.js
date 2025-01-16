@@ -62,3 +62,69 @@ export function getRestMoves(moves, playedMove) {
 
   return restMoves;
 }
+
+export function isForwardMove({ fromPlace, selectedPlace, playerTurn }) {
+  if (playerTurn === "black") return selectedPlace < fromPlace;
+  if (playerTurn === "white") return selectedPlace > fromPlace;
+
+  return false;
+}
+
+export function hasValidDiceMove({ moves, diceMoves }) {
+  return diceMoves.includes(moves) && diceMoves.length > 0;
+}
+
+export function canMoveToPlace({ toPlaceData, playerTurn }) {
+  const { pieces } = toPlaceData;
+  return pieces.length <= 1 || pieces[0] === playerTurn || pieces.length === 0;
+}
+
+export function getPlaceData({
+  boardArea,
+  fromPlaceData,
+  selectedPlace,
+  playerTurn,
+}) {
+  const toPlaceData = boardArea.find(
+    (item) => item.place === fromPlaceData.place
+  );
+  const moves = Math.abs(toPlaceData.place - selectedPlace);
+  const placeHasPieces = fromPlaceData.pieces.length > 0;
+  const isPlayerPiece = playerTurn === fromPlaceData.pieces?.[0];
+  const unSelectPlace = fromPlaceData.place === selectedPlace;
+  const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
+  const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
+
+  return {
+    toPlaceData,
+    moves,
+    placeHasPieces,
+    isPlayerPiece,
+    unSelectPlace,
+    isSamePieceColor,
+    shouldEat,
+  };
+}
+
+export function isValidMove({
+  fromPlaceData,
+  toPlaceData,
+  isDiceThrew,
+  playerTurn,
+  selectedPlace,
+  diceMoves,
+  moves,
+}) {
+  if (!isDiceThrew || !selectedPlace || diceMoves.length === 0) return false;
+
+  const forwardMove = isForwardMove({
+    fromPlace: fromPlaceData.place,
+    selectedPlace,
+    playerTurn,
+  });
+
+  const validDiceMove = hasValidDiceMove({ moves, diceMoves });
+  const validPlace = canMoveToPlace({ toPlaceData, playerTurn });
+
+  return forwardMove && validDiceMove && validPlace;
+}
