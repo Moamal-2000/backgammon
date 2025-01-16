@@ -37,6 +37,7 @@ const gameSlice = createSlice({
 
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;
+      state.diceMoves = restDiceMoves
     },
   },
 });

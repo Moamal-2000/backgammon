@@ -63,8 +63,6 @@ const PlacesWithPieces = ({ placesData }) => {
           restDiceMoves,
         })
       );
-      dispatch(updateGameState({ key: "diceMoves", value: restDiceMoves }));
-
       return;
     }
 
