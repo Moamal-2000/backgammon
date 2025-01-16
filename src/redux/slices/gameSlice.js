@@ -7,7 +7,7 @@ const initialState = {
   gameStart: true,
   showBeginDices: false,
   playerTurn: "",
-  deadPieces: { black: [], white: [] },
+  deadPieces: { black: ["black", "black"], white: ["black", "black"] },
   outPieces: { black: [], white: [] },
   diceMoves: [],
   beginDice: [],

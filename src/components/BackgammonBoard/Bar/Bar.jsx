@@ -1,7 +1,7 @@
 "use client";
 
+import DeadPiece from "@/components/Shared/DeadPiece";
 import { useSelector } from "react-redux";
-import u from "../PlacesWithPieces/utilsClasses.module.scss";
 import s from "./Bar.module.scss";
 
 const Bar = () => {
@@ -10,13 +10,8 @@ const Bar = () => {
 
   return (
     <div className={s.bar}>
-      <div className={`${u.piece} ${u.white}`} style={{ color: "black" }}>
-        {white.length > 1 && white.length}
-      </div>
-
-      <div className={`${u.piece} ${u.black}`} style={{ color: "#white" }}>
-        {black.length > 1 && black.length}
-      </div>
+      <DeadPiece color="white" pieces={white} position="top" />
+      <DeadPiece color="black" pieces={black} position="bottom" />
     </div>
   );
 };
