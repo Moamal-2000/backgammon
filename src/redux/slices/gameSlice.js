@@ -24,6 +24,7 @@ const gameSlice = createSlice({
     movePiece: (state, action) => {
       const { from, dataPlace, playerTurn, shouldEat, restDiceMoves } =
         action.payload;
+      const opponent = playerTurn === "white" ? "black" : "white";
 
       const fromPlace = state.boardArea.find((item) => item.place === from);
       const toPlace = state.boardArea.find((item) => item.place === dataPlace);
@@ -31,13 +32,18 @@ const gameSlice = createSlice({
 
       if (fromPlace) fromPlace.pieces.pop();
       if (toPlace) toPlace.pieces.push(playerTurn);
-      if (shouldEat) toPlace.pieces.shift();
-      if (allMovesUsed)
-        state.playerTurn = playerTurn === "white" ? "black" : "white";
+      if (allMovesUsed) state.playerTurn = opponent;
+
+      if (shouldEat) {
+        const clonedDeadPieces = { ...state.deadPieces };
+        clonedDeadPieces[opponent].push(opponent);
+        state.deadPieces = clonedDeadPieces;
+        toPlace.pieces.shift();
+      }
 
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;
-      state.diceMoves = restDiceMoves
+      state.diceMoves = restDiceMoves;
     },
   },
 });

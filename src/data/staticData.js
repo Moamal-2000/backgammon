@@ -1,2 +1,6 @@
 import { getBoardArea } from "@/functions/helper";
-export const boardArea = getBoardArea();
+import { getBoardAreaToTestKill } from "@/functions/testing";
+
+export const boardArea = getBoardAreaToTestKill();
+
+

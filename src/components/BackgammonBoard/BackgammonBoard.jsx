@@ -5,6 +5,7 @@ import { updateGameState } from "@/redux/slices/gameSlice";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
+import Bar from "./Bar/Bar";
 import Dice from "./Dice/Dice";
 import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
 
@@ -48,6 +49,8 @@ const BackgammonBoard = () => {
           beginDiceNumber={beginDice[0]}
         />
       </div>
+
+      <Bar />
 
       <div className={s.rightTable}>
         <div className={`${s.top} ${s.reverse}`}>
