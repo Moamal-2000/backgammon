@@ -1,5 +1,6 @@
 "use client";
 
+import SvgIcon from "@/components/Shared/SvgIcon";
 import { useSelector } from "react-redux";
 import s from "./TurnTracker.module.scss";
 
@@ -11,12 +12,12 @@ const TurnTracker = () => {
   return (
     <div className={s.turnTracker}>
       <div className={`${s.player} ${whiteActiveClass}`}>
-        {/* Icon */}
+        <SvgIcon name="user" />
         <span>P1</span>
       </div>
 
       <div className={`${s.player} ${blackActiveClass}`}>
-        {/* Icon */}
+        <SvgIcon name="user" />
         <span>P2</span>
       </div>
     </div>
