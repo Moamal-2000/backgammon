@@ -1,6 +1,6 @@
 "use client";
 
-import { getDiceNumbers } from "@/functions/helper";
+import { getDiceNumbers, getPiecesData } from "@/functions/helper";
 import { updateGameState } from "@/redux/slices/gameSlice";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,12 +73,3 @@ const BackgammonBoard = () => {
 };
 
 export default BackgammonBoard;
-
-function getPiecesData(boardArea) {
-  return {
-    rightBottom: boardArea.slice(1, 7).reverse(),
-    leftBottom: boardArea.slice(7, 13).reverse(),
-    leftTop: boardArea.slice(13, 19),
-    rightTop: boardArea.slice(19, 25),
-  };
-}

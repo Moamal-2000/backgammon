@@ -138,9 +138,14 @@ export function isValidMove({
   const validDiceMove = hasValidDiceMove({ moves, diceMoves, deadPieceColor });
   const validPlace = canMoveToPlace({ toPlaceData, playerTurn });
 
-  // console.log('forwardMove', forwardMove);
-  // console.log('validDiceMove', validDiceMove);
-  // console.log('validPlace',validPlace);
-
   return forwardMove && validDiceMove && validPlace;
+}
+
+export function getPiecesData(boardArea) {
+  return {
+    rightBottom: boardArea.slice(1, 7).reverse(),
+    leftBottom: boardArea.slice(7, 13).reverse(),
+    leftTop: boardArea.slice(13, 19),
+    rightTop: boardArea.slice(19, 25),
+  };
 }
