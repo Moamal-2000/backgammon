@@ -1,1 +1,21 @@
-.turnTracker {}
+.turnTracker {
+  width: 80px;
+  height: 100%;
+  background-color: #d9ad7a;
+  border: solid 20px #9e611f;
+  border-width: 20px 0 20px 20px;
+}
+
+.turnTracker .player {
+  color: #000;
+  font-size: 1.4rem;
+  padding: 10px;
+  border: solid #6d3c08;
+  border-radius: 8px;
+  height: 200px;
+}
+
+.player.black,
+.player.white {
+  color: #2054ff;
+}

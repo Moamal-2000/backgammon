@@ -4,11 +4,10 @@
   background-color: #d9ad7a;
   border: solid 20px #9e611f;
   width: 800px;
-  height: 680px;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin: 40px 0;
 }
 
 @include m.small {
