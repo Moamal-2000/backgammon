@@ -1,7 +1,7 @@
 "use client";
 
-import { getDiceNumbers, getPiecesData } from "@/functions/helper";
-import { updateGameState } from "@/redux/slices/gameSlice";
+import { getDiceNumbers, getPiecesData } from "@/Functions/helper";
+import { updateGameState } from "@/Redux/slices/gameSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";

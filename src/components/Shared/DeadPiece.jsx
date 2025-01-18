@@ -1,6 +1,6 @@
 "use client";
 
-import { updateGameState } from "@/redux/slices/gameSlice";
+import { updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import u from "../BackgammonBoard/PlacesWithPieces/utilsClasses.module.scss";
 

@@ -1,4 +1,4 @@
-import { boardArea } from "@/data/staticData";
+import { boardArea } from "@/Data/staticData";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

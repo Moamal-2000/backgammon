@@ -1,7 +1,7 @@
 "use client";
 
-import { getPlaceData, getRestMoves, isValidMove } from "@/functions/helper";
-import { movePiece, updateGameState } from "@/redux/slices/gameSlice";
+import { getPlaceData, getRestMoves, isValidMove } from "@/Functions/helper";
+import { movePiece, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Pieces from "./Pieces/Pieces";
 import s from "./PlacesWithPieces.module.scss";

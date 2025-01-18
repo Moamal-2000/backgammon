@@ -1,4 +1,4 @@
-import { BACKGAMMON_DATA, DICE_NUMBERS } from "@/data/constants";
+import { BACKGAMMON_DATA, DICE_NUMBERS } from "@/Data/constants";
 
 export function getDiceNumbers(recalcIfSameNumbers = false) {
   let firstDice = calcRandomNumber(DICE_NUMBERS);

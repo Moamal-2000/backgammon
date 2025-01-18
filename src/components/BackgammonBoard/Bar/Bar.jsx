@@ -1,6 +1,6 @@
 "use client";
 
-import DeadPiece from "@/components/Shared/DeadPiece";
+import DeadPiece from "@/Components/Shared/DeadPiece";
 import { useSelector } from "react-redux";
 import s from "./Bar.module.scss";
 

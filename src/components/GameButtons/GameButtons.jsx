@@ -1,7 +1,7 @@
 "use client";
 
-import { rollDice } from "@/functions/helper";
-import { resetGameState, updateGameState } from "@/redux/slices/gameSlice";
+import { rollDice } from "@/Functions/helper";
+import { resetGameState, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 

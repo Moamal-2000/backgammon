@@ -1,6 +1,6 @@
 "use client";
 
-import SvgIcon from "@/components/Shared/SvgIcon";
+import SvgIcon from "@/Components/Shared/SvgIcon";
 import { useSelector } from "react-redux";
 import s from "./TurnTracker.module.scss";
 
