@@ -4,11 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: true,
+  gameStart: false,
   showBeginDices: false,
   playerTurn: "",
-  deadPieces: { black: ["black", "black"], white: ["black", "black"] },
   outPieces: { black: [], white: [] },
+  deadPieceColor: "",
   diceMoves: [],
   beginDice: [],
   isDiceThrew: false,
@@ -22,9 +22,16 @@ const gameSlice = createSlice({
       state[payload.key] = payload.value;
     },
     movePiece: (state, action) => {
-      const { from, dataPlace, playerTurn, shouldEat, restDiceMoves } =
-        action.payload;
+      const {
+        from,
+        dataPlace,
+        playerTurn,
+        shouldEat,
+        restDiceMoves,
+        deadPieceColor,
+      } = action.payload;
       const opponent = playerTurn === "white" ? "black" : "white";
+      const isDeadPiece = !!deadPieceColor;
 
       const fromPlace = state.boardArea.find((item) => item.place === from);
       const toPlace = state.boardArea.find((item) => item.place === dataPlace);
@@ -35,11 +42,11 @@ const gameSlice = createSlice({
       if (allMovesUsed) state.playerTurn = opponent;
 
       if (shouldEat) {
-        const clonedDeadPieces = { ...state.deadPieces };
-        clonedDeadPieces[opponent].push(opponent);
-        state.deadPieces = clonedDeadPieces;
+        state.boardArea[0].deadPieces[opponent].push(opponent);
         toPlace.pieces.shift();
       }
+
+      if (isDeadPiece) state.boardArea[0].deadPieces[deadPieceColor].pop();
 
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;

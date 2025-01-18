@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import s from "./Bar.module.scss";
 
 const Bar = () => {
-  const { deadPieces } = useSelector((s) => s.game);
-  const { black, white } = deadPieces;
+  const { boardArea } = useSelector((s) => s.game);
+  const { black, white } = boardArea[0].deadPieces;
 
   return (
     <div className={s.bar}>

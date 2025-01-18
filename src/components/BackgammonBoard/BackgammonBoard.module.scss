@@ -4,7 +4,8 @@
   background-color: #d9ad7a;
   border: solid 20px #9e611f;
   width: 800px;
-  height: 680px;
+  // height: 680px;
+  height: 550px;
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -13,7 +14,7 @@
 
 @include m.small {
   .board {
-    scale: .7;
+    scale: .58;
   }
 }
 

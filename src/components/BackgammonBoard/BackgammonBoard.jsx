@@ -22,7 +22,8 @@ const BackgammonBoard = () => {
     if (!gameStart || gameStarted.current) return;
 
     const { firstDice, secondDice } = getDiceNumbers(true);
-    const wonPlayer = firstDice > secondDice ? "white" : "black";
+    // const wonPlayer = firstDice > secondDice ? "white" : "black";
+    const wonPlayer = "white";
 
     dispatch(updateGameState({ key: "playerTurn", value: wonPlayer }));
     dispatch(
@@ -76,9 +77,9 @@ export default BackgammonBoard;
 
 function getPiecesData(boardArea) {
   return {
-    rightBottom: boardArea.slice(0, 6).reverse(),
-    leftBottom: boardArea.slice(6, 12).reverse(),
-    leftTop: boardArea.slice(12, 18),
-    rightTop: boardArea.slice(18, 24),
+    rightBottom: boardArea.slice(1, 7).reverse(),
+    leftBottom: boardArea.slice(7, 13).reverse(),
+    leftTop: boardArea.slice(13, 19),
+    rightTop: boardArea.slice(19, 25),
   };
 }

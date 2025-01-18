@@ -14,6 +14,7 @@ const PlacesWithPieces = ({ placesData }) => {
     gameStart,
     diceMoves,
     isDiceThrew,
+    deadPieceColor,
   } = useSelector((s) => s.game);
   const dispatch = useDispatch();
 
@@ -44,6 +45,7 @@ const PlacesWithPieces = ({ placesData }) => {
       diceMoves,
       isSamePieceColor,
       moves,
+      deadPieceColor,
     });
 
     if (unSelectPlace) {
@@ -52,7 +54,8 @@ const PlacesWithPieces = ({ placesData }) => {
     }
 
     if (isCurrentMoveValid) {
-      const restDiceMoves = getRestMoves(diceMoves, moves);
+      const whiteOrBlackMoves = deadPieceColor === "white" ? 25 - moves : moves;
+      const restDiceMoves = getRestMoves(diceMoves, whiteOrBlackMoves);
 
       dispatch(
         movePiece({
@@ -61,12 +64,13 @@ const PlacesWithPieces = ({ placesData }) => {
           playerTurn: playerTurn,
           shouldEat,
           restDiceMoves,
+          deadPieceColor,
         })
       );
       return;
     }
 
-    if (placeHasPieces && isPlayerPiece)
+    if (placeHasPieces && isPlayerPiece && !deadPieceColor)
       dispatch(
         updateGameState({ key: "selectedPlace", value: fromPlaceData.place })
       );

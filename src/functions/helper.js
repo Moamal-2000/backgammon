@@ -22,16 +22,23 @@ export const getColor = (i) => ((i + 1) % 2 === 1 ? "black" : "white");
 
 export function getPieces(i) {
   return Array.from({ length: BACKGAMMON_DATA.numbersOfPieces[i] || 0 }, () =>
-    BACKGAMMON_DATA.placesColors[i] === 0 ? "black" : "white"
+    BACKGAMMON_DATA.placesColors[i - 1] === 0 ? "black" : "white"
   );
 }
 
 export function getBoardArea() {
-  return Array.from({ length: 24 }, (_, i) => ({
-    place: i + 1,
-    placeColor: getColor(i),
-    pieces: getPieces(i),
-  }));
+  const deadPieces = { black: [], white: [] };
+
+  return Array.from({ length: 25 }, (_, i) => {
+    const placeData = {
+      place: i,
+      placeColor: getColor(i),
+      pieces: getPieces(i),
+    };
+
+    if (i === 0) placeData.deadPieces = deadPieces;
+    return placeData;
+  });
 }
 
 export const rollDice = (diceCount) => {
@@ -64,13 +71,15 @@ export function getRestMoves(moves, playedMove) {
 }
 
 export function isForwardMove({ fromPlace, selectedPlace, playerTurn }) {
-  if (playerTurn === "black") return selectedPlace < fromPlace;
-  if (playerTurn === "white") return selectedPlace > fromPlace;
+  const isDeadPiece = selectedPlace === 0;
 
-  return false;
+  if (playerTurn === "black") return selectedPlace < fromPlace;
+  if (playerTurn === "white" && !isDeadPiece) return selectedPlace > fromPlace;
+  return isDeadPiece;
 }
 
-export function hasValidDiceMove({ moves, diceMoves }) {
+export function hasValidDiceMove({ moves, diceMoves, deadPieceColor }) {
+  if (deadPieceColor === "white") moves = 25 - moves;
   return diceMoves.includes(moves) && diceMoves.length > 0;
 }
 
@@ -114,8 +123,11 @@ export function isValidMove({
   selectedPlace,
   diceMoves,
   moves,
+  deadPieceColor,
 }) {
-  if (!isDiceThrew || !selectedPlace || diceMoves.length === 0) return false;
+  const hasSelectedPlace = !isNaN(parseInt(selectedPlace));
+
+  if (!isDiceThrew || !hasSelectedPlace || diceMoves.length === 0) return false;
 
   const forwardMove = isForwardMove({
     fromPlace: fromPlaceData.place,
@@ -123,8 +135,12 @@ export function isValidMove({
     playerTurn,
   });
 
-  const validDiceMove = hasValidDiceMove({ moves, diceMoves });
+  const validDiceMove = hasValidDiceMove({ moves, diceMoves, deadPieceColor });
   const validPlace = canMoveToPlace({ toPlaceData, playerTurn });
+
+  // console.log('forwardMove', forwardMove);
+  // console.log('validDiceMove', validDiceMove);
+  // console.log('validPlace',validPlace);
 
   return forwardMove && validDiceMove && validPlace;
 }
