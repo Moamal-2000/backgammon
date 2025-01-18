@@ -52,8 +52,9 @@ const gameSlice = createSlice({
       state.selectedPlace = null;
       state.diceMoves = restDiceMoves;
     },
+    resetGameState: () => initialState,
   },
 });
 
 export default gameSlice.reducer;
-export const { updateGameState, movePiece } = gameSlice.actions;
+export const { updateGameState, movePiece, resetGameState } = gameSlice.actions;

@@ -1,7 +1,7 @@
 "use client";
 
 import { rollDice } from "@/functions/helper";
-import { updateGameState } from "@/redux/slices/gameSlice";
+import { resetGameState, updateGameState } from "@/redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
@@ -20,6 +20,11 @@ const GameButtons = () => {
 
   function restartGame() {
     const shouldRestart = confirm("Are you sure you want to restart the game?");
+
+    if (shouldRestart) {
+      dispatch(resetGameState());
+      setTimeout(startTheGame, 0);
+    }
   }
 
   function handleThrowDice() {

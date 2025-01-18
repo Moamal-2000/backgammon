@@ -2,7 +2,7 @@
 
 import { getDiceNumbers, getPiecesData } from "@/functions/helper";
 import { updateGameState } from "@/redux/slices/gameSlice";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
 import Bar from "./Bar/Bar";
@@ -16,10 +16,9 @@ const BackgammonBoard = () => {
   const pieces = getPiecesData(boardArea);
   const shouldShowBeginDices = gameStart && showBeginDices;
   const showGameDices = gameStart && !showBeginDices && diceMoves.length !== 0;
-  const gameStarted = useRef(false);
 
   useEffect(() => {
-    if (!gameStart || gameStarted.current) return;
+    if (!gameStart) return;
 
     const { firstDice, secondDice } = getDiceNumbers(true);
     const wonPlayer = firstDice > secondDice ? "white" : "black";
@@ -28,8 +27,6 @@ const BackgammonBoard = () => {
     dispatch(
       updateGameState({ key: "beginDice", value: [firstDice, secondDice] })
     );
-
-    gameStarted.current = true;
   }, [gameStart]);
 
   return (
