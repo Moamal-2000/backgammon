@@ -1,0 +1,14 @@
+.bar {
+  width: 40px;
+  height: 100%;
+  padding: 180px 0;
+  background-color: #9e611f;
+  position: relative;
+  z-index: 1;
+}
+
+.bar>* {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+}

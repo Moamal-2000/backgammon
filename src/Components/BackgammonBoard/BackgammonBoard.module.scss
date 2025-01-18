@@ -1,0 +1,37 @@
+@use "../../styles/mixins" as m;
+
+.board {
+  background-color: #d9ad7a;
+  border: solid 20px #9e611f;
+  width: 800px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+@include m.small {
+  .board {
+    scale: .7;
+  }
+}
+
+.leftTable,
+.rightTable {
+  background-color: #d9ad7a;
+  width: calc(50% - 20px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(100% - 250px * 2);
+  position: relative;
+}
+
+:where(.top, .bottom) {
+  width: 100%;
+  display: flex;
+}
+
+.board .top.reverse {
+  transform: rotateX(180deg);
+}

@@ -1,0 +1,60 @@
+.turnTracker {
+  width: 80px;
+  height: 100%;
+  background-color: #9e611f;
+  border: solid 20px #9e611f;
+  border-width: 20px 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.turnTracker .player {
+  background-color: #834f12;
+  color: #3b1e00;
+  border: solid #6d3c08;
+  font-size: 1.4rem;
+  padding: 10px;
+  border-radius: 8px;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  user-select: none;
+  position: relative;
+}
+
+.turnTracker .player::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  border: solid #9e611f;
+  filter: blur(.5);
+}
+
+.player.black::before,
+.player.white::before {
+  animation: border-glow .8s infinite alternate ease-in-out;
+}
+
+.player svg {
+  width: 26px;
+  height: 26px;
+  fill: #3d1f00;
+}
+
+@keyframes border-glow {
+  from {
+    border-color: #6d3c08;
+  }
+
+  to {
+    border-color: #dbb087;
+  }
+}
