@@ -1,5 +1,5 @@
-const BasicsCard = () => {
+const StrategyCard = () => {
   return <main></main>;
 };
 
-export default BasicsCard;
+export default StrategyCard;
