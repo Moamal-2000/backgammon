@@ -1,3 +1,5 @@
+@use "../../Styles/mixins" as m;
+
 .header {
   padding: 3rem 1rem;
   background-image: linear-gradient(to right,
@@ -16,12 +18,27 @@
   color: #fff;
 }
 
+@include m.small {
+  .header h1 {
+    font-size: 2rem;
+  }
+}
+
 .header .shape {
   background-color: #262626;
   width: 42rem;
   padding: 1rem;
   border-radius: .5rem;
   position: relative;
+}
+
+@include m.small {
+  .header .shape {
+    width: 100%;
+    max-width: 25rem;
+    min-width: 17.5rem;
+    padding: .9rem;
+  }
 }
 
 .header .shape::before,
@@ -33,6 +50,26 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+}
+
+@include m.small {
+
+  .header .shape::before,
+  .header .shape::after {
+    width: 24px;
+    height: 24px;
+    bottom: -18px;
+  }
+}
+
+@include m.small {
+
+  .header .shape::before,
+  .header .shape::after {
+    width: 20px;
+    height: 20px;
+    bottom: -14px;
+  }
 }
 
 .header .shape::before {
@@ -54,11 +91,29 @@
   height: 8px;
 }
 
+@include m.small {
+  .header .shape .line {
+    height: 6px;
+  }
+}
+
 .header p {
   font-size: 1.2rem;
   line-height: 1.75rem;
   margin-top: 3rem;
-  width: 300px;
+  max-width: 370px;
   text-align: center;
   color: #c1c4ca;
+}
+
+@include m.small {
+  .header p {
+    font-size: 1.1rem;
+  }
+}
+
+@include m.very-small {
+  .header p {
+    font-size: 1rem;
+  }
 }
