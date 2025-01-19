@@ -43,12 +43,14 @@ export const BASICS_DATA = {
       descriptions: [
         "The backgammon board consists of 24 points, divided into four quadrants of six points each. Players move their checkers in opposite directions.",
       ],
+      id: 0,
     },
     {
       title: "The Objective",
       descriptions: [
         "Move all your checkers around the board and bear them off before your opponent. Each player starts with 15 checkers.",
       ],
+      id: 1,
     },
   ],
 };
