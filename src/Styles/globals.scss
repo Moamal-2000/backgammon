@@ -23,6 +23,10 @@ button {
   cursor: pointer;
 }
 
+main {
+  min-height: calc(100vh - 300px);
+}
+
 .container {
   width: 864px;
   margin: 0 auto;

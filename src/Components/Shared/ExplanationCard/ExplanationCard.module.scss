@@ -1,3 +1,31 @@
-.mainCard {}
+.mainCard {
+  background-color: #262626;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-.mainCard .card {}
+.mainCard h2 {
+  color: #f3f4f6;
+  margin-bottom: 1.5rem;
+  letter-spacing: -.025em;
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.mainCard .card {
+  background-color: #404040;
+  padding: 1rem;
+}
+
+.mainCard .card h3 {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: .5rem;
+}
+
+.mainCard .card p {
+  color: #d1d5db;
+}
