@@ -1,6 +1,6 @@
 import Header from "@/Components/Header/Header";
 import Navigator from "@/Components/Navigator/Navigator";
-import "../styles/globals.scss";
+import "../Styles/globals.scss";
 import RootProviders from "./RootProviders";
 
 export const metadata = {
