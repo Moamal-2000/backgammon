@@ -8,29 +8,3 @@
   border-radius: 8px;
   width: 100%;
 }
-
-.nav a {
-  background-color: #404040;
-  color: #afbad2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  flex: 1;
-  font-weight: 500;
-  font-size: .875rem;
-  transition: background-color .2s ease, color .2s ease;
-
-  &.active {
-    background-color: #ffffff;
-    color: #030712;
-    fill: #030712;
-  }
-}
-
-.nav a svg {
-  width: 18px;
-  height: 18px;
-}
