@@ -1,4 +1,3 @@
-import BackgammonGame from "@/Components/BackgammonGame/BackgammonGame";
 import Header from "@/Components/Header/Header";
 import Navigator from "@/Components/Navigator/Navigator";
 import "../styles/globals.scss";
@@ -21,10 +20,6 @@ export default function RootLayout({ children }) {
           </div>
 
           {children}
-
-          <div className="container">
-            <BackgammonGame />
-          </div>
         </body>
       </html>
     </RootProviders>

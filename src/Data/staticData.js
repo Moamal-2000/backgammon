@@ -4,8 +4,14 @@ export const boardArea = getBoardArea();
 
 export const NAV_LINKS = [
   {
-    name: "Basics",
+    name: "Play",
     path: "/",
+    iconName: "dice",
+    id: 0,
+  },
+  {
+    name: "Basics",
+    path: "/basics",
     iconName: "exclamation-mark",
     id: 1,
   },

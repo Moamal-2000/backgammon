@@ -103,4 +103,24 @@ export const iconsData = [
       </svg>
     ),
   },
+  {
+    name: "dice",
+    icon: (
+      <svg viewBox="0 0 64 64">
+        <rect
+          x="4"
+          y="4"
+          width="54"
+          height="54"
+          rx="8"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="5"
+        />
+        <circle cx="20" cy="20" r="5" fill="currentColor" />
+        <circle cx="32" cy="32" r="5" fill="currentColor" />
+        <circle cx="44" cy="44" r="5" fill="currentColor" />
+      </svg>
+    ),
+  },
 ];
