@@ -1,4 +1,5 @@
 import Header from "@/Components/Header/Header";
+import Navigator from "@/Components/Navigator/Navigator";
 import "../styles/globals.scss";
 import RootProviders from "./RootProviders";
 
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body>
           <Header />
+          <Navigator />
           {children}
         </body>
       </html>
