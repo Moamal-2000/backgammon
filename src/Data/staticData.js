@@ -54,3 +54,17 @@ export const BASICS_DATA = {
     },
   ],
 };
+
+export const RULES_DATA = {
+  mainTitle: "Game Rules",
+  explanationData: [
+    {
+      title: "Movement Rules",
+      descriptions: [
+        "Roll two dice and move checkers according to the numbers shown",
+        "Move in opposite directions: one player clockwise, the other counterclockwise",
+      ],
+      id: 0,
+    },
+  ],
+};

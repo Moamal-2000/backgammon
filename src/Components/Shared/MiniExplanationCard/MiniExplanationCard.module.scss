@@ -10,6 +10,25 @@
   margin-bottom: .5rem;
 }
 
-.card p {
+.card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.card ul li {
+  margin-left: .5rem;
   color: #d1d5db;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.card ul li svg {
+  width: 22px;
+  height: 22px;
+  stroke: #f59e0b;
+  position: relative;
+  top: 1px;
 }
