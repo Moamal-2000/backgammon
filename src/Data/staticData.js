@@ -34,3 +34,21 @@ export const NAV_LINKS = [
     id: 4,
   },
 ];
+
+export const BASICS_DATA = {
+  mainTitle: "Getting Started with Backgammon",
+  explanationData: [
+    {
+      title: "The Board",
+      descriptions: [
+        "The backgammon board consists of 24 points, divided into four quadrants of six points each. Players move their checkers in opposite directions.",
+      ],
+    },
+    {
+      title: "The Objective",
+      descriptions: [
+        "Move all your checkers around the board and bear them off before your opponent. Each player starts with 15 checkers.",
+      ],
+    },
+  ],
+};
