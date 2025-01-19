@@ -1,5 +1,5 @@
 const SetupCard = () => {
-  return <div>page</div>;
+  return <main></main>;
 };
 
 export default SetupCard;

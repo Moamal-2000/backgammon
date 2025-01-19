@@ -1,5 +1,5 @@
 const StrategyCard = () => {
-  return <div>page</div>;
+  return <main></main>;
 };
 
 export default StrategyCard;
