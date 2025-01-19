@@ -17,9 +17,8 @@ export default function RootLayout({ children }) {
 
           <div className="container">
             <Navigator />
+            {children}
           </div>
-
-          {children}
         </body>
       </html>
     </RootProviders>
