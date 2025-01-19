@@ -135,7 +135,27 @@ export const ADVANCED_STRATEGIES_DATA = {
   ],
 };
 
+export const PRO_TIPS_STRATEGY_DATA = {
+  subTitle: "Pro Tips for Beginners",
+  explanationData: [
+    {
+      title: "",
+      descriptions: [
+        "Don’t leave unnecessary blots: A blot is a single checker that can be hit by your opponent. Protect your checkers by forming points whenever possible.",
+        "Build a strong home board early: Secure as many points as you can in your home board to prevent your opponent from re-entering easily.",
+        "Focus on flexibility: Keep your checkers spread out to give yourself a wider range of possible moves on each roll.",
+        "Know when to hit: Hitting your opponent’s blot sends their checker to the bar, but only do so if it strengthens your position or disrupts theirs.",
+      ],
+      id: 0,
+    },
+  ],
+};
+
 export const STRATEGY_DATA = {
   mainTitle: "Strategy Tips for Backgammon",
-  sections: [BASIC_STRATEGIES_DATA, ADVANCED_STRATEGIES_DATA],
+  sections: [
+    BASIC_STRATEGIES_DATA,
+    ADVANCED_STRATEGIES_DATA,
+    PRO_TIPS_STRATEGY_DATA,
+  ],
 };

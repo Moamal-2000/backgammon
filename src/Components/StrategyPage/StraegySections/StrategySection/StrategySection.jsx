@@ -4,7 +4,7 @@ import s from "./StrategySection.module.scss";
 const StrategySection = ({ title, descriptions, id }) => {
   return (
     <div className={s.card}>
-      <h4>{title}</h4>
+      {title && <h4>{title}</h4>}
 
       <ul>
         {descriptions?.map((description, index) => (
