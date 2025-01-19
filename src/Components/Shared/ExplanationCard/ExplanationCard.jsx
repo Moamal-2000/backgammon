@@ -1,3 +1,4 @@
+import MiniExplanationCard from "../MiniExplanationCard/MiniExplanationCard";
 import s from "./ExplanationCard.module.scss";
 
 const ExplanationCard = ({ mainTitle, explanationData }) => {
@@ -6,12 +7,7 @@ const ExplanationCard = ({ mainTitle, explanationData }) => {
       <h2>{mainTitle}</h2>
 
       {explanationData?.map(({ title, descriptions }) => (
-        <div className={s.card}>
-          <h3>{title}</h3>
-          {descriptions?.map((description) => (
-            <p>{description}</p>
-          ))}
-        </div>
+        <MiniExplanationCard title={title} descriptions={descriptions} />
       ))}
     </div>
   );
