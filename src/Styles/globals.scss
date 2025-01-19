@@ -2,12 +2,6 @@
 @use "./variables";
 @import "./fonts.css";
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
