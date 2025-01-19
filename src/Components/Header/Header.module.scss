@@ -1,1 +1,64 @@
-.header {}
+.header {
+  padding: 3rem 1rem;
+  background-image: linear-gradient(to right,
+      #171717,
+      #262626,
+      #171717);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header h1 {
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.header .shape {
+  background-color: #262626;
+  width: 42rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  position: relative;
+}
+
+.header .shape::before,
+.header .shape::after {
+  --position-x: 40px;
+  content: '';
+  position: absolute;
+  bottom: -24px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.header .shape::before {
+  background-color: #fff;
+  border: solid 2px #e5e7eb;
+  left: var(--position-x);
+}
+
+.header .shape::after {
+  background-color: #000;
+  border: solid 2px #1f2937;
+  right: var(--position-x);
+}
+
+.header .shape .line {
+  background-color: #652f11;
+  border-radius: .25rem;
+  width: 100%;
+  height: 8px;
+}
+
+.header p {
+  font-size: 1.2rem;
+  line-height: 1.75rem;
+  margin-top: 3rem;
+  width: 300px;
+  text-align: center;
+  color: #c1c4ca;
+}
