@@ -1,4 +1,4 @@
-import BackgammonGame from "@/Components/BackgammonGame/BackgammonGame";
+import BackgammonGame from "@/Components/Pages/Home/BackgammonGame/BackgammonGame";
 import s from "./page.module.scss";
 
 export default function Home() {

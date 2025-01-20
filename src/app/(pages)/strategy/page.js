@@ -1,6 +1,6 @@
-import StrategySections from "@/Components/StrategyPage/StraegySections/StrategySections";
+import StrategySections from "@/Components/Pages/Strategy/StraegySections/StrategySections";
 import { STRATEGY_DATA } from "@/Data/Pages/StrategyPage";
-import s from "../../../Components/StrategyPage/StrategyCard.module.scss";
+import s from "./StrategyCard.module.scss";
 
 const StrategyCard = () => {
   const { mainTitle, sections } = STRATEGY_DATA;
