@@ -109,7 +109,9 @@ export function getPlaceData({
   const unSelectPlace = fromPlaceData.place === selectedPlace;
   const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
   const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
-  const canSelectPiece = placeHasPieces && isPlayerPiece && isDiceThrew;
+  const playerHasDeadPieces = boardArea[0].deadPieces[playerTurn].length > 0;
+  const canSelectPiece =
+    placeHasPieces && isPlayerPiece && isDiceThrew && !playerHasDeadPieces;
 
   return {
     toPlaceData,
