@@ -1,7 +1,7 @@
 import { getColor } from "./helper";
 
 export function getBoardAreaToTestKill() {
-  const deadPieces = { black: ["black", "black"], white: [] };
+  const deadPieces = { black: ["black", "black"], white: ["white", "white"] };
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {

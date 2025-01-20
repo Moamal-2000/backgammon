@@ -24,16 +24,17 @@ const PlacesWithPieces = ({ placesData }) => {
     const {
       toPlaceData,
       moves,
-      placeHasPieces,
-      isPlayerPiece,
       unSelectPlace,
       isSamePieceColor,
       shouldEat,
+      canSelectPiece,
     } = getPlaceData({
       fromPlaceData,
       boardArea,
       selectedPlace,
       playerTurn,
+      deadPieceColor,
+      isDiceThrew,
     });
 
     const isCurrentMoveValid = isValidMove({
@@ -70,10 +71,13 @@ const PlacesWithPieces = ({ placesData }) => {
       return;
     }
 
-    if (placeHasPieces && isPlayerPiece && !deadPieceColor)
+    if (canSelectPiece) {
       dispatch(
         updateGameState({ key: "selectedPlace", value: fromPlaceData.place })
       );
+
+      dispatch(updateGameState({ key: "deadPieceColor", value: null }));
+    }
   }
 
   return placesData.map((data) => (
