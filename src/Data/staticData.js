@@ -135,7 +135,7 @@ export const ADVANCED_STRATEGIES_DATA = {
   ],
 };
 
-export const PRO_TIPS_STRATEGY_DATA = {
+export const PRO_TIPS_STRATEGIES_DATA = {
   subTitle: "Pro Tips for Beginners",
   explanationData: [
     {
@@ -151,11 +151,26 @@ export const PRO_TIPS_STRATEGY_DATA = {
   ],
 };
 
+export const EXAMPLES_STRATEGIES_DATA = {
+  subTitle: "Example Scenarios",
+  explanationData: [
+    {
+      title: "",
+      descriptions: [
+        "Blocking Strategy in Action: You’ve created a prime (four consecutive points) near the mid-board. Your opponent’s back checkers are trapped and can’t advance without rolling high doubles. You use this time to consolidate your position and strengthen your home board.",
+        "Using the Doubling Cube: You’re ahead in the race with a clear path to bear off your checkers, while your opponent has blots exposed and few options. Doubling at this point increases pressure on them, forcing a decision.",
+      ],
+      id: 0,
+    },
+  ],
+};
+
 export const STRATEGY_DATA = {
   mainTitle: "Strategy Tips for Backgammon",
   sections: [
     BASIC_STRATEGIES_DATA,
     ADVANCED_STRATEGIES_DATA,
-    PRO_TIPS_STRATEGY_DATA,
+    PRO_TIPS_STRATEGIES_DATA,
+    EXAMPLES_STRATEGIES_DATA,
   ],
 };
