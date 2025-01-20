@@ -71,7 +71,7 @@ export function getRestMoves(moves, playedMove) {
 }
 
 export function isForwardMove({ fromPlace, selectedPlace, playerTurn }) {
-  const isDeadPiece = selectedPlace === 1;
+  const isDeadPiece = selectedPlace === 0;
 
   if (playerTurn === "black") return selectedPlace < fromPlace;
   if (playerTurn === "white" && !isDeadPiece) return selectedPlace > fromPlace;
