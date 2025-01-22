@@ -49,15 +49,10 @@ const PlacesWithPieces = ({ placesData }) => {
     const isAllDiceMovesUsed = diceMoves.length === 0;
 
     if (shouldOutPiece && !playerHasDeadPieces && !isAllDiceMovesUsed) {
-      const whiteOrBlackMoves =
-        playerTurn === "black" ? 26 - fromPlaceData.place : fromPlaceData.place;
       const numberOfSelectedPiece =
-        playersHomeSide[playerTurn].indexOf(whiteOrBlackMoves);
+        playersHomeSide[playerTurn].indexOf(fromPlaceData.place) + 1;
       const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
 
-      // console.log("numberOfSelectedPiece", numberOfSelectedPiece);
-      console.log("playerTurn",playerTurn);
-      console.log("whiteOrBlackMoves", whiteOrBlackMoves);
       dispatch(
         outPiece({
           from: fromPlaceData,

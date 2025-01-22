@@ -2,31 +2,7 @@ import { getColor } from "./helper";
 
 const BACKGAMMON_DATA = {
   numbersOfPieces: [
-    ,
-    3,
-    3,
-    3,
-    2,
-    2,
-    2,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
+    0, 3, 3, 3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 3, 3, 3,
   ],
   placesColors: [
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -34,7 +10,6 @@ const BACKGAMMON_DATA = {
 };
 
 export function getBoardAreaToTestKill() {
-  // const deadPieces = { black: [], white: [] };
   const deadPieces = { black: ["black", "black"], white: ["white", "white"] };
 
   return Array.from({ length: 25 }, (_, i) => {

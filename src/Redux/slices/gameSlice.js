@@ -4,10 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: true,
+  gameStart: false,
   showBeginDices: false,
   playerTurn: "",
-  outPieces: { black: [], white: [] },
   deadPieceColor: "",
   diceMoves: [],
   beginDice: [],
@@ -55,12 +54,14 @@ const gameSlice = createSlice({
     outPiece: (state, action) => {
       const { from, playerTurn, restDiceMoves } = action.payload;
       const opponent = playerTurn === "white" ? "black" : "white";
+      const isBlackPlayer = playerTurn === "black";
+      const diceMove = isBlackPlayer ? 26 - from.place : from.place - 1;
 
-      const fromPlace = state.boardArea.find((item) => {
-        return item.place === from.place;
-      });
+      const fromPlace = state.boardArea.find(
+        (item) => item.place === from.place
+      );
       const allMovesUsed = restDiceMoves.length === 0;
-      const isValidDiceNumber = state.diceMoves.includes(from.place - 1)
+      const isValidDiceNumber = state.diceMoves.includes(diceMove);
 
       if (fromPlace && isValidDiceNumber) fromPlace.pieces.pop();
       if (allMovesUsed) state.playerTurn = opponent;

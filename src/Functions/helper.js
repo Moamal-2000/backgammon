@@ -58,9 +58,6 @@ export function getRestMoves(moves, playedMove) {
   const restMoves = [];
   let isPlayedMoveRemoved = false;
 
-  // console.log("moves", moves);
-  // console.log('playedMove', playedMove);
-
   for (let i = 0; i < moves.length; i++) {
     if (moves[i] === playedMove && !isPlayedMoveRemoved) {
       isPlayedMoveRemoved = true;
