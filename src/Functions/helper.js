@@ -58,6 +58,9 @@ export function getRestMoves(moves, playedMove) {
   const restMoves = [];
   let isPlayedMoveRemoved = false;
 
+  // console.log("moves", moves);
+  // console.log('playedMove', playedMove);
+
   for (let i = 0; i < moves.length; i++) {
     if (moves[i] === playedMove && !isPlayedMoveRemoved) {
       isPlayedMoveRemoved = true;
@@ -149,6 +152,20 @@ export function isValidMove({
   const validPlace = canMoveToPlace({ toPlaceData, playerTurn });
 
   return forwardMove && validDiceMove && validPlace;
+}
+
+export function areAllPiecesInInnerHome(boardArea, playerTurn) {
+  const innerHomeRange =
+    playerTurn === "black" ? [20, 21, 22, 23, 24, 25] : [2, 3, 4, 5, 6, 7];
+
+  for (const point of boardArea) {
+    const isOutsideInnerHome = !innerHomeRange.includes(point.place);
+    const hasPlayerPieces = point.pieces.includes(playerTurn);
+
+    if (isOutsideInnerHome && hasPlayerPieces) return false;
+  }
+
+  return true;
 }
 
 export function getPiecesData(boardArea) {

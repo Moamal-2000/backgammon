@@ -1,7 +1,13 @@
 "use client";
 
-import { getPlaceData, getRestMoves, isValidMove } from "@/Functions/helper";
-import { movePiece, updateGameState } from "@/Redux/slices/gameSlice";
+import { playersHomeSide } from "@/Data/constants";
+import {
+  areAllPiecesInInnerHome,
+  getPlaceData,
+  getRestMoves,
+  isValidMove,
+} from "@/Functions/helper";
+import { movePiece, outPiece, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Pieces from "./Pieces/Pieces";
 import s from "./PlacesWithPieces.module.scss";
@@ -36,6 +42,32 @@ const PlacesWithPieces = ({ placesData }) => {
       deadPieceColor,
       isDiceThrew,
     });
+
+    const playerDeadPieces = boardArea[0].deadPieces[playerTurn];
+    const playerHasDeadPieces = playerDeadPieces.length !== 0;
+    const shouldOutPiece = areAllPiecesInInnerHome(boardArea, playerTurn);
+    const isAllDiceMovesUsed = diceMoves.length === 0;
+
+    if (shouldOutPiece && !playerHasDeadPieces && !isAllDiceMovesUsed) {
+      const whiteOrBlackMoves =
+        playerTurn === "black" ? 26 - fromPlaceData.place : fromPlaceData.place;
+      const numberOfSelectedPiece =
+        playersHomeSide[playerTurn].indexOf(whiteOrBlackMoves);
+      const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
+
+      // console.log("numberOfSelectedPiece", numberOfSelectedPiece);
+      console.log("playerTurn",playerTurn);
+      console.log("whiteOrBlackMoves", whiteOrBlackMoves);
+      dispatch(
+        outPiece({
+          from: fromPlaceData,
+          playerTurn,
+          restDiceMoves,
+        })
+      );
+
+      return;
+    }
 
     const isCurrentMoveValid = isValidMove({
       fromPlaceData,

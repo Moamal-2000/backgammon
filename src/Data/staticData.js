@@ -1,7 +1,6 @@
-import { getBoardArea } from "@/Functions/helper";
-import { getBoardAreaToTestKill } from "@/Functions/testing";
+import { getBoardAreaToTestOutPieces } from "@/Functions/testing";
 
-export const boardArea = getBoardArea();
+export const boardArea = getBoardAreaToTestOutPieces();
 
 export const NAV_LINKS = [
   {

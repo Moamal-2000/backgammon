@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: false,
+  gameStart: true,
   showBeginDices: false,
   playerTurn: "",
   outPieces: { black: [], white: [] },
@@ -52,9 +52,27 @@ const gameSlice = createSlice({
       state.selectedPlace = null;
       state.diceMoves = restDiceMoves;
     },
+    outPiece: (state, action) => {
+      const { from, playerTurn, restDiceMoves } = action.payload;
+      const opponent = playerTurn === "white" ? "black" : "white";
+
+      const fromPlace = state.boardArea.find((item) => {
+        return item.place === from.place;
+      });
+      const allMovesUsed = restDiceMoves.length === 0;
+      const isValidDiceNumber = state.diceMoves.includes(from.place - 1)
+
+      if (fromPlace && isValidDiceNumber) fromPlace.pieces.pop();
+      if (allMovesUsed) state.playerTurn = opponent;
+
+      state.isDiceThrew = !allMovesUsed;
+      state.selectedPlace = null;
+      state.diceMoves = restDiceMoves;
+    },
     resetGameState: () => initialState,
   },
 });
 
 export default gameSlice.reducer;
-export const { updateGameState, movePiece, resetGameState } = gameSlice.actions;
+export const { updateGameState, movePiece, outPiece, resetGameState } =
+  gameSlice.actions;
