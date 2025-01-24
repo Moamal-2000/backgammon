@@ -85,6 +85,8 @@ export function hasValidDiceMove({ moves, diceMoves, deadPieceColor }) {
 }
 
 export function canMoveToPlace({ toPlaceData, playerTurn }) {
+  if (!toPlaceData) return false;
+
   const { pieces } = toPlaceData;
   const thereIsOnePiece = pieces.length <= 1;
   const isPlaceHasPlayerPieces = pieces[0] === playerTurn;

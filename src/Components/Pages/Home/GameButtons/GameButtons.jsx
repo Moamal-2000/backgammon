@@ -4,7 +4,6 @@ import { rollDice } from "@/Functions/helper";
 import { resetGameState, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
-import { useEffect } from "react";
 
 const GameButtons = () => {
   const { gameStart, isDiceThrew } = useSelector((s) => s.game);
@@ -37,12 +36,9 @@ const GameButtons = () => {
     if (isDouble) diceNumbers.push(...diceNumbers);
 
     dispatch(updateGameState({ key: "isDiceThrew", value: true }));
+    dispatch(updateGameState({ key: "isBoardDataUpdated", value: false }));
     dispatch(updateGameState({ key: "diceMoves", value: diceNumbers }));
   }
-
-  useEffect(() => {
-    handleThrowDice()
-  }, [])
 
   return (
     <div className={s.buttons}>

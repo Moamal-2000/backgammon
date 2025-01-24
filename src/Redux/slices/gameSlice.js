@@ -11,6 +11,7 @@ const initialState = {
   diceMoves: [],
   beginDice: [],
   isDiceThrew: false,
+  isBoardDataUpdated: false,
 };
 
 const gameSlice = createSlice({
@@ -47,6 +48,7 @@ const gameSlice = createSlice({
 
       if (isDeadPiece) state.boardArea[0].deadPieces[deadPieceColor].pop();
 
+      state.isBoardDataUpdated = false;
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;
       state.diceMoves = restDiceMoves;
@@ -66,6 +68,7 @@ const gameSlice = createSlice({
       if (fromPlace && isValidDiceNumber) fromPlace.pieces.pop();
       if (allMovesUsed) state.playerTurn = opponent;
 
+      state.isBoardDataUpdated = false;
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;
       state.diceMoves = restDiceMoves;
