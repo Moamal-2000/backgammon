@@ -7,7 +7,7 @@ export const BACKGAMMON_DATA = {
   placesColors: [0, , , , , , , , , , , 0, , , , , 0, , 0],
 };
 
-export const playersHomeSide = {
+export const PLAYERS_HOME_SIDE = {
   black: [25, 24, 23, 22, 21, 20],
   white: [2, 3, 4, 5, 6, 7],
 };

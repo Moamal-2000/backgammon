@@ -45,7 +45,6 @@
   filter: blur(.5);
 }
 
-.player.active::before,
 .player.active::before {
   animation: border-glow .8s infinite alternate ease-in-out;
 }
