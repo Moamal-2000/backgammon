@@ -6,17 +6,17 @@ import s from "./TurnTracker.module.scss";
 
 const TurnTracker = () => {
   const { playerTurn } = useSelector((s) => s.game);
-  const whiteActiveClass = playerTurn === "white" ? s.white : "";
-  const blackActiveClass = playerTurn === "black" ? s.black : "";
+  const whiteActiveClass = playerTurn === "white" ? s.active : "";
+  const blackActiveClass = playerTurn === "black" ? s.active : "";
 
   return (
     <div className={s.turnTracker}>
-      <div className={`${s.player} ${whiteActiveClass}`}>
+      <div className={`${s.player} ${s.white} ${whiteActiveClass}`}>
         <SvgIcon name="user" />
         <span>P1</span>
       </div>
 
-      <div className={`${s.player} ${blackActiveClass}`}>
+      <div className={`${s.player} ${s.black} ${blackActiveClass}`}>
         <SvgIcon name="user" />
         <span>P2</span>
       </div>

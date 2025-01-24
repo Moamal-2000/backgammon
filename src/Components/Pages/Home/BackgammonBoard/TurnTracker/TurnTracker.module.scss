@@ -11,7 +11,6 @@
 
 .turnTracker .player {
   background-color: #834f12;
-  color: #3b1e00;
   border: solid #6d3c08;
   font-size: 1.4rem;
   padding: 10px;
@@ -26,6 +25,14 @@
   position: relative;
 }
 
+.turnTracker .player.white {
+  color: #f4f4f4;
+}
+
+.turnTracker .player.black {
+  color: #3d1f00;
+}
+
 .turnTracker .player::before {
   content: '';
   position: absolute;
@@ -38,14 +45,21 @@
   filter: blur(.5);
 }
 
-.player.black::before,
-.player.white::before {
+.player.active::before,
+.player.active::before {
   animation: border-glow .8s infinite alternate ease-in-out;
 }
 
 .player svg {
   width: 26px;
   height: 26px;
+}
+
+.player.white svg {
+  fill: #f4f4f4;
+}
+
+.player.black svg {
   fill: #3d1f00;
 }
 
