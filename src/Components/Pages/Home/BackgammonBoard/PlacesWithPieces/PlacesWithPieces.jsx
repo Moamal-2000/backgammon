@@ -107,15 +107,23 @@ const PlacesWithPieces = ({ placesData }) => {
     }
   }
 
-  return placesData.map((data) => (
-    <div
-      className={`${s.place} ${s[data.placeColor]}`}
-      key={data.place}
-      onClick={() => handlePlaceClick(data)}
-    >
-      <Pieces data={data} />
-    </div>
-  ));
+  return placesData.map((data) => {
+    const selectedAvailableMoves = boardArea[selectedPlace]?.availableMoves;
+    const isAvailablePlace = selectedAvailableMoves?.includes(data.place);
+    const activeClass = isAvailablePlace ? s.active : "";
+
+    return (
+      <div
+        className={`${s.place} ${s[data.placeColor]} ${activeClass}`}
+        key={data.place}
+        onClick={() => handlePlaceClick(data)}
+      >
+        <Pieces data={data} />
+
+        {isAvailablePlace && <div className={`${s.highlightPlace}`} />}
+      </div>
+    );
+  });
 };
 
 export default PlacesWithPieces;
