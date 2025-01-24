@@ -175,3 +175,48 @@ export function getPiecesData(boardArea) {
     rightTop: boardArea.slice(19, 25),
   };
 }
+
+export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
+  const noMoreMoves = diceMoves.length === 0;
+  const updatedBoardArea = boardArea.map((point) => ({ ...point }));
+
+  const availablePieces = updatedBoardArea.filter(
+    (point) => playerTurn === point.pieces?.[0]
+  );
+
+  if (noMoreMoves) updatedBoardArea.map((point) => (point.availableMoves = []));
+
+  for (let i = 0; i < availablePieces.length; i++) {
+    const availableMoves = [];
+
+    for (let j = 0; j < diceMoves.length; j++) {
+      const availableMove = getAvailableMove({
+        diceMove: diceMoves[j],
+        availablePlace: availablePieces[i].place,
+        playerTurn,
+      });
+
+      const availablePlace = updatedBoardArea[availableMove - 1];
+      const validPlace = canMoveToPlace({
+        toPlaceData: availablePlace,
+        playerTurn,
+      });
+
+      if (validPlace) availableMoves.push(availableMove);
+    }
+
+    availablePieces[i].availableMoves = availableMoves;
+  }
+
+  availablePieces.forEach((pieceData) => {
+    const index = pieceData.place;
+    updatedBoardArea[index] = pieceData;
+  });
+
+  return updatedBoardArea;
+}
+
+export function getAvailableMove({ diceMove, availablePlace, playerTurn }) {
+  const isWhitePlayer = playerTurn === "white";
+  return isWhitePlayer ? availablePlace - diceMove : diceMove + availablePlace;
+}
