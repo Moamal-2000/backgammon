@@ -201,7 +201,7 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
         playerTurn,
       });
 
-      const availablePlace = updatedBoardArea[availableMove - 1];
+      const availablePlace = updatedBoardArea[availableMove];
       const validPlace = canMoveToPlace({
         toPlaceData: availablePlace,
         playerTurn,

@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: true,
+  gameStart: false,
   showBeginDices: false,
   playerTurn: "",
   deadPieceColor: "",
@@ -58,8 +58,6 @@ const gameSlice = createSlice({
       const opponent = playerTurn === "white" ? "black" : "white";
       const isBlackPlayer = playerTurn === "black";
       const diceMove = isBlackPlayer ? 25 - from.place : from.place;
-
-      console.log("diceMove", diceMove);
 
       const fromPlace = state.boardArea.find(
         (item) => item.place === from.place
