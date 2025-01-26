@@ -8,6 +8,6 @@ export const BACKGAMMON_DATA = {
 };
 
 export const PLAYERS_HOME_SIDE = {
-  black: [25, 24, 23, 22, 21, 20],
-  white: [2, 3, 4, 5, 6, 7],
+  black: [19, 20, 21, 22, 23, 24],
+  white: [1, 2, 3, 4, 5, 6],
 };

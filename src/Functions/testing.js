@@ -51,7 +51,7 @@ export function getBoardAreaToTestOutPieces() {
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {
-      place: i + 1,
+      place: i,
       placeColor: getColor(i),
       pieces: getPieces(i),
       availableMoves: [],

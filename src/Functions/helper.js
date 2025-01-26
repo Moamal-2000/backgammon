@@ -1,4 +1,8 @@
-import { BACKGAMMON_DATA, DICE_NUMBERS } from "@/Data/constants";
+import {
+  BACKGAMMON_DATA,
+  DICE_NUMBERS,
+  PLAYERS_HOME_SIDE,
+} from "@/Data/constants";
 
 export function getDiceNumbers(recalcIfSameNumbers = false) {
   let firstDice = calcRandomNumber(DICE_NUMBERS);
@@ -34,6 +38,7 @@ export function getBoardArea() {
       place: i,
       placeColor: getColor(i),
       pieces: getPieces(i),
+      availableMoves: [],
     };
 
     if (i === 0) placeData.deadPieces = deadPieces;
@@ -155,7 +160,7 @@ export function isValidMove({
 
 export function areAllPiecesInInnerHome(boardArea, playerTurn) {
   const innerHomeRange =
-    playerTurn === "black" ? [20, 21, 22, 23, 24, 25] : [2, 3, 4, 5, 6, 7];
+    PLAYERS_HOME_SIDE[playerTurn === "black" ? "black" : "white"];
 
   for (const point of boardArea) {
     const isOutsideInnerHome = !innerHomeRange.includes(point.place);

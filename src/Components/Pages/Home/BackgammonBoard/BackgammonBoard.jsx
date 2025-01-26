@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  areAllPiecesInInnerHome,
   calcAvailablePlaces,
   getDiceNumbers,
   getPiecesData,
@@ -42,7 +43,8 @@ const BackgammonBoard = () => {
   }, [gameStart]);
 
   useEffect(() => {
-    if (isBoardDataUpdated) return;
+    const shouldOutPiece = areAllPiecesInInnerHome(boardArea, playerTurn);
+    if (isBoardDataUpdated || shouldOutPiece) return;
 
     const updatedBoardArea = calcAvailablePlaces({
       boardArea,
