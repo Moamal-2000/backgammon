@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: false,
+  gameStart: true,
   showBeginDices: false,
   playerTurn: "",
   deadPieceColor: "",

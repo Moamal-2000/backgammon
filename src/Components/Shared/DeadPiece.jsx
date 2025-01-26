@@ -8,9 +8,8 @@ const DeadPiece = ({ color, pieces, position }) => {
   const opponent = color === "black" ? "white" : "black";
   const style = { color: opponent, [position]: "180px" };
 
-  const { playerTurn, selectedPlace, boardArea, deadPieceColor } = useSelector(
-    (s) => s.game
-  );
+  const { playerTurn, selectedPlace, boardArea, deadPieceColor, isDiceThrew } =
+    useSelector((s) => s.game);
   const fromPlaceData = boardArea[0];
   const isSelectDeadPiece = selectedPlace === fromPlaceData.place;
   const isSameColor = color === deadPieceColor;
@@ -18,7 +17,7 @@ const DeadPiece = ({ color, pieces, position }) => {
   const dispatch = useDispatch();
 
   function handlePieceClick() {
-    if (playerTurn !== color) return;
+    if (playerTurn !== color || !isDiceThrew) return;
 
     dispatch(
       updateGameState({

@@ -34,7 +34,8 @@ const BackgammonBoard = () => {
     if (!gameStart) return;
 
     const { firstDice, secondDice } = getDiceNumbers(true);
-    const wonPlayer = firstDice > secondDice ? "white" : "black";
+    // const wonPlayer = firstDice > secondDice ? "white" : "black";
+    const wonPlayer = "black";
 
     dispatch(updateGameState({ key: "playerTurn", value: wonPlayer }));
     dispatch(
