@@ -1,0 +1,16 @@
+.placeNumber {
+  color: #000;
+  z-index: 1;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 50%;
+  translate: -50%;
+  bottom: -22px;
+  width: 100%;
+  text-align: center;
+}
+
+.placeNumber.topSide {
+  bottom: -24px;
+  transform: rotateX(180deg);
+}

@@ -9,9 +9,10 @@ import {
 import { movePiece, outPiece, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Pieces from "./Pieces/Pieces";
+import PlaceNumber from "./PlaceNumber/PlaceNumber";
 import s from "./PlacesWithPieces.module.scss";
 
-const PlacesWithPieces = ({ placesData }) => {
+const PlacesWithPieces = ({ placesData, placesSide }) => {
   const {
     playerTurn,
     selectedPlace,
@@ -120,8 +121,8 @@ const PlacesWithPieces = ({ placesData }) => {
         onClick={() => handlePlaceClick(data)}
       >
         <Pieces data={data} />
-
         {isAvailablePlace && <div className={`${s.highlightPlace}`} />}
+        <PlaceNumber data={data} placesSide={placesSide} />
       </div>
     );
   });
