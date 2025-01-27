@@ -118,11 +118,13 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
         onClick={() => handlePlaceClick(data)}
       >
         <Pieces data={data} />
+
         <HighlightPlace
           data={data}
           boardArea={boardArea}
           selectedPlace={selectedPlace}
         />
+
         <PlaceNumber
           data={data}
           boardArea={boardArea}

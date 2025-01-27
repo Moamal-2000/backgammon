@@ -28,7 +28,7 @@ const GameButtons = () => {
   }
 
   function handleThrowDice() {
-    if (isDiceThrew) return;
+    if (isDiceThrew || !gameStart) return;
 
     const diceNumbers = rollDice(2);
     const isDouble = diceNumbers[0] === diceNumbers[1];
