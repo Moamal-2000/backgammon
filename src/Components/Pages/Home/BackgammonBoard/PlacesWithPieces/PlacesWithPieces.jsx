@@ -122,7 +122,11 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       >
         <Pieces data={data} />
         {isAvailablePlace && <div className={`${s.highlightPlace}`} />}
-        <PlaceNumber data={data} placesSide={placesSide} />
+        <PlaceNumber
+          data={data}
+          placesSide={placesSide}
+          isAvailablePlace={isAvailablePlace}
+        />
       </div>
     );
   });
