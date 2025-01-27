@@ -5,14 +5,11 @@ const PlaceNumber = ({ data, placesSide, boardArea, selectedPlace }) => {
   const isAvailablePlace = selectedAvailableMoves?.includes(data.place);
   const topSideClass = placesSide === "top" ? s.topSide : "";
   const activeClass = isAvailablePlace ? s.active : "";
+  const classes = `${s.placeNumber} ${topSideClass} ${activeClass}`;
 
-  return (
-    !data?.deadPieces && (
-      <span className={`${s.placeNumber} ${topSideClass} ${activeClass}`}>
-        {data.place}
-      </span>
-    )
-  );
+  if (!data?.deadPieces) return;
+
+  return <span className={classes}>{data.place}</span>;
 };
 
 export default PlaceNumber;
