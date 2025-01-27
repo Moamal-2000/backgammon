@@ -1,6 +1,8 @@
 import s from "./PlaceNumber.module.scss";
 
-const PlaceNumber = ({ data, placesSide, isAvailablePlace }) => {
+const PlaceNumber = ({ data, placesSide, boardArea, selectedPlace }) => {
+  const selectedAvailableMoves = boardArea[selectedPlace]?.availableMoves;
+  const isAvailablePlace = selectedAvailableMoves?.includes(data.place);
   const topSideClass = placesSide === "top" ? s.topSide : "";
   const activeClass = isAvailablePlace ? s.active : "";
 

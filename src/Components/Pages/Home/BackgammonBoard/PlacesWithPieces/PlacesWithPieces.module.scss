@@ -25,12 +25,3 @@
 .place.white::before {
   border-color: #d9ad7a #d9ad7a #f5ebd0 #d9ad7a;
 }
-
-.place .highlightPlace {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  border-style: solid;
-  border-width: 0 30px 250px 30px;
-  border-color: transparent transparent #ffc636 transparent;
-}

@@ -8,6 +8,7 @@ import {
 } from "@/Functions/helper";
 import { movePiece, outPiece, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
+import HighlightPlace from "./HighlightPlace/HighlightPlace";
 import Pieces from "./Pieces/Pieces";
 import PlaceNumber from "./PlaceNumber/PlaceNumber";
 import s from "./PlacesWithPieces.module.scss";
@@ -110,22 +111,23 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
   }
 
   return placesData.map((data) => {
-    const selectedAvailableMoves = boardArea[selectedPlace]?.availableMoves;
-    const isAvailablePlace = selectedAvailableMoves?.includes(data.place);
-    const activeClass = isAvailablePlace ? s.active : "";
-
     return (
       <div
-        className={`${s.place} ${s[data.placeColor]} ${activeClass}`}
+        className={`${s.place} ${s[data.placeColor]}`}
         key={data.place}
         onClick={() => handlePlaceClick(data)}
       >
         <Pieces data={data} />
-        {isAvailablePlace && <div className={`${s.highlightPlace}`} />}
+        <HighlightPlace
+          data={data}
+          boardArea={boardArea}
+          selectedPlace={selectedPlace}
+        />
         <PlaceNumber
           data={data}
+          boardArea={boardArea}
+          selectedPlace={selectedPlace}
           placesSide={placesSide}
-          isAvailablePlace={isAvailablePlace}
         />
       </div>
     );
