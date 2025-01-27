@@ -13,13 +13,14 @@ const Dice = ({
 }) => {
   const { diceMoves } = useSelector((s) => s.game);
   const diceNumber = diceMoves?.[color === "black" ? 1 : 0];
+  const blackNoun = color === "black" ? "-black" : "";
 
   return (
     <>
       {shouldShowBeginDices && beginDiceNumber && (
         <Image
           className={s.dice}
-          src={`/dice${beginDiceNumber}.png`}
+          src={`/dice${beginDiceNumber}${blackNoun}.png`}
           width={size}
           height={size}
           alt={`dice ${beginDiceNumber}`}
