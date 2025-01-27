@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useSelector } from "react-redux";
 import s from "./Dice.module.scss";
 
@@ -8,6 +9,7 @@ const Dice = ({
   showGameDices,
   beginDiceNumber,
   color,
+  size = 50,
 }) => {
   const { diceMoves } = useSelector((s) => s.game);
   const blackClass = color === "black" ? s.black : "";
@@ -16,11 +18,23 @@ const Dice = ({
   return (
     <>
       {shouldShowBeginDices && (
-        <p className={`${s.dice} ${blackClass}`}>{beginDiceNumber}</p>
+        <Image
+          className={`${s.dice} ${blackClass}`}
+          src={`/dice${beginDiceNumber}.png`}
+          width={size}
+          height={size}
+          alt="dice"
+        />
       )}
 
       {showGameDices && (
-        <p className={`${s.dice} ${blackClass}`}>{diceNumber}</p>
+        <Image
+          className={`${s.dice} ${blackClass}`}
+          src={`/dice${diceNumber}.png`}
+          width={size}
+          height={size}
+          alt="dice"
+        />
       )}
     </>
   );
