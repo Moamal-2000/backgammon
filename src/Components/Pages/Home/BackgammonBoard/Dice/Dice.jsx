@@ -27,7 +27,7 @@ const Dice = ({
         />
       )}
 
-      {showGameDices && (
+      {showGameDices && diceNumber && (
         <Image
           className={`${s.dice} ${blackClass}`}
           src={`/dice${diceNumber}.png`}
