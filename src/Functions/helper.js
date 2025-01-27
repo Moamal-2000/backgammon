@@ -31,7 +31,7 @@ export function getPieces(i) {
 }
 
 export function getBoardArea() {
-  const deadPieces = { black: ["black"], white: [] };
+  const deadPieces = { black: [], white: [] };
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {

@@ -1,6 +1,5 @@
 "use client";
 
-import { PLAYERS_HOME_SIDE } from "@/Data/constants";
 import {
   areAllPiecesInInnerHome,
   getPlaceData,
@@ -49,8 +48,10 @@ const PlacesWithPieces = ({ placesData }) => {
     const isAllDiceMovesUsed = diceMoves.length === 0;
 
     if (shouldOutPiece && !playerHasDeadPieces && !isAllDiceMovesUsed) {
+      const homeSideRange =
+        playerTurn === "black" ? [24, 23, 22, 21, 20, 19] : [1, 2, 3, 4, 5, 6];
       const numberOfSelectedPiece =
-        PLAYERS_HOME_SIDE[playerTurn].indexOf(fromPlaceData.place) + 1;
+        homeSideRange.indexOf(fromPlaceData.place) + 1;
       const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
 
       dispatch(
