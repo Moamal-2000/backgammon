@@ -7,7 +7,7 @@ const PlaceNumber = ({ data, placesSide, boardArea, selectedPlace }) => {
   const activeClass = isAvailablePlace ? s.active : "";
   const classes = `${s.placeNumber} ${topSideClass} ${activeClass}`;
 
-  if (!data?.deadPieces) return;
+  if (data?.deadPieces) return;
 
   return <span className={classes}>{data.place}</span>;
 };
