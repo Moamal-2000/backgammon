@@ -12,28 +12,27 @@ const Dice = ({
   size = 50,
 }) => {
   const { diceMoves } = useSelector((s) => s.game);
-  const blackClass = color === "black" ? s.black : "";
   const diceNumber = diceMoves?.[color === "black" ? 1 : 0];
 
   return (
     <>
-      {shouldShowBeginDices && (
+      {shouldShowBeginDices && beginDiceNumber && (
         <Image
-          className={`${s.dice} ${blackClass}`}
+          className={s.dice}
           src={`/dice${beginDiceNumber}.png`}
           width={size}
           height={size}
-          alt="dice"
+          alt={`dice ${beginDiceNumber}`}
         />
       )}
 
       {showGameDices && diceNumber && (
         <Image
-          className={`${s.dice} ${blackClass}`}
+          className={s.dice}
           src={`/dice${diceNumber}.png`}
           width={size}
           height={size}
-          alt="dice"
+          alt={`dice ${diceNumber}`}
         />
       )}
     </>
