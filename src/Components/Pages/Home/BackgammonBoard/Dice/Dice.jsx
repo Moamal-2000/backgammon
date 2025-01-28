@@ -11,9 +11,11 @@ const Dice = ({
   color,
   size = 50,
 }) => {
-  const { diceMoves } = useSelector((s) => s.game);
+  const { diceMoves, validDiceNumbers } = useSelector((s) => s.game);
   const diceNumber = diceMoves?.[color === "black" ? 1 : 0];
   const blackNoun = color === "black" ? "-black" : "";
+  const isValidDice = validDiceNumbers.includes(diceNumber);
+  const invalidClass = !isValidDice ? s.invalid : "";
 
   return (
     <>
@@ -29,7 +31,7 @@ const Dice = ({
 
       {showGameDices && diceNumber && (
         <Image
-          className={s.dice}
+          className={`${s.dice} ${invalidClass}`}
           src={`/dice${diceNumber}.png`}
           width={size}
           height={size}

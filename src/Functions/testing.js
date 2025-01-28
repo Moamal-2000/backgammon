@@ -11,10 +11,10 @@ const BACKGAMMON_DATA = {
 
 const BACKGAMMON_DATA2 = {
   numbersOfPieces: [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2,
+    0, 3, 3, 3, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1, 2, 2, 2, 3, 3, 3,
   ],
   placesColors: [
-    0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
   ],
 };
 
@@ -35,7 +35,7 @@ export function getBoardAreaToTestKill() {
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {
-      place: i + 1,
+      place: i,
       placeColor: getColor(i),
       pieces: [i % 2 === 1 ? "black" : "white"],
       availableMoves: [],
@@ -67,7 +67,7 @@ export function getBoardAreaToTestNoMoreMoves() {
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {
-      place: i + 1,
+      place: i,
       placeColor: getColor(i),
       pieces: getPieces2(i),
       availableMoves: [],

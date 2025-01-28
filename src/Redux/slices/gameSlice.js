@@ -10,6 +10,7 @@ const initialState = {
   deadPieceColor: "",
   diceMoves: [],
   beginDice: [],
+  validDiceNumbers: [],
   isDiceThrew: false,
   isBoardDataUpdated: false,
 };

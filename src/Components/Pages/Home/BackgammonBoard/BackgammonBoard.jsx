@@ -44,13 +44,46 @@ const BackgammonBoard = () => {
 
   useEffect(() => {
     const shouldOutPiece = areAllPiecesInInnerHome(boardArea, playerTurn);
-    if (isBoardDataUpdated || shouldOutPiece) return;
-
     const updatedBoardArea = calcAvailablePlaces({
       boardArea,
       diceMoves,
       playerTurn,
     });
+
+    const playerPieces = updatedBoardArea.filter(
+      (point) => point.pieces?.[0] === playerTurn
+    );
+    const availableMoves = playerPieces.map((point) => point.availableMoves);
+    const allAvailableMoves = availableMoves.reduce(
+      (acc, curr) => [...acc, ...curr],
+      []
+    );
+    const diceStatus = { validMoves: [], diceMoves: [] };
+
+    allAvailableMoves.forEach((availableMove) => {
+      diceMoves.forEach((diceMove) => {
+        diceStatus.validMoves.push(availableMove - diceMove);
+        diceStatus.diceMoves.push(diceMove);
+      });
+    });
+
+    const validDiceNumbers = diceStatus.validMoves.map((move, index) => {
+      const validPlace = playerPieces.find((point) => point.place === move);
+      if (validPlace?.place === move) return diceStatus.diceMoves[index];
+    });
+
+    const validDiceNumbersWithoutRepeat = [...new Set(validDiceNumbers)].filter(
+      (diceNumber) => diceNumber
+    );
+
+    dispatch(
+      updateGameState({
+        key: "validDiceNumbers",
+        value: validDiceNumbersWithoutRepeat,
+      })
+    );
+
+    if (isBoardDataUpdated || shouldOutPiece) return;
 
     dispatch(updateGameState({ key: "boardArea", value: updatedBoardArea }));
     dispatch(updateGameState({ key: "isBoardDataUpdated", value: true }));
