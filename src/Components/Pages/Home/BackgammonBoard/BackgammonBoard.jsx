@@ -44,6 +44,13 @@ const BackgammonBoard = () => {
 
   useEffect(() => {
     const shouldOutPiece = areAllPiecesInInnerHome(boardArea, playerTurn);
+    if (shouldOutPiece) {
+      dispatch(
+        updateGameState({ key: "validDiceNumbers", value: [1, 2, 3, 4, 5, 6] })
+      );
+      return;
+    }
+
     const updatedBoardArea = calcAvailablePlaces({
       boardArea,
       diceMoves,
@@ -58,23 +65,23 @@ const BackgammonBoard = () => {
       (acc, curr) => [...acc, ...curr],
       []
     );
-    const diceStatus = { validMoves: [], diceMoves: [] };
+    const validDiceNumbers = allAvailableMoves.map((availableMove) => {
+      const validPoint = playerPieces.find((point) =>
+        point.availableMoves.includes(availableMove)
+      );
 
-    allAvailableMoves.forEach((availableMove) => {
-      diceMoves.forEach((diceMove) => {
-        diceStatus.validMoves.push(availableMove - diceMove);
-        diceStatus.diceMoves.push(diceMove);
+      return diceMoves.map((diceMove) => {
+        const expectedDiceMove =
+          Math.abs(validPoint?.place - availableMove) === diceMove;
+        if (expectedDiceMove) return diceMove;
       });
     });
 
-    const validDiceNumbers = diceStatus.validMoves.map((move, index) => {
-      const validPlace = playerPieces.find((point) => point.place === move);
-      if (validPlace?.place === move) return diceStatus.diceMoves[index];
-    });
+    const allValidDiceNumbers = validDiceNumbers.flat(1);
 
-    const validDiceNumbersWithoutRepeat = [...new Set(validDiceNumbers)].filter(
-      (diceNumber) => diceNumber
-    );
+    const validDiceNumbersWithoutRepeat = [
+      ...new Set(allValidDiceNumbers),
+    ].filter((diceNumber) => diceNumber);
 
     dispatch(
       updateGameState({
