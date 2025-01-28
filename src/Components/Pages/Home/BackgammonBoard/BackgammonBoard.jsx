@@ -5,6 +5,7 @@ import {
   calcAvailablePlaces,
   getDiceNumbers,
   getPiecesData,
+  getPlayerPieces,
 } from "@/Functions/helper";
 import { updateGameState } from "@/Redux/slices/gameSlice";
 import { useEffect } from "react";
@@ -24,6 +25,8 @@ const BackgammonBoard = () => {
     playerTurn,
     isDiceThrew,
     isBoardDataUpdated,
+    selectedPlace,
+    deadPieceColor,
   } = useSelector((s) => s.game);
   const dispatch = useDispatch();
   const pieces = getPiecesData(boardArea);
@@ -44,27 +47,34 @@ const BackgammonBoard = () => {
 
   useEffect(() => {
     const shouldOutPiece = areAllPiecesInInnerHome(boardArea, playerTurn);
-    if (shouldOutPiece) {
+    const updatedBoardArea = calcAvailablePlaces({
+      boardArea,
+      diceMoves,
+      playerTurn,
+      deadPieceColor,
+    });
+    const isPlayerHasDeadPiece =
+      playerTurn && updatedBoardArea[0].deadPieces[playerTurn].length > 0;
+
+    if (shouldOutPiece && !isPlayerHasDeadPiece) {
       dispatch(
         updateGameState({ key: "validDiceNumbers", value: [1, 2, 3, 4, 5, 6] })
       );
       return;
     }
 
-    const updatedBoardArea = calcAvailablePlaces({
-      boardArea,
-      diceMoves,
+    const playerPieces = getPlayerPieces({
+      boardArea: updatedBoardArea,
       playerTurn,
     });
 
-    const playerPieces = updatedBoardArea.filter(
-      (point) => point.pieces?.[0] === playerTurn
-    );
     const availableMoves = playerPieces.map((point) => point.availableMoves);
+
     const allAvailableMoves = availableMoves.reduce(
       (acc, curr) => [...acc, ...curr],
       []
     );
+
     const validDiceNumbers = allAvailableMoves.map((availableMove) => {
       const validPoint = playerPieces.find((point) =>
         point.availableMoves.includes(availableMove)
@@ -73,7 +83,13 @@ const BackgammonBoard = () => {
       return diceMoves.map((diceMove) => {
         const expectedDiceMove =
           Math.abs(validPoint?.place - availableMove) === diceMove;
-        if (expectedDiceMove) return diceMove;
+
+        const isWhitePlayer = playerTurn === "white";
+        const isDeadPiece = selectedPlace === 0;
+        const validMove = validPoint.availableMoves.includes(25 - diceMove);
+        const whitePlayerCondition = isWhitePlayer && isDeadPiece && validMove;
+
+        if (expectedDiceMove || whitePlayerCondition) return diceMove;
       });
     });
 
@@ -90,11 +106,17 @@ const BackgammonBoard = () => {
       })
     );
 
+    if (!isBoardDataUpdated && isPlayerHasDeadPiece) {
+      dispatch(updateGameState({ key: "boardArea", value: updatedBoardArea }));
+      dispatch(updateGameState({ key: "isBoardDataUpdated", value: true }));
+      return;
+    }
+
     if (isBoardDataUpdated || shouldOutPiece) return;
 
     dispatch(updateGameState({ key: "boardArea", value: updatedBoardArea }));
     dispatch(updateGameState({ key: "isBoardDataUpdated", value: true }));
-  }, [boardArea, isDiceThrew, isBoardDataUpdated]);
+  }, [boardArea, isDiceThrew, isBoardDataUpdated, selectedPlace]);
 
   return (
     <div className={s.board}>

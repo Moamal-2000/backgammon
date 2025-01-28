@@ -3,6 +3,7 @@
 import { updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import u from "../../Components/Pages/Home/BackgammonBoard/PlacesWithPieces/utilsClasses.module.scss";
+import { useEffect } from "react";
 
 const DeadPiece = ({ color, pieces, position }) => {
   const opponent = color === "black" ? "white" : "black";
@@ -25,6 +26,8 @@ const DeadPiece = ({ color, pieces, position }) => {
         value: isSelectDeadPiece ? null : fromPlaceData.place,
       })
     );
+
+    dispatch(updateGameState({ key: "isBoardDataUpdated", value: false }));
 
     dispatch(
       updateGameState({

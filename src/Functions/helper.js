@@ -181,13 +181,15 @@ export function getPiecesData(boardArea) {
   };
 }
 
-export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
+export function calcAvailablePlaces({
+  boardArea,
+  diceMoves,
+  playerTurn,
+  deadPieceColor,
+}) {
   const noMoreMoves = diceMoves.length === 0;
   const updatedBoardArea = boardArea.map((point) => ({ ...point }));
-
-  const availablePieces = updatedBoardArea.filter(
-    (point) => playerTurn === point.pieces?.[0]
-  );
+  const availablePieces = getPlayerPieces({ boardArea, playerTurn });
 
   if (noMoreMoves) updatedBoardArea.map((point) => (point.availableMoves = []));
 
@@ -199,6 +201,7 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
         diceMove: diceMoves[j],
         availablePlace: availablePieces[i].place,
         playerTurn,
+        deadPieceColor,
       });
 
       const availablePlace = updatedBoardArea[availableMove];
@@ -210,7 +213,7 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
       if (validPlace) availableMoves.push(availableMove);
     }
 
-    availablePieces[i].availableMoves = availableMoves;
+    availablePieces[i].availableMoves = [...availableMoves];
   }
 
   availablePieces.forEach((pieceData) => {
@@ -221,7 +224,31 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
   return updatedBoardArea;
 }
 
-export function getAvailableMove({ diceMove, availablePlace, playerTurn }) {
+export function getAvailableMove({
+  diceMove,
+  availablePlace,
+  playerTurn,
+  deadPieceColor,
+}) {
   const isWhitePlayer = playerTurn === "white";
-  return isWhitePlayer ? availablePlace - diceMove : diceMove + availablePlace;
+  const isWhiteDeadPiece = deadPieceColor === "white";
+
+  if (isWhitePlayer && isWhiteDeadPiece)
+    return 25 - Math.abs(availablePlace - diceMove);
+
+  if (isWhitePlayer) return availablePlace - diceMove;
+
+  return diceMove + availablePlace;
+}
+
+export function getPlayerPieces({ boardArea, playerTurn }) {
+  const updatedBoardArea = boardArea.map((point) => ({ ...point }));
+
+  return updatedBoardArea.filter((point) => {
+    const playerDeadPieces = point?.deadPieces?.[playerTurn];
+    const placeHasPlayerPiece = playerTurn === point.pieces?.[0];
+    const playerHasDeadPiece = playerTurn === playerDeadPieces?.[0];
+
+    return placeHasPlayerPiece || playerHasDeadPiece;
+  });
 }
