@@ -3,11 +3,13 @@
 import {
   areAllPiecesInInnerHome,
   calcAvailablePlaces,
-  getDiceNumbers,
   getPiecesData,
   getPlayerPieces,
 } from "@/Functions/helper";
-import { updateGameState } from "@/Redux/slices/gameSlice";
+import {
+  initializePlayerTurn,
+  updateGameState,
+} from "@/Redux/slices/gameSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
@@ -35,14 +37,7 @@ const BackgammonBoard = () => {
 
   useEffect(() => {
     if (!gameStart) return;
-
-    const { firstDice, secondDice } = getDiceNumbers(true);
-    const wonPlayer = firstDice > secondDice ? "white" : "black";
-
-    dispatch(updateGameState({ key: "playerTurn", value: wonPlayer }));
-    dispatch(
-      updateGameState({ key: "beginDice", value: [firstDice, secondDice] })
-    );
+    dispatch(initializePlayerTurn());
   }, [gameStart]);
 
   useEffect(() => {

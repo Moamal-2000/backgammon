@@ -1,5 +1,5 @@
 import { boardArea } from "@/Data/staticData";
-import { rollDice } from "@/Functions/helper";
+import { getDiceNumbers, rollDice } from "@/Functions/helper";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -23,7 +23,7 @@ const gameSlice = createSlice({
     updateGameState: (state, { payload }) => {
       state[payload.key] = payload.value;
     },
-    movePiece: (state, action) => {
+    movePiece: (state, { payload }) => {
       const {
         from,
         dataPlace,
@@ -31,7 +31,7 @@ const gameSlice = createSlice({
         shouldEat,
         restDiceMoves,
         deadPieceColor,
-      } = action.payload;
+      } = payload;
       const opponent = playerTurn === "white" ? "black" : "white";
       const isDeadPiece = !!deadPieceColor;
 
@@ -55,8 +55,8 @@ const gameSlice = createSlice({
       state.selectedPlace = null;
       state.diceMoves = restDiceMoves;
     },
-    outPiece: (state, action) => {
-      const { from, playerTurn, restDiceMoves } = action.payload;
+    outPiece: (state, { payload }) => {
+      const { from, playerTurn, restDiceMoves } = payload;
       const opponent = playerTurn === "white" ? "black" : "white";
       const isBlackPlayer = playerTurn === "black";
       const diceMove = isBlackPlayer ? 25 - from.place : from.place;
@@ -90,6 +90,13 @@ const gameSlice = createSlice({
       state.isBoardDataUpdated = false;
       state.diceMoves = diceNumbers;
     },
+    initializePlayerTurn: (state) => {
+      const { firstDice, secondDice } = getDiceNumbers(true);
+      const wonPlayer = firstDice > secondDice ? "white" : "black";
+
+      state.playerTurn = wonPlayer;
+      state.beginDice = [firstDice, secondDice];
+    },
     resetGameState: () => initialState,
   },
 });
@@ -100,5 +107,6 @@ export const {
   movePiece,
   outPiece,
   throwDices,
+  initializePlayerTurn,
   resetGameState,
 } = gameSlice.actions;

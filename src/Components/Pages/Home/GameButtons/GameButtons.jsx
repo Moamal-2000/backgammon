@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
 const GameButtons = () => {
-  const { gameStart, isDiceThrew } = useSelector((s) => s.game);
+  const { gameStart } = useSelector((s) => s.game);
   const dispatch = useDispatch();
 
   function startTheGame() {
