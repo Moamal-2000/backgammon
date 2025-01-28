@@ -1,7 +1,10 @@
 "use client";
 
-import { rollDice } from "@/Functions/helper";
-import { resetGameState, updateGameState } from "@/Redux/slices/gameSlice";
+import {
+  resetGameState,
+  throwDices,
+  updateGameState,
+} from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
@@ -28,16 +31,7 @@ const GameButtons = () => {
   }
 
   function handleThrowDice() {
-    if (isDiceThrew || !gameStart) return;
-
-    const diceNumbers = rollDice(2);
-    const isDouble = diceNumbers[0] === diceNumbers[1];
-
-    if (isDouble) diceNumbers.push(...diceNumbers);
-
-    dispatch(updateGameState({ key: "isDiceThrew", value: true }));
-    dispatch(updateGameState({ key: "isBoardDataUpdated", value: false }));
-    dispatch(updateGameState({ key: "diceMoves", value: diceNumbers }));
+    dispatch(throwDices({ numberOfDices: 2 }));
   }
 
   return (

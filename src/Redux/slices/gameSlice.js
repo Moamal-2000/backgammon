@@ -1,4 +1,5 @@
 import { boardArea } from "@/Data/staticData";
+import { rollDice } from "@/Functions/helper";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -74,10 +75,30 @@ const gameSlice = createSlice({
       state.selectedPlace = null;
       state.diceMoves = restDiceMoves;
     },
+    throwDices(state, { payload }) {
+      const { numberOfDices } = payload;
+      const { isDiceThrew, gameStart } = state;
+
+      if (isDiceThrew || !gameStart) return;
+
+      const diceNumbers = rollDice(numberOfDices);
+      const isDouble = diceNumbers[0] === diceNumbers[1];
+
+      if (isDouble) diceNumbers.push(...diceNumbers);
+
+      state.isDiceThrew = true;
+      state.isBoardDataUpdated = false;
+      state.diceMoves = diceNumbers;
+    },
     resetGameState: () => initialState,
   },
 });
 
 export default gameSlice.reducer;
-export const { updateGameState, movePiece, outPiece, resetGameState } =
-  gameSlice.actions;
+export const {
+  updateGameState,
+  movePiece,
+  outPiece,
+  throwDices,
+  resetGameState,
+} = gameSlice.actions;
