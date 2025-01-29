@@ -1,9 +1,8 @@
 "use client";
 
 import { updateGameState } from "@/Redux/slices/gameSlice";
+import u from "@/Styles/utilsClasses.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import u from "../../Components/Pages/Home/BackgammonBoard/PlacesWithPieces/utilsClasses.module.scss";
-import { useEffect } from "react";
 
 const DeadPiece = ({ color, pieces, position }) => {
   const opponent = color === "black" ? "white" : "black";
