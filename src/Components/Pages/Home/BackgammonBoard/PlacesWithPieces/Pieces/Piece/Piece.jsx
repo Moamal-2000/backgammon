@@ -1,7 +1,7 @@
 "use client";
 
-import { useSelector } from "react-redux";
 import u from "@/Styles/utilsClasses.module.scss";
+import { useSelector } from "react-redux";
 
 const Piece = ({ data, piece, isLastPiece }) => {
   const { selectedPlace } = useSelector((s) => s.game);
