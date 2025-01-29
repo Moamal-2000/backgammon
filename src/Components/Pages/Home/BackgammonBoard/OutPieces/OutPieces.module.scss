@@ -1,1 +1,26 @@
-.outPieces {}
+.outPieces {
+  width: 80px;
+  height: 100%;
+  background-color: #9e611f;
+  border: solid 20px #9e611f;
+  border-width: 20px 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.outPieces .piecesArea {
+  background-color: #834f12;
+  border: solid #6d3c08;
+  font-size: 1.4rem;
+  padding: 10px;
+  border-radius: 8px;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  user-select: none;
+  position: relative;
+}
