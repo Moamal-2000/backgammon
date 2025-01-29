@@ -1,5 +1,5 @@
 import { boardArea } from "@/Data/staticData";
-import { getDiceNumbers, rollDice } from "@/Functions/helper";
+import { getDiceNumbers, getPlayerPieces, rollDice } from "@/Functions/helper";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -109,6 +109,49 @@ const gameSlice = createSlice({
       state.deadPieceColor = isSelectDeadPiece ? null : pieceColor;
       state.isBoardDataUpdated = false;
     },
+    updateAvailableDices: (state, { payload }) => {
+      const { updatedBoardArea } = payload;
+      const { playerTurn, selectedPlace, diceMoves } = state;
+
+      const playerPieces = getPlayerPieces({
+        boardArea: updatedBoardArea,
+        playerTurn,
+      });
+
+      const availableMoves = playerPieces.map((point) => point.availableMoves);
+
+      const allAvailableMoves = availableMoves.reduce(
+        (acc, curr) => [...acc, ...curr],
+        []
+      );
+
+      const validDiceNumbers = allAvailableMoves.map((availableMove) => {
+        const validPoint = playerPieces.find((point) =>
+          point.availableMoves.includes(availableMove)
+        );
+
+        return diceMoves.map((diceMove) => {
+          const expectedDiceMove =
+            Math.abs(validPoint?.place - availableMove) === diceMove;
+
+          const isWhitePlayer = playerTurn === "white";
+          const isDeadPiece = selectedPlace === 0;
+          const validMove = validPoint.availableMoves.includes(25 - diceMove);
+          const whitePlayerCondition =
+            isWhitePlayer && isDeadPiece && validMove;
+
+          if (expectedDiceMove || whitePlayerCondition) return diceMove;
+        });
+      });
+
+      const allValidDiceNumbers = validDiceNumbers.flat(1);
+
+      const validDiceNumbersWithoutRepeat = [
+        ...new Set(allValidDiceNumbers),
+      ].filter((diceNumber) => diceNumber);
+
+      state.validDiceNumbers = validDiceNumbersWithoutRepeat;
+    },
     resetGameState: () => initialState,
   },
 });
@@ -121,5 +164,6 @@ export const {
   throwDices,
   initializePlayerTurn,
   selectDeadPiece,
+  updateAvailableDices,
   resetGameState,
 } = gameSlice.actions;
