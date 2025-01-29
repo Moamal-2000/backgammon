@@ -1,45 +1,30 @@
 "use client";
 
-import { updateGameState } from "@/Redux/slices/gameSlice";
+import { selectDeadPiece } from "@/Redux/slices/gameSlice";
 import u from "@/Styles/utilsClasses.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 
-const DeadPiece = ({ color, pieces, position }) => {
-  const opponent = color === "black" ? "white" : "black";
+const DeadPiece = ({ pieceColor, pieces, position }) => {
+  const opponent = pieceColor === "black" ? "white" : "black";
   const style = { color: opponent, [position]: "180px" };
 
-  const { playerTurn, selectedPlace, boardArea, deadPieceColor, isDiceThrew } =
-    useSelector((s) => s.game);
+  const { selectedPlace, boardArea, deadPieceColor } = useSelector(
+    (s) => s.game
+  );
   const fromPlaceData = boardArea[0];
   const isSelectDeadPiece = selectedPlace === fromPlaceData.place;
-  const isSameColor = color === deadPieceColor;
+  const isSameColor = pieceColor === deadPieceColor;
   const selectClass = isSelectDeadPiece && isSameColor ? u.select : "";
   const dispatch = useDispatch();
 
   function handlePieceClick() {
-    if (playerTurn !== color || !isDiceThrew) return;
-
-    dispatch(
-      updateGameState({
-        key: "selectedPlace",
-        value: isSelectDeadPiece ? null : fromPlaceData.place,
-      })
-    );
-
-    dispatch(updateGameState({ key: "isBoardDataUpdated", value: false }));
-
-    dispatch(
-      updateGameState({
-        key: "deadPieceColor",
-        value: isSelectDeadPiece ? null : color,
-      })
-    );
+    dispatch(selectDeadPiece({ pieceColor }));
   }
 
   return (
     pieces.length > 0 && (
       <div
-        className={`${u.piece} ${u[color]} ${selectClass}`}
+        className={`${u.piece} ${u[pieceColor]} ${selectClass}`}
         style={style}
         onClick={handlePieceClick}
       >

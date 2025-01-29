@@ -10,8 +10,8 @@ const Bar = () => {
 
   return (
     <div className={s.bar}>
-      <DeadPiece color="white" pieces={white} position="top" />
-      <DeadPiece color="black" pieces={black} position="bottom" />
+      <DeadPiece pieceColor="white" pieces={white} position="top" />
+      <DeadPiece pieceColor="black" pieces={black} position="bottom" />
     </div>
   );
 };

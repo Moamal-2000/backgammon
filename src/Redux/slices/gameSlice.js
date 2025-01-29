@@ -97,6 +97,18 @@ const gameSlice = createSlice({
       state.playerTurn = wonPlayer;
       state.beginDice = [firstDice, secondDice];
     },
+    selectDeadPiece: (state, { payload }) => {
+      const { pieceColor } = payload;
+      const { playerTurn, isDiceThrew } = state;
+      const fromPlaceData = state.boardArea[0];
+      const isSelectDeadPiece = state.selectedPlace === fromPlaceData.place;
+
+      if (playerTurn !== pieceColor || !isDiceThrew) return;
+
+      state.selectedPlace = isSelectDeadPiece ? null : fromPlaceData.place;
+      state.deadPieceColor = isSelectDeadPiece ? null : pieceColor;
+      state.isBoardDataUpdated = false;
+    },
     resetGameState: () => initialState,
   },
 });
@@ -108,5 +120,6 @@ export const {
   outPiece,
   throwDices,
   initializePlayerTurn,
+  selectDeadPiece,
   resetGameState,
 } = gameSlice.actions;
