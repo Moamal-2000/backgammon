@@ -8,6 +8,7 @@ import {
 import {
   initializePlayerTurn,
   updateAvailableDices,
+  updateBoardArea,
   updateGameState,
 } from "@/Redux/slices/gameSlice";
 import { useEffect } from "react";
@@ -61,15 +62,13 @@ const BackgammonBoard = () => {
     dispatch(updateAvailableDices({ updatedBoardArea }));
 
     if (!isBoardDataUpdated && isPlayerHasDeadPiece) {
-      dispatch(updateGameState({ key: "boardArea", value: updatedBoardArea }));
-      dispatch(updateGameState({ key: "isBoardDataUpdated", value: true }));
+      dispatch(updateBoardArea({ updatedBoardArea }));
       return;
     }
 
     if (isBoardDataUpdated || shouldOutPiece) return;
 
-    dispatch(updateGameState({ key: "boardArea", value: updatedBoardArea }));
-    dispatch(updateGameState({ key: "isBoardDataUpdated", value: true }));
+    dispatch(updateBoardArea({ updatedBoardArea }));
   }, [boardArea, isDiceThrew, isBoardDataUpdated, selectedPlace]);
 
   return (

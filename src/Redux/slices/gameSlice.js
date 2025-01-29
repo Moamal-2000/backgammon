@@ -126,6 +126,10 @@ const gameSlice = createSlice({
 
       state.validDiceNumbers = validDiceNumbers;
     },
+    updateBoardArea: (state, { payload }) => {
+      state.boardArea = payload.updatedBoardArea;
+      state.isBoardDataUpdated = true;
+    },
     resetGameState: () => initialState,
   },
 });
@@ -139,5 +143,6 @@ export const {
   initializePlayerTurn,
   selectDeadPiece,
   updateAvailableDices,
+  updateBoardArea,
   resetGameState,
 } = gameSlice.actions;
