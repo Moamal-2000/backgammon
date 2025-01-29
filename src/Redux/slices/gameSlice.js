@@ -18,6 +18,7 @@ const initialState = {
   validDiceNumbers: [],
   isDiceThrew: false,
   isBoardDataUpdated: false,
+  outPieces: { black: [], white: [] },
 };
 
 const gameSlice = createSlice({
@@ -71,7 +72,11 @@ const gameSlice = createSlice({
       const allMovesUsed = restDiceMoves.length === 0;
       const isValidDiceNumber = state.diceMoves.includes(diceMove);
 
-      if (fromPlace && isValidDiceNumber) fromPlace.pieces.pop();
+      if (fromPlace && isValidDiceNumber) {
+        fromPlace.pieces.pop();
+        state.outPieces[playerTurn].push(playerTurn);
+      }
+
       if (allMovesUsed) state.playerTurn = opponent;
 
       state.isBoardDataUpdated = false;
