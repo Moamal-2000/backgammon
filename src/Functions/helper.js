@@ -252,3 +252,45 @@ export function getPlayerPieces({ boardArea, playerTurn }) {
     return placeHasPlayerPiece || playerHasDeadPiece;
   });
 }
+
+export function calcValidDiceNumbers({
+  updatedBoardArea,
+  playerTurn,
+  selectedPlace,
+  diceMoves,
+}) {
+  const playerPieces = getPlayerPieces({
+    boardArea: updatedBoardArea,
+    playerTurn,
+  });
+
+  const allAvailableMoves = playerPieces
+    .map((point) => point.availableMoves)
+    .reduce((acc, curr) => [...acc, ...curr], []);
+
+  const allValidDiceNumbers = allAvailableMoves
+    .map((availableMove) => {
+      const validPoint = playerPieces.find((point) =>
+        point.availableMoves.includes(availableMove)
+      );
+
+      return diceMoves.map((diceMove) => {
+        const expectedDiceMove =
+          Math.abs(validPoint?.place - availableMove) === diceMove;
+
+        const isWhitePlayer = playerTurn === "white";
+        const isDeadPiece = selectedPlace === 0;
+        const validMove = validPoint.availableMoves.includes(25 - diceMove);
+        const whitePlayerCondition = isWhitePlayer && isDeadPiece && validMove;
+
+        if (expectedDiceMove || whitePlayerCondition) return diceMove;
+      });
+    })
+    .flat(1);
+
+  const validDiceNumbersWithoutRepeat = [
+    ...new Set(allValidDiceNumbers),
+  ].filter((diceNumber) => diceNumber);
+
+  return validDiceNumbersWithoutRepeat;
+}
