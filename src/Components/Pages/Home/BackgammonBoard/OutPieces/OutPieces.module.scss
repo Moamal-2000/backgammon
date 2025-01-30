@@ -12,15 +12,44 @@
 .outPieces .piecesArea {
   background-color: #834f12;
   border: solid #6d3c08;
-  font-size: 1.4rem;
-  padding: 10px;
   border-radius: 8px;
   height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-end;
   user-select: none;
   position: relative;
+  overflow: hidden;
+}
+
+.piecesArea .piece {
+  position: absolute;
+  left: 50%;
+  translate: -50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 2px #6b6b6b;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1;
+
+  &.black {
+    background-color: #161515;
+  }
+
+  &.white {
+    background-color: #fff;
+  }
+}
+
+$piece-gap: -25px;
+
+@for $i from 1 through 15 {
+  .piecesArea .piece[data-sort="#{$i}"] {
+    bottom: #{$piece-gap};
+  }
+
+  $piece-gap: $piece-gap + 19.6px;
 }

@@ -10,13 +10,21 @@ const OutPieces = () => {
     <div className={s.outPieces}>
       <div className={s.piecesArea}>
         {outPieces.black.map((_, index) => (
-          <div className={`${s.piece} ${s.black}`} key={index} />
+          <div
+            className={`${s.piece} ${s.black}`}
+            data-sort={outPieces.black.length - index}
+            key={index}
+          />
         ))}
       </div>
 
       <div className={s.piecesArea}>
         {outPieces.white.map((_, index) => (
-          <div className={`${s.piece} ${s.white}`} key={index} />
+          <div
+            className={`${s.piece} ${s.white}`}
+            data-sort={outPieces.white.length - index}
+            key={index}
+          />
         ))}
       </div>
     </div>
