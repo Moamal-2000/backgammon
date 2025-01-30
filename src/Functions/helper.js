@@ -185,7 +185,7 @@ export function calcAvailablePlaces({
   boardArea,
   diceMoves,
   playerTurn,
-  deadPieceColor,
+  selectedPlace,
 }) {
   const noMoreMoves = diceMoves.length === 0;
   const updatedBoardArea = boardArea.map((point) => ({ ...point }));
@@ -201,7 +201,7 @@ export function calcAvailablePlaces({
         diceMove: diceMoves[j],
         availablePlace: availablePieces[i].place,
         playerTurn,
-        deadPieceColor,
+        selectedPlace,
       });
 
       const availablePlace = updatedBoardArea[availableMove];
@@ -228,12 +228,12 @@ export function getAvailableMove({
   diceMove,
   availablePlace,
   playerTurn,
-  deadPieceColor,
+  selectedPlace,
 }) {
   const isWhitePlayer = playerTurn === "white";
-  const isWhiteDeadPiece = deadPieceColor === "white";
+  const isSelectDeadPiece = selectedPlace === 0;
 
-  if (isWhitePlayer && isWhiteDeadPiece)
+  if (isWhitePlayer && isSelectDeadPiece)
     return 25 - Math.abs(availablePlace - diceMove);
 
   if (isWhitePlayer) return availablePlace - diceMove;

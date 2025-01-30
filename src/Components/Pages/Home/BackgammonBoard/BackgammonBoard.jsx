@@ -29,7 +29,6 @@ const BackgammonBoard = () => {
     isDiceThrew,
     isBoardDataUpdated,
     selectedPlace,
-    deadPieceColor,
   } = useSelector((s) => s.game);
   const dispatch = useDispatch();
   const pieces = getPiecesData(boardArea);
@@ -47,7 +46,7 @@ const BackgammonBoard = () => {
       boardArea,
       diceMoves,
       playerTurn,
-      deadPieceColor,
+      selectedPlace,
     });
     const isPlayerHasDeadPiece =
       playerTurn && updatedBoardArea[0].deadPieces[playerTurn].length > 0;
