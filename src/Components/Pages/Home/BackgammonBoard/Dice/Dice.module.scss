@@ -4,6 +4,12 @@
   top: 50%;
   translate: -50% -50%;
   user-select: none;
+  display: none;
+
+  &.showDice,
+  &.showBeginDice {
+    display: block;
+  }
 
   &.invalid {
     opacity: .4;

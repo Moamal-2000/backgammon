@@ -16,28 +16,29 @@ const Dice = ({
   const blackNoun = color === "black" ? "-black" : "";
   const isValidDice = validDiceNumbers.includes(diceNumber);
   const invalidClass = !isValidDice ? s.invalid : "";
+  const showBeginDiceClass =
+    shouldShowBeginDices && beginDiceNumber ? s.showBeginDice : "";
+  const showDiceClass = showGameDices && diceNumber ? s.showDice : "";
 
   return (
     <>
-      {shouldShowBeginDices && beginDiceNumber && (
-        <Image
-          className={s.dice}
-          src={`/dice${beginDiceNumber}${blackNoun}.png`}
-          width={size}
-          height={size}
-          alt={`dice ${beginDiceNumber}`}
-        />
-      )}
+      <Image
+        className={`${s.dice} ${showBeginDiceClass}`}
+        src={`/dice${beginDiceNumber}${blackNoun}.png`}
+        alt={`dice ${beginDiceNumber}`}
+        width={size}
+        height={size}
+        priority={true}
+      />
 
-      {showGameDices && diceNumber && (
-        <Image
-          className={`${s.dice} ${invalidClass}`}
-          src={`/dice${diceNumber}.png`}
-          width={size}
-          height={size}
-          alt={`dice ${diceNumber}`}
-        />
-      )}
+      <Image
+        className={`${s.dice} ${invalidClass} ${showDiceClass}`}
+        src={`/dice${diceNumber}.png`}
+        alt={`dice ${diceNumber}`}
+        width={size}
+        height={size}
+        priority={true}
+      />
     </>
   );
 };
