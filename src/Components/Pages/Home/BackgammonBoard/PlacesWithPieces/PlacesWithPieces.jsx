@@ -1,7 +1,12 @@
 "use client";
 
-import { getPlaceData, getRestMoves } from "@/Functions/helper";
-import { movePiece, outPiece, updateGameState } from "@/Redux/slices/gameSlice";
+import { getPlaceData } from "@/Functions/helper";
+import {
+  movePiece,
+  outPiece,
+  selectPiece,
+  updateGameState,
+} from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import HighlightPlace from "./HighlightPlace/HighlightPlace";
 import Pieces from "./Pieces/Pieces";
@@ -53,21 +58,12 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
     }
 
     if (isCurrentMoveValid) {
-      const whiteOrBlackMoves = deadPieceColor === "white" ? 25 - moves : moves;
-      const restDiceMoves = getRestMoves(diceMoves, whiteOrBlackMoves);
-
-      dispatch(
-        movePiece({ dataPlace: fromPlaceData.place, shouldEat, restDiceMoves })
-      );
+      dispatch(movePiece({ placeData: fromPlaceData.place, shouldEat, moves }));
       return;
     }
 
     if (canSelectPiece) {
-      dispatch(
-        updateGameState({ key: "selectedPlace", value: fromPlaceData.place })
-      );
-
-      dispatch(updateGameState({ key: "deadPieceColor", value: null }));
+      dispatch(selectPiece({ placeData: fromPlaceData.place }));
     }
   }
 

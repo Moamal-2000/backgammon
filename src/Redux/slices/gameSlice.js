@@ -2,6 +2,7 @@ import { boardArea } from "@/Data/staticData";
 import {
   calcValidDiceNumbers,
   getDiceNumbers,
+  getRestMoves,
   rollDice,
 } from "@/Functions/helper";
 import { createSlice } from "@reduxjs/toolkit";
@@ -29,15 +30,17 @@ const gameSlice = createSlice({
       state[payload.key] = payload.value;
     },
     movePiece: (state, { payload }) => {
-      const { dataPlace, shouldEat, restDiceMoves } = payload;
-      const { selectedPlace, playerTurn, deadPieceColor } = state;
+      const { placeData, shouldEat, moves } = payload;
+      const { selectedPlace, playerTurn, deadPieceColor, diceMoves } = state;
       const opponent = playerTurn === "white" ? "black" : "white";
       const isDeadPiece = !!deadPieceColor;
+      const whiteOrBlackMoves = deadPieceColor === "white" ? 25 - moves : moves;
+      const restDiceMoves = getRestMoves(diceMoves, whiteOrBlackMoves);
 
       const fromPlace = state.boardArea.find(
         (point) => point.place === selectedPlace
       );
-      const toPlace = state.boardArea.find((item) => item.place === dataPlace);
+      const toPlace = state.boardArea.find((item) => item.place === placeData);
       const allMovesUsed = restDiceMoves.length === 0;
 
       if (fromPlace) fromPlace.pieces.pop();
@@ -131,6 +134,11 @@ const gameSlice = createSlice({
       state.boardArea = payload.updatedBoardArea;
       state.isBoardDataUpdated = true;
     },
+    selectPiece: (state, { payload }) => {
+      const { placeData } = payload;
+      state.selectedPlace = placeData;
+      state.deadPieceColor = null;
+    },
     resetGameState: () => initialState,
   },
 });
@@ -145,5 +153,6 @@ export const {
   selectDeadPiece,
   updateAvailableDices,
   updateBoardArea,
+  selectPiece,
   resetGameState,
 } = gameSlice.actions;
