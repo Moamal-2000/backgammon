@@ -107,6 +107,7 @@ export function getPlaceData({
   playerTurn,
   isDiceThrew,
   diceMoves,
+  deadPieceColor,
 }) {
   const toPlaceData = boardArea.find(
     (item) => item.place === fromPlaceData.place
@@ -125,27 +126,41 @@ export function getPlaceData({
   const numberOfSelectedPiece = homeSideRange.indexOf(fromPlaceData.place) + 1;
   const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
 
+  // Main conditions
   const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
+
   const canSelectPiece =
     placeHasPieces && isPlayerPiece && isDiceThrew && !playerHasDeadPieces;
+
   const shouldOutPiece =
     allPiecesInInnerHome &&
     !playerHasDeadPieces &&
     !isAllDiceMovesUsed &&
     placeHasPiece;
 
-  return {
+  const isCurrentMoveValid = isValidMove({
+    fromPlaceData,
     toPlaceData,
+    isDiceThrew,
+    playerTurn,
+    selectedPlace,
+    diceMoves,
+    isSamePieceColor,
+    moves,
+    deadPieceColor,
+  });
+
+  return {
     moves,
     placeHasPieces,
     isPlayerPiece,
     unSelectPlace,
-    isSamePieceColor,
     shouldEat,
     canSelectPiece,
     playerHasDeadPieces,
     restDiceMoves,
     shouldOutPiece,
+    isCurrentMoveValid,
   };
 }
 

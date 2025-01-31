@@ -1,6 +1,6 @@
 "use client";
 
-import { getPlaceData, getRestMoves, isValidMove } from "@/Functions/helper";
+import { getPlaceData, getRestMoves } from "@/Functions/helper";
 import { movePiece, outPiece, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import HighlightPlace from "./HighlightPlace/HighlightPlace";
@@ -24,14 +24,13 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
     if (!gameStart) return;
 
     const {
-      toPlaceData,
       moves,
       unSelectPlace,
-      isSamePieceColor,
       shouldEat,
       canSelectPiece,
       restDiceMoves,
       shouldOutPiece,
+      isCurrentMoveValid,
     } = getPlaceData({
       fromPlaceData,
       boardArea,
@@ -40,17 +39,6 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       deadPieceColor,
       isDiceThrew,
       diceMoves,
-    });
-
-    const isCurrentMoveValid = isValidMove({
-      fromPlaceData,
-      toPlaceData,
-      isDiceThrew,
-      playerTurn,
-      selectedPlace,
-      diceMoves,
-      isSamePieceColor,
-      moves,
       deadPieceColor,
     });
 
