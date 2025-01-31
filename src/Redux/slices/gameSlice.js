@@ -29,18 +29,14 @@ const gameSlice = createSlice({
       state[payload.key] = payload.value;
     },
     movePiece: (state, { payload }) => {
-      const {
-        from,
-        dataPlace,
-        playerTurn,
-        shouldEat,
-        restDiceMoves,
-        deadPieceColor,
-      } = payload;
+      const { dataPlace, shouldEat, restDiceMoves } = payload;
+      const { selectedPlace, playerTurn, deadPieceColor } = state;
       const opponent = playerTurn === "white" ? "black" : "white";
       const isDeadPiece = !!deadPieceColor;
 
-      const fromPlace = state.boardArea.find((item) => item.place === from);
+      const fromPlace = state.boardArea.find(
+        (point) => point.place === selectedPlace
+      );
       const toPlace = state.boardArea.find((item) => item.place === dataPlace);
       const allMovesUsed = restDiceMoves.length === 0;
 
@@ -67,7 +63,7 @@ const gameSlice = createSlice({
       const diceMove = isBlackPlayer ? 25 - from.place : from.place;
 
       const fromPlace = state.boardArea.find(
-        (item) => item.place === from.place
+        (point) => point.place === from.place
       );
       const allMovesUsed = restDiceMoves.length === 0;
       const isValidDiceNumber = state.diceMoves.includes(diceMove);

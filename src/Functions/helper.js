@@ -110,7 +110,7 @@ export function getPlaceData({
   deadPieceColor,
 }) {
   const toPlaceData = boardArea.find(
-    (item) => item.place === fromPlaceData.place
+    (point) => point.place === fromPlaceData.place
   );
   const moves = Math.abs(toPlaceData.place - selectedPlace);
   const placeHasPieces = fromPlaceData.pieces.length > 0;

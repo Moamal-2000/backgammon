@@ -57,14 +57,7 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       const restDiceMoves = getRestMoves(diceMoves, whiteOrBlackMoves);
 
       dispatch(
-        movePiece({
-          from: selectedPlace,
-          dataPlace: fromPlaceData.place,
-          playerTurn: playerTurn,
-          shouldEat,
-          restDiceMoves,
-          deadPieceColor,
-        })
+        movePiece({ dataPlace: fromPlaceData.place, shouldEat, restDiceMoves })
       );
       return;
     }
