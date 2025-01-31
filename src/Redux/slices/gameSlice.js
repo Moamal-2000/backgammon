@@ -9,7 +9,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   boardArea,
   selectedPlace: null,
-  gameStart: false,
+  gameStart: true,
   showBeginDices: false,
   playerTurn: "",
   deadPieceColor: "",
@@ -103,7 +103,7 @@ const gameSlice = createSlice({
       const { firstDice, secondDice } = getDiceNumbers(true);
       const wonPlayer = firstDice > secondDice ? "white" : "black";
 
-      state.playerTurn = wonPlayer;
+      state.playerTurn = "white";
       state.beginDice = [firstDice, secondDice];
     },
     selectDeadPiece: (state, { payload }) => {

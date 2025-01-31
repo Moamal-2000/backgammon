@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  areAllPiecesInInnerHome,
-  getPlaceData,
-  getRestMoves,
-  isValidMove,
-} from "@/Functions/helper";
+import { getPlaceData, getRestMoves, isValidMove } from "@/Functions/helper";
 import { movePiece, outPiece, updateGameState } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import HighlightPlace from "./HighlightPlace/HighlightPlace";
@@ -35,6 +30,8 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       isSamePieceColor,
       shouldEat,
       canSelectPiece,
+      restDiceMoves,
+      shouldOutPiece,
     } = getPlaceData({
       fromPlaceData,
       boardArea,
@@ -42,30 +39,8 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       playerTurn,
       deadPieceColor,
       isDiceThrew,
+      diceMoves,
     });
-
-    const playerDeadPieces = boardArea[0].deadPieces[playerTurn];
-    const playerHasDeadPieces = playerDeadPieces.length !== 0;
-    const shouldOutPiece = areAllPiecesInInnerHome(boardArea, playerTurn);
-    const isAllDiceMovesUsed = diceMoves.length === 0;
-
-    if (shouldOutPiece && !playerHasDeadPieces && !isAllDiceMovesUsed) {
-      const homeSideRange =
-        playerTurn === "black" ? [24, 23, 22, 21, 20, 19] : [1, 2, 3, 4, 5, 6];
-      const numberOfSelectedPiece =
-        homeSideRange.indexOf(fromPlaceData.place) + 1;
-      const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
-
-      dispatch(
-        outPiece({
-          from: fromPlaceData,
-          playerTurn,
-          restDiceMoves,
-        })
-      );
-
-      return;
-    }
 
     const isCurrentMoveValid = isValidMove({
       fromPlaceData,
@@ -78,6 +53,11 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       moves,
       deadPieceColor,
     });
+
+    if (shouldOutPiece) {
+      dispatch(outPiece({ from: fromPlaceData, playerTurn, restDiceMoves }));
+      return;
+    }
 
     if (unSelectPlace) {
       dispatch(updateGameState({ key: "selectedPlace", value: null }));

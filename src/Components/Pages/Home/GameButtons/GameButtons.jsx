@@ -5,6 +5,7 @@ import {
   throwDices,
   updateGameState,
 } from "@/Redux/slices/gameSlice";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
@@ -33,6 +34,10 @@ const GameButtons = () => {
   function handleThrowDice() {
     dispatch(throwDices({ numberOfDices: 2 }));
   }
+
+  useEffect(() => {
+    handleThrowDice();
+  }, []);
 
   return (
     <div className={s.buttons}>

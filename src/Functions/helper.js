@@ -106,6 +106,7 @@ export function getPlaceData({
   selectedPlace,
   playerTurn,
   isDiceThrew,
+  diceMoves,
 }) {
   const toPlaceData = boardArea.find(
     (item) => item.place === fromPlaceData.place
@@ -115,10 +116,23 @@ export function getPlaceData({
   const isPlayerPiece = playerTurn === fromPlaceData.pieces?.[0];
   const unSelectPlace = fromPlaceData.place === selectedPlace;
   const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
-  const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
   const playerHasDeadPieces = boardArea[0].deadPieces[playerTurn].length > 0;
+  const allPiecesInInnerHome = areAllPiecesInInnerHome(boardArea, playerTurn);
+  const isAllDiceMovesUsed = diceMoves.length === 0;
+  const placeHasPiece = fromPlaceData.pieces.length > 0;
+  const homeSideRange =
+    playerTurn === "black" ? [24, 23, 22, 21, 20, 19] : [1, 2, 3, 4, 5, 6];
+  const numberOfSelectedPiece = homeSideRange.indexOf(fromPlaceData.place) + 1;
+  const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
+
+  const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
   const canSelectPiece =
     placeHasPieces && isPlayerPiece && isDiceThrew && !playerHasDeadPieces;
+  const shouldOutPiece =
+    allPiecesInInnerHome &&
+    !playerHasDeadPieces &&
+    !isAllDiceMovesUsed &&
+    placeHasPiece;
 
   return {
     toPlaceData,
@@ -129,6 +143,9 @@ export function getPlaceData({
     isSamePieceColor,
     shouldEat,
     canSelectPiece,
+    playerHasDeadPieces,
+    restDiceMoves,
+    shouldOutPiece,
   };
 }
 
