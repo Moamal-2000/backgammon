@@ -2,6 +2,7 @@
 
 import { getPlaceData } from "@/Functions/helper";
 import {
+  checkWinner,
   movePiece,
   outPiece,
   selectPiece,
@@ -49,6 +50,7 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
 
     if (shouldOutPiece) {
       dispatch(outPiece({ from: fromPlaceData, playerTurn, restDiceMoves }));
+      dispatch(checkWinner())
       return;
     }
 

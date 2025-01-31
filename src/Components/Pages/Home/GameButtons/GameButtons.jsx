@@ -1,5 +1,6 @@
 "use client";
 
+import { boardArea } from "@/Data/staticData";
 import {
   resetGameState,
   throwDices,
@@ -10,22 +11,29 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
 const GameButtons = () => {
-  const { gameStart } = useSelector((s) => s.game);
+  const { gameStart, winnerPlayer } = useSelector((s) => s.game);
   const dispatch = useDispatch();
 
   function startTheGame() {
     dispatch(updateGameState({ key: "gameStart", value: true }));
     dispatch(updateGameState({ key: "showBeginDices", value: true }));
+    dispatch(updateGameState({ key: "boardArea", value: boardArea }));
+    dispatch(
+      updateGameState({ key: "outPieces", value: { black: [], white: [] } })
+    );
 
     setTimeout(() => {
       dispatch(updateGameState({ key: "showBeginDices", value: false }));
     }, 2000);
   }
 
-  function restartGame() {
-    const shouldRestart = confirm("Are you sure you want to restart the game?");
+  function restartGame(showAlert = true) {
+    let shouldRestart;
 
-    if (shouldRestart) {
+    if (showAlert)
+      shouldRestart = confirm("Are you sure you want to restart the game?");
+
+    if (shouldRestart || !showAlert) {
       dispatch(resetGameState());
       setTimeout(startTheGame, 0);
     }
@@ -36,8 +44,16 @@ const GameButtons = () => {
   }
 
   useEffect(() => {
-    handleThrowDice();
-  }, []);
+    if (!winnerPlayer) return;
+
+    setTimeout(() => {
+      const playAgain = confirm(
+        `Congratulation! ${winnerPlayer} player is the winner, Do you want to play again?`
+      );
+
+      if (playAgain) restartGame(false);
+    }, 500);
+  }, [winnerPlayer]);
 
   return (
     <div className={s.buttons}>

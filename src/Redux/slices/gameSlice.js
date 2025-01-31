@@ -8,18 +8,20 @@ import {
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  boardArea,
+  winners: { black: 0, white: 0 },
+  outPieces: { black: [], white: [] },
   selectedPlace: null,
-  gameStart: true,
+  boardArea,
+  isBoardDataUpdated: false,
   showBeginDices: false,
-  playerTurn: "",
+  isDiceThrew: false,
+  gameStart: false,
   deadPieceColor: "",
+  winnerPlayer: "",
+  playerTurn: "",
+  validDiceNumbers: [],
   diceMoves: [],
   beginDice: [],
-  validDiceNumbers: [],
-  isDiceThrew: false,
-  isBoardDataUpdated: false,
-  outPieces: { black: [], white: [] },
 };
 
 const gameSlice = createSlice({
@@ -102,7 +104,7 @@ const gameSlice = createSlice({
       const { firstDice, secondDice } = getDiceNumbers(true);
       const wonPlayer = firstDice > secondDice ? "white" : "black";
 
-      state.playerTurn = "white";
+      state.playerTurn = wonPlayer;
       state.beginDice = [firstDice, secondDice];
     },
     selectDeadPiece: (state, { payload }) => {
@@ -139,6 +141,16 @@ const gameSlice = createSlice({
       state.selectedPlace = placeData;
       state.deadPieceColor = null;
     },
+    checkWinner: (state) => {
+      const { outPieces, playerTurn } = state;
+      const isSomeoneWin = [...outPieces[playerTurn]].length === 15;
+
+      if (!isSomeoneWin) return;
+
+      state.winnerPlayer = playerTurn;
+      state.winners[playerTurn] += 1;
+      resetGameAfterWin(state);
+    },
     resetGameState: () => initialState,
   },
 });
@@ -154,5 +166,18 @@ export const {
   updateAvailableDices,
   updateBoardArea,
   selectPiece,
+  checkWinner,
   resetGameState,
 } = gameSlice.actions;
+
+function resetGameAfterWin(state) {
+  Object.assign(state, {
+    gameStart: false,
+    showBeginDices: false,
+    isDiceThrew: false,
+    diceMoves: [],
+    playerTurn: "",
+    validDiceNumbers: [],
+    isBoardDataUpdated: false,
+  });
+}
