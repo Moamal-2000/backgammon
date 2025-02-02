@@ -121,12 +121,11 @@ const gameSlice = createSlice({
     },
     updateAvailableDices: (state, { payload }) => {
       const { updatedBoardArea } = payload;
-      const { playerTurn, selectedPlace, diceMoves } = state;
+      const { playerTurn, diceMoves } = state;
 
       const validDiceNumbers = calcValidDiceNumbers({
         updatedBoardArea,
         playerTurn,
-        selectedPlace,
         diceMoves,
       });
 

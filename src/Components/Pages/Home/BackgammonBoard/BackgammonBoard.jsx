@@ -46,7 +46,6 @@ const BackgammonBoard = () => {
       boardArea,
       diceMoves,
       playerTurn,
-      selectedPlace,
     });
     const isPlayerHasDeadPiece =
       playerTurn && updatedBoardArea[0].deadPieces[playerTurn].length > 0;

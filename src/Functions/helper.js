@@ -213,15 +213,14 @@ export function getPiecesData(boardArea) {
   };
 }
 
-export function calcAvailablePlaces({
-  boardArea,
-  diceMoves,
-  playerTurn,
-  selectedPlace,
-}) {
+export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
   const noMoreMoves = diceMoves.length === 0;
   const updatedBoardArea = boardArea.map((point) => ({ ...point }));
-  const availablePieces = getPlayerPieces({ boardArea, playerTurn });
+  const hasDeadPieces = boardArea[0].deadPieces[playerTurn]?.length > 0;
+  let availablePieces = getPlayerPieces({ boardArea, playerTurn });
+
+  if (hasDeadPieces)
+    availablePieces = availablePieces.filter((point) => point.place === 0);
 
   if (noMoreMoves) updatedBoardArea.map((point) => (point.availableMoves = []));
 
@@ -231,9 +230,9 @@ export function calcAvailablePlaces({
     for (let j = 0; j < diceMoves.length; j++) {
       const availableMove = getAvailableMove({
         diceMove: diceMoves[j],
+        placeData: availablePieces[i],
         availablePlace: availablePieces[i].place,
         playerTurn,
-        selectedPlace,
       });
 
       const availablePlace = updatedBoardArea[availableMove];
@@ -258,15 +257,15 @@ export function calcAvailablePlaces({
 
 export function getAvailableMove({
   diceMove,
+  placeData,
   availablePlace,
   playerTurn,
-  selectedPlace,
 }) {
   const isWhitePlayer = playerTurn === "white";
-  const isSelectDeadPiece = selectedPlace === 0;
+  const isSelectDeadPiece = placeData?.place === 0;
 
   if (isWhitePlayer && isSelectDeadPiece)
-    return 25 - Math.abs(availablePlace - diceMove);
+    return Math.abs(25 - availablePlace - diceMove);
 
   if (isWhitePlayer) return availablePlace - diceMove;
 
@@ -288,7 +287,6 @@ export function getPlayerPieces({ boardArea, playerTurn }) {
 export function calcValidDiceNumbers({
   updatedBoardArea,
   playerTurn,
-  selectedPlace,
   diceMoves,
 }) {
   const playerPieces = getPlayerPieces({
@@ -311,7 +309,7 @@ export function calcValidDiceNumbers({
           Math.abs(validPoint?.place - availableMove) === diceMove;
 
         const isWhitePlayer = playerTurn === "white";
-        const isDeadPiece = selectedPlace === 0;
+        const isDeadPiece = validPoint?.place === 0;
         const validMove = validPoint.availableMoves.includes(25 - diceMove);
         const whitePlayerCondition = isWhitePlayer && isDeadPiece && validMove;
 
