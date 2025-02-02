@@ -150,9 +150,17 @@ const gameSlice = createSlice({
       state.winners[playerTurn] += 1;
       resetGameAfterWin(state);
     },
-    checkPlayableOrChangeTurn: (state, { payload }) => {
-      const { validDiceNumbers } = state;
-      const shouldChangeTurn = [...validDiceNumbers].length === 0
+    checkPlayableOrChangeTurn: (state) => {
+      const { validDiceNumbers, playerTurn, isDiceThrew } = state;
+      const shouldChangeTurn = [...validDiceNumbers].length === 0;
+      const opponent = playerTurn === "white" ? "black" : "white";
+
+      if (!shouldChangeTurn & isDiceThrew) return;
+
+      console.log(`No more moves, ${opponent} turn.`);
+      state.playerTurn = opponent;
+      state.isDiceThrew = false;
+      state.diceMoves = [];
     },
     resetGameState: () => initialState,
   },

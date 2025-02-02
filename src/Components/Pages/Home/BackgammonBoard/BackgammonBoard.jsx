@@ -58,11 +58,11 @@ const BackgammonBoard = () => {
       });
 
       const availablePlaces = availablePieces.map((point) => point.place);
-      const validDiceNumbers = diceMoves.filter((diceMove) => {
-        return availablePlaces.includes(
+      const validDiceNumbers = diceMoves.filter((diceMove) =>
+        availablePlaces.includes(
           playerTurn === "white" ? diceMove : 25 - diceMove
-        );
-      });
+        )
+      );
 
       dispatch(
         updateGameState({ key: "validDiceNumbers", value: validDiceNumbers })

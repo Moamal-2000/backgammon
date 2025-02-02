@@ -60,7 +60,7 @@ const GameButtons = () => {
   useEffect(() => {
     if (!isDiceThrew || !gameStart) return;
     dispatch(checkPlayableOrChangeTurn());
-  }, [isDiceThrew, validDiceNumbers]);
+  }, [validDiceNumbers]);
 
   return (
     <div className={s.buttons}>
