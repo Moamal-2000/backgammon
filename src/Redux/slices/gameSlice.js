@@ -150,6 +150,10 @@ const gameSlice = createSlice({
       state.winners[playerTurn] += 1;
       resetGameAfterWin(state);
     },
+    checkPlayableOrChangeTurn: (state, { payload }) => {
+      const { validDiceNumbers } = state;
+      const shouldChangeTurn = [...validDiceNumbers].length === 0
+    },
     resetGameState: () => initialState,
   },
 });
@@ -166,6 +170,7 @@ export const {
   updateBoardArea,
   selectPiece,
   checkWinner,
+  checkPlayableOrChangeTurn,
   resetGameState,
 } = gameSlice.actions;
 

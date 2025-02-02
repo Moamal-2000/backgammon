@@ -2,6 +2,7 @@
 
 import { boardArea } from "@/Data/staticData";
 import {
+  checkPlayableOrChangeTurn,
   resetGameState,
   throwDices,
   updateGameState,
@@ -11,7 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
 const GameButtons = () => {
-  const { gameStart, winnerPlayer } = useSelector((s) => s.game);
+  const { gameStart, isDiceThrew, winnerPlayer, validDiceNumbers } =
+    useSelector((s) => s.game);
   const dispatch = useDispatch();
 
   function startTheGame() {
@@ -54,6 +56,11 @@ const GameButtons = () => {
       if (playAgain) restartGame(false);
     }, 500);
   }, [winnerPlayer]);
+
+  useEffect(() => {
+    if (!isDiceThrew || !gameStart) return;
+    dispatch(checkPlayableOrChangeTurn());
+  }, [isDiceThrew, validDiceNumbers]);
 
   return (
     <div className={s.buttons}>

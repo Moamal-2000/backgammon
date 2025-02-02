@@ -191,6 +191,8 @@ export function isValidMove({
 }
 
 export function areAllPiecesInInnerHome(boardArea, playerTurn) {
+  if (!playerTurn) return false
+
   const innerHomeRange =
     PLAYERS_HOME_SIDE[playerTurn === "black" ? "black" : "white"];
 

@@ -4,6 +4,7 @@ import {
   areAllPiecesInInnerHome,
   calcAvailablePlaces,
   getPiecesData,
+  getPlayerPieces,
 } from "@/Functions/helper";
 import {
   initializePlayerTurn,
@@ -51,8 +52,20 @@ const BackgammonBoard = () => {
       playerTurn && updatedBoardArea[0].deadPieces[playerTurn].length > 0;
 
     if (shouldOutPiece && !isPlayerHasDeadPiece) {
+      const availablePieces = getPlayerPieces({
+        boardArea: updatedBoardArea,
+        playerTurn,
+      });
+
+      const availablePlaces = availablePieces.map((point) => point.place);
+      const validDiceNumbers = diceMoves.filter((diceMove) => {
+        return availablePlaces.includes(
+          playerTurn === "white" ? diceMove : 25 - diceMove
+        );
+      });
+
       dispatch(
-        updateGameState({ key: "validDiceNumbers", value: [1, 2, 3, 4, 5, 6] })
+        updateGameState({ key: "validDiceNumbers", value: validDiceNumbers })
       );
       return;
     }
