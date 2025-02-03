@@ -161,6 +161,12 @@ const gameSlice = createSlice({
       state.isDiceThrew = false;
       state.diceMoves = [];
     },
+    startTheGame: (state) => {
+      state.gameStart = true;
+      state.isDiceThrew = true;
+      state.boardArea = boardArea;
+      state.outPieces = { black: [], white: [] };
+    },
     resetGameState: () => initialState,
   },
 });
@@ -178,6 +184,7 @@ export const {
   selectPiece,
   checkWinner,
   checkPlayableOrChangeTurn,
+  startTheGame,
   resetGameState,
 } = gameSlice.actions;
 

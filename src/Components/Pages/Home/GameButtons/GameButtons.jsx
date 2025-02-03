@@ -1,11 +1,10 @@
 "use client";
 
-import { boardArea } from "@/Data/staticData";
 import {
   checkPlayableOrChangeTurn,
   resetGameState,
+  startTheGame,
   throwDices,
-  updateGameState,
 } from "@/Redux/slices/gameSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,13 +15,12 @@ const GameButtons = () => {
     useSelector((s) => s.game);
   const dispatch = useDispatch();
 
-  function startTheGame() {
-    dispatch(updateGameState({ key: "gameStart", value: true }));
-    dispatch(updateGameState({ key: "isDiceThrew", value: true }));
-    dispatch(updateGameState({ key: "boardArea", value: boardArea }));
-    dispatch(
-      updateGameState({ key: "outPieces", value: { black: [], white: [] } })
-    );
+  function handleStartGame() {
+    dispatch(startTheGame());
+  }
+
+  function handleThrowDice() {
+    dispatch(throwDices({ numberOfDices: 2 }));
   }
 
   function restartGame(showAlert = true) {
@@ -33,12 +31,8 @@ const GameButtons = () => {
 
     if (shouldRestart || !showAlert) {
       dispatch(resetGameState());
-      setTimeout(startTheGame, 0);
+      setTimeout(handleStartGame, 0);
     }
-  }
-
-  function handleThrowDice() {
-    dispatch(throwDices({ numberOfDices: 2 }));
   }
 
   useEffect(() => {
@@ -58,16 +52,12 @@ const GameButtons = () => {
     dispatch(checkPlayableOrChangeTurn());
   }, [validDiceNumbers]);
 
-  useEffect(() => {
-    handleThrowDice();
-  }, []);
-
   return (
     <div className={s.buttons}>
       <button
         className={s.startButton}
         type="button"
-        onClick={startTheGame}
+        onClick={handleStartGame}
         disabled={gameStart}
       >
         Start playing
