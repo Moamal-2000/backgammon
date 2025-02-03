@@ -62,6 +62,10 @@ const GameButtons = () => {
     dispatch(checkPlayableOrChangeTurn());
   }, [validDiceNumbers]);
 
+  useEffect(() => {
+    handleThrowDice()
+  }, [])
+
   return (
     <div className={s.buttons}>
       <button

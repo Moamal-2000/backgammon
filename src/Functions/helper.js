@@ -125,12 +125,18 @@ export function getPlaceData({
     playerTurn === "black" ? [24, 23, 22, 21, 20, 19] : [1, 2, 3, 4, 5, 6];
   const numberOfSelectedPiece = homeSideRange.indexOf(fromPlaceData.place) + 1;
   const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
+  const selectedAvailableMoves = boardArea[fromPlaceData.place]?.availableMoves;
+  const hasAvailableMove = selectedAvailableMoves?.length > 0;
 
   // Main conditions
   const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
 
   const canSelectPiece =
-    placeHasPieces && isPlayerPiece && isDiceThrew && !playerHasDeadPieces;
+    placeHasPieces &&
+    isPlayerPiece &&
+    isDiceThrew &&
+    !playerHasDeadPieces &&
+    hasAvailableMove;
 
   const shouldOutPiece =
     allPiecesInInnerHome &&
@@ -191,7 +197,7 @@ export function isValidMove({
 }
 
 export function areAllPiecesInInnerHome(boardArea, playerTurn) {
-  if (!playerTurn) return false
+  if (!playerTurn) return false;
 
   const innerHomeRange =
     PLAYERS_HOME_SIDE[playerTurn === "black" ? "black" : "white"];

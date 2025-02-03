@@ -8,6 +8,7 @@ import {
   selectPiece,
   updateGameState,
 } from "@/Redux/slices/gameSlice";
+import u from "@/Styles/utilsClasses.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import HighlightPlace from "./HighlightPlace/HighlightPlace";
 import Pieces from "./Pieces/Pieces";
@@ -50,7 +51,7 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
 
     if (shouldOutPiece) {
       dispatch(outPiece({ from: fromPlaceData, playerTurn, restDiceMoves }));
-      dispatch(checkWinner())
+      dispatch(checkWinner());
       return;
     }
 
@@ -70,13 +71,17 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
   }
 
   return placesData.map((data) => {
+    const selectedAvailableMoves = boardArea[data.place]?.availableMoves;
+    const hasAvailableMove = selectedAvailableMoves?.length > 0;
+    const unavailableClass = !hasAvailableMove ? u.unavailable : "";
+
     return (
       <div
-        className={`${s.place} ${s[data.placeColor]}`}
+        className={`${s.place} ${s[data.placeColor]} ${unavailableClass}`}
         key={data.place}
         onClick={() => handlePlaceClick(data)}
       >
-        <Pieces data={data} />
+        <Pieces data={data} unavailableClass={unavailableClass} />
 
         <HighlightPlace
           data={data}

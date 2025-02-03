@@ -109,9 +109,9 @@ const gameSlice = createSlice({
     },
     selectDeadPiece: (state, { payload }) => {
       const { pieceColor } = payload;
-      const { playerTurn, isDiceThrew } = state;
-      const fromPlaceData = state.boardArea[0];
-      const isSelectDeadPiece = state.selectedPlace === fromPlaceData.place;
+      const { boardArea, playerTurn, isDiceThrew, selectedPlace } = state;
+      const fromPlaceData = boardArea[0];
+      const isSelectDeadPiece = selectedPlace === fromPlaceData.place;
 
       if (playerTurn !== pieceColor || !isDiceThrew) return;
 

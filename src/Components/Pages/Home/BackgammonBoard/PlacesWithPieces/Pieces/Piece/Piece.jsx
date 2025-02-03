@@ -3,15 +3,14 @@
 import u from "@/Styles/utilsClasses.module.scss";
 import { useSelector } from "react-redux";
 
-const Piece = ({ data, piece, isLastPiece }) => {
+const Piece = ({ data, piece, isLastPiece, unavailableClass }) => {
   const { selectedPlace } = useSelector((s) => s.game);
   const selectClass = data.place === selectedPlace ? u.select : "";
+  const classes = `${u.piece} ${u[piece]} ${unavailableClass} ${
+    isLastPiece ? selectClass : ""
+  }`;
 
-  return (
-    <div
-      className={`${u.piece} ${u[piece]} ${isLastPiece ? selectClass : ""}`}
-    />
-  );
+  return <div className={classes} />;
 };
 
 export default Piece;

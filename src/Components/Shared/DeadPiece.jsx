@@ -14,7 +14,11 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
   const fromPlaceData = boardArea[0];
   const isSelectDeadPiece = selectedPlace === fromPlaceData.place;
   const isSameColor = pieceColor === deadPieceColor;
-  const selectClass = isSelectDeadPiece && isSameColor ? u.select : "";
+  const selectedAvailableMoves = boardArea[fromPlaceData.place]?.availableMoves;
+  const hasAvailableMove = selectedAvailableMoves?.length > 0;
+  const selectClass =
+    isSelectDeadPiece && isSameColor && hasAvailableMove ? u.select : "";
+  const unavailableClass = !hasAvailableMove ? u.unavailable : "";
   const dispatch = useDispatch();
 
   function handlePieceClick() {
@@ -24,7 +28,7 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
   return (
     pieces.length > 0 && (
       <div
-        className={`${u.piece} ${u[pieceColor]} ${selectClass}`}
+        className={`${u.piece} ${u[pieceColor]} ${selectClass} ${unavailableClass}`}
         style={style}
         onClick={handlePieceClick}
       >
