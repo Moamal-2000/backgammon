@@ -36,20 +36,11 @@ const GameButtons = () => {
   }
 
   useEffect(() => {
-    if (!winnerPlayer) return;
-
-    setTimeout(() => {
-      const playAgain = confirm(
-        `Congratulation! ${winnerPlayer} player is the winner, Do you want to play again?`
-      );
-
-      if (playAgain) restartGame(false);
-    }, 500);
+    if (winnerPlayer) showWinnerMessage(winnerPlayer, restartGame);
   }, [winnerPlayer]);
 
   useEffect(() => {
-    if (!isDiceThrew || !gameStart) return;
-    dispatch(checkPlayableOrChangeTurn());
+    if (isDiceThrew || gameStart) dispatch(checkPlayableOrChangeTurn());
   }, [validDiceNumbers]);
 
   return (
@@ -75,3 +66,13 @@ const GameButtons = () => {
 };
 
 export default GameButtons;
+
+function showWinnerMessage(winnerPlayer, restartGameFun) {
+  setTimeout(() => {
+    const playAgain = confirm(
+      `Congratulation! ${winnerPlayer} player is the winner, Do you want to play again?`
+    );
+
+    if (playAgain) restartGameFun(false);
+  }, 500);
+}
