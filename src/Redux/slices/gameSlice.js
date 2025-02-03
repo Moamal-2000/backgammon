@@ -13,6 +13,7 @@ const initialState = {
   selectedPlace: null,
   boardArea,
   isBoardDataUpdated: false,
+  showBeginDice: false,
   isDiceThrew: false,
   gameStart: false,
   deadPieceColor: "",
@@ -85,7 +86,7 @@ const gameSlice = createSlice({
     },
     throwDices(state, { payload }) {
       const { numberOfDices } = payload;
-      const { isDiceThrew, gameStart } = state;
+      const { isDiceThrew, gameStart, showBeginDice } = state;
 
       if (isDiceThrew || !gameStart) return;
 
@@ -93,6 +94,7 @@ const gameSlice = createSlice({
       const isDouble = diceNumbers[0] === diceNumbers[1];
 
       if (isDouble) diceNumbers.push(...diceNumbers);
+      if (!showBeginDice) state.showBeginDice = true;
 
       state.isDiceThrew = true;
       state.isBoardDataUpdated = false;
