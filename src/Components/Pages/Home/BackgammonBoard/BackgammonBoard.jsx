@@ -23,9 +23,7 @@ const BackgammonBoard = () => {
   const {
     boardArea,
     gameStart,
-    showBeginDices,
     diceMoves,
-    beginDice,
     playerTurn,
     isDiceThrew,
     isBoardDataUpdated,
@@ -33,8 +31,7 @@ const BackgammonBoard = () => {
   } = useSelector((s) => s.game);
   const dispatch = useDispatch();
   const pieces = getPiecesData(boardArea);
-  const shouldShowBeginDices = gameStart && showBeginDices;
-  const showGameDices = gameStart && !showBeginDices && diceMoves.length !== 0;
+  const showGameDices = gameStart && diceMoves.length !== 0;
 
   useEffect(() => {
     if (!gameStart) return;
@@ -96,11 +93,7 @@ const BackgammonBoard = () => {
           />
         </div>
 
-        <Dice
-          shouldShowBeginDices={shouldShowBeginDices}
-          showGameDices={showGameDices}
-          beginDiceNumber={beginDice[0]}
-        />
+        <Dice showGameDices={showGameDices} number={diceMoves?.[0]} />
       </div>
 
       <Bar />
@@ -118,10 +111,9 @@ const BackgammonBoard = () => {
         </div>
 
         <Dice
-          shouldShowBeginDices={shouldShowBeginDices}
           showGameDices={showGameDices}
-          beginDiceNumber={beginDice[1]}
           color="black"
+          number={diceMoves?.[1]}
         />
       </div>
     </div>

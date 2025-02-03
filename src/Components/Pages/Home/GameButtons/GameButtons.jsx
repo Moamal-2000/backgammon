@@ -18,15 +18,11 @@ const GameButtons = () => {
 
   function startTheGame() {
     dispatch(updateGameState({ key: "gameStart", value: true }));
-    dispatch(updateGameState({ key: "showBeginDices", value: true }));
+    dispatch(updateGameState({ key: "isDiceThrew", value: true }));
     dispatch(updateGameState({ key: "boardArea", value: boardArea }));
     dispatch(
       updateGameState({ key: "outPieces", value: { black: [], white: [] } })
     );
-
-    setTimeout(() => {
-      dispatch(updateGameState({ key: "showBeginDices", value: false }));
-    }, 2000);
   }
 
   function restartGame(showAlert = true) {
@@ -63,8 +59,8 @@ const GameButtons = () => {
   }, [validDiceNumbers]);
 
   useEffect(() => {
-    handleThrowDice()
-  }, [])
+    handleThrowDice();
+  }, []);
 
   return (
     <div className={s.buttons}>

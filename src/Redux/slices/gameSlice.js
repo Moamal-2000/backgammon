@@ -13,7 +13,6 @@ const initialState = {
   selectedPlace: null,
   boardArea,
   isBoardDataUpdated: false,
-  showBeginDices: false,
   isDiceThrew: false,
   gameStart: false,
   deadPieceColor: "",
@@ -21,7 +20,6 @@ const initialState = {
   playerTurn: "",
   validDiceNumbers: [],
   diceMoves: [],
-  beginDice: [],
 };
 
 const gameSlice = createSlice({
@@ -105,7 +103,8 @@ const gameSlice = createSlice({
       const wonPlayer = firstDice > secondDice ? "white" : "black";
 
       state.playerTurn = wonPlayer;
-      state.beginDice = [firstDice, secondDice];
+      state.diceMoves = [firstDice, secondDice];
+      state.isBoardDataUpdated = false;
     },
     selectDeadPiece: (state, { payload }) => {
       const { pieceColor } = payload;
@@ -151,11 +150,11 @@ const gameSlice = createSlice({
       resetGameAfterWin(state);
     },
     checkPlayableOrChangeTurn: (state) => {
-      const { validDiceNumbers, playerTurn, isDiceThrew } = state;
+      const { validDiceNumbers, playerTurn, isDiceThrew, gameStart } = state;
       const shouldChangeTurn = [...validDiceNumbers].length === 0;
       const opponent = playerTurn === "white" ? "black" : "white";
 
-      if (!shouldChangeTurn & isDiceThrew) return;
+      if ((!shouldChangeTurn && isDiceThrew) || gameStart) return;
 
       console.log(`No more moves, ${opponent} turn.`);
       state.playerTurn = opponent;
@@ -185,7 +184,6 @@ export const {
 function resetGameAfterWin(state) {
   Object.assign(state, {
     gameStart: false,
-    showBeginDices: false,
     isDiceThrew: false,
     diceMoves: [],
     playerTurn: "",
