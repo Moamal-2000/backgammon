@@ -126,10 +126,23 @@ export function getPlaceData({
   const numberOfSelectedPiece = homeSideRange.indexOf(fromPlaceData.place) + 1;
   const restDiceMoves = getRestMoves(diceMoves, numberOfSelectedPiece);
   const selectedAvailableMoves = boardArea[fromPlaceData.place]?.availableMoves;
-  const hasAvailableMove = selectedAvailableMoves?.length > 0;
+  const selectedPoint =
+    playerTurn === "white" ? fromPlaceData.place : 25 - fromPlaceData.place;
+  const hasAvailableOutPiece = diceMoves.includes(selectedPoint);
 
   // Main conditions
   const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
+
+  const shouldOutPiece =
+    allPiecesInInnerHome &&
+    !playerHasDeadPieces &&
+    !isAllDiceMovesUsed &&
+    placeHasPiece;
+
+  const hasAvailableMove =
+    selectedAvailableMoves?.length > 0 ||
+    hasAvailableOutPiece ||
+    shouldOutPiece;
 
   const canSelectPiece =
     placeHasPieces &&
@@ -137,12 +150,6 @@ export function getPlaceData({
     isDiceThrew &&
     !playerHasDeadPieces &&
     hasAvailableMove;
-
-  const shouldOutPiece =
-    allPiecesInInnerHome &&
-    !playerHasDeadPieces &&
-    !isAllDiceMovesUsed &&
-    placeHasPiece;
 
   const isCurrentMoveValid = isValidMove({
     fromPlaceData,

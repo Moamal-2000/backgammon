@@ -10,6 +10,11 @@
   user-select: none;
   position: relative;
   overflow: hidden;
+
+  &.active {
+    animation: border-glow .8s infinite alternate ease-in-out;
+    filter: blur(.5);
+  }
 }
 
 .piecesArea .piece {
@@ -41,4 +46,14 @@ $piece-gap: -25px;
   }
 
   $piece-gap: $piece-gap + 19.6px;
+}
+
+@keyframes border-glow {
+  from {
+    border-color: #6d3c08;
+  }
+
+  to {
+    border-color: #dbb087;
+  }
 }

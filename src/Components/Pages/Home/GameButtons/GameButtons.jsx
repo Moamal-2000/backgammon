@@ -11,8 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
 const GameButtons = () => {
-  const { gameStart, isDiceThrew, winnerPlayer, validDiceNumbers } =
-    useSelector((s) => s.game);
+  const { gameStart, winnerPlayer, validDiceNumbers } = useSelector(
+    (s) => s.game
+  );
   const dispatch = useDispatch();
 
   function handleStartGame() {
@@ -40,7 +41,7 @@ const GameButtons = () => {
   }, [winnerPlayer]);
 
   useEffect(() => {
-    if (isDiceThrew || gameStart) dispatch(checkPlayableOrChangeTurn());
+    dispatch(checkPlayableOrChangeTurn());
   }, [validDiceNumbers]);
 
   return (

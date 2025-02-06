@@ -55,12 +55,28 @@ const BackgammonBoard = () => {
       });
 
       const availablePlaces = availablePieces.map((point) => point.place);
-      const validDiceNumbers = diceMoves.filter((diceMove) =>
-        availablePlaces.includes(
-          playerTurn === "white" ? diceMove : 25 - diceMove
-        )
-      );
 
+      const validDiceNumbers = diceMoves.filter((diceMove) => {
+        const outByPlaceNumber =
+          playerTurn === "white" ? diceMove : 25 - diceMove;
+
+        return availablePlaces.includes(outByPlaceNumber);
+      });
+
+      // updatedBoardArea.forEach(point => {
+
+      // })
+
+      diceMoves.forEach((diceMove) => {
+        updatedBoardArea.forEach((point) => {
+          diceMove === point.place;
+        });
+      });
+
+      // console.log("availablePieces", availablePieces);
+      // console.log("validDiceNumbers", validDiceNumbers);
+      // console.log("availablePlaces", availablePlaces);
+      // console.log("________");
       dispatch(
         updateGameState({ key: "validDiceNumbers", value: validDiceNumbers })
       );

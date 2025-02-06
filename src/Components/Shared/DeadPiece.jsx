@@ -16,6 +16,7 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
   const isSameColor = pieceColor === deadPieceColor;
   const selectedAvailableMoves = boardArea[fromPlaceData.place]?.availableMoves;
   const hasAvailableMove = selectedAvailableMoves?.length > 0;
+
   const selectClass =
     isSelectDeadPiece && isSameColor && hasAvailableMove ? u.select : "";
   const unavailableClass = !hasAvailableMove ? u.unavailable : "";

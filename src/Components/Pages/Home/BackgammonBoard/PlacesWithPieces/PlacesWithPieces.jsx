@@ -50,22 +50,25 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
     });
 
     if (shouldOutPiece) {
-      dispatch(outPiece({ from: fromPlaceData, playerTurn, restDiceMoves }));
-      dispatch(checkWinner());
-      return;
+      // dispatch(outPiece({ from: fromPlaceData, playerTurn, restDiceMoves }));
+      // dispatch(checkWinner());
+      // return;
     }
 
     if (unSelectPlace) {
+      console.log('unSelectPlace');
       dispatch(updateGameState({ key: "selectedPlace", value: null }));
       return;
     }
 
     if (isCurrentMoveValid) {
+      console.log('isCurrentMoveValid');
       dispatch(movePiece({ placeData: fromPlaceData.place, shouldEat, moves }));
       return;
     }
 
     if (canSelectPiece) {
+      console.log('canSelectPiece');
       dispatch(selectPiece({ placeData: fromPlaceData.place }));
     }
   }

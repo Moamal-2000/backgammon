@@ -3,7 +3,6 @@ import {
   calcValidDiceNumbers,
   getDiceNumbers,
   getRestMoves,
-  rollDice,
 } from "@/Functions/helper";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -62,7 +61,6 @@ const gameSlice = createSlice({
     },
     outPiece: (state, { payload }) => {
       const { from, playerTurn, restDiceMoves } = payload;
-      const opponent = playerTurn === "white" ? "black" : "white";
       const isBlackPlayer = playerTurn === "black";
       const diceMove = isBlackPlayer ? 25 - from.place : from.place;
 
@@ -77,8 +75,6 @@ const gameSlice = createSlice({
         state.outPieces[playerTurn].push(playerTurn);
       }
 
-      if (allMovesUsed) state.playerTurn = opponent;
-
       state.isBoardDataUpdated = false;
       state.isDiceThrew = !allMovesUsed;
       state.selectedPlace = null;
@@ -90,7 +86,9 @@ const gameSlice = createSlice({
 
       if (isDiceThrew || !gameStart) return;
 
-      const diceNumbers = rollDice(numberOfDices);
+      console.log('throwDices');
+      // const diceNumbers = rollDice(numberOfDices);
+      const diceNumbers = [5, 5];
       const isDouble = diceNumbers[0] === diceNumbers[1];
 
       if (isDouble) diceNumbers.push(...diceNumbers);
@@ -104,7 +102,7 @@ const gameSlice = createSlice({
       const { firstDice, secondDice } = getDiceNumbers(true);
       const wonPlayer = firstDice > secondDice ? "white" : "black";
 
-      state.playerTurn = wonPlayer;
+      state.playerTurn = "white";
       state.diceMoves = [firstDice, secondDice];
       state.isBoardDataUpdated = false;
     },
@@ -156,7 +154,7 @@ const gameSlice = createSlice({
       const shouldChangeTurn = [...validDiceNumbers].length === 0;
       const opponent = playerTurn === "white" ? "black" : "white";
 
-      if ((!shouldChangeTurn && isDiceThrew) || gameStart) return;
+      if (!shouldChangeTurn || isDiceThrew || !gameStart) return;
 
       console.log(`No more moves, ${opponent} turn.`);
       state.playerTurn = opponent;
