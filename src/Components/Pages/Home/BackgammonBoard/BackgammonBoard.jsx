@@ -48,7 +48,7 @@ const BackgammonBoard = () => {
     const isPlayerHasDeadPiece =
       playerTurn && updatedBoardArea[0].deadPieces[playerTurn].length > 0;
 
-    if (shouldOutPiece && !isPlayerHasDeadPiece) {
+    if (shouldOutPiece && !isPlayerHasDeadPiece && !isBoardDataUpdated) {
       const availablePieces = getPlayerPieces({
         boardArea: updatedBoardArea,
         playerTurn,
@@ -63,23 +63,10 @@ const BackgammonBoard = () => {
         return availablePlaces.includes(outByPlaceNumber);
       });
 
-      // updatedBoardArea.forEach(point => {
-
-      // })
-
-      diceMoves.forEach((diceMove) => {
-        updatedBoardArea.forEach((point) => {
-          diceMove === point.place;
-        });
-      });
-
-      // console.log("availablePieces", availablePieces);
-      // console.log("validDiceNumbers", validDiceNumbers);
-      // console.log("availablePlaces", availablePlaces);
-      // console.log("________");
       dispatch(
         updateGameState({ key: "validDiceNumbers", value: validDiceNumbers })
       );
+      dispatch(updateBoardArea({ updatedBoardArea }));
       return;
     }
 

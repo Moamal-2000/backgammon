@@ -2,9 +2,7 @@
 
 import { getPlaceData } from "@/Functions/helper";
 import {
-  checkWinner,
   movePiece,
-  outPiece,
   selectPiece,
   updateGameState,
 } from "@/Redux/slices/gameSlice";
@@ -35,8 +33,6 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       unSelectPlace,
       shouldEat,
       canSelectPiece,
-      restDiceMoves,
-      shouldOutPiece,
       isCurrentMoveValid,
     } = getPlaceData({
       fromPlaceData,
@@ -49,26 +45,17 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
       deadPieceColor,
     });
 
-    if (shouldOutPiece) {
-      // dispatch(outPiece({ from: fromPlaceData, playerTurn, restDiceMoves }));
-      // dispatch(checkWinner());
-      // return;
-    }
-
     if (unSelectPlace) {
-      console.log('unSelectPlace');
       dispatch(updateGameState({ key: "selectedPlace", value: null }));
       return;
     }
 
     if (isCurrentMoveValid) {
-      console.log('isCurrentMoveValid');
       dispatch(movePiece({ placeData: fromPlaceData.place, shouldEat, moves }));
       return;
     }
 
     if (canSelectPiece) {
-      console.log('canSelectPiece');
       dispatch(selectPiece({ placeData: fromPlaceData.place }));
     }
   }

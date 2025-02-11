@@ -86,7 +86,6 @@ const gameSlice = createSlice({
 
       if (isDiceThrew || !gameStart) return;
 
-      console.log('throwDices');
       // const diceNumbers = rollDice(numberOfDices);
       const diceNumbers = [5, 5];
       const isDouble = diceNumbers[0] === diceNumbers[1];
