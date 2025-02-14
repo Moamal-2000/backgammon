@@ -4,6 +4,7 @@ import { getPlaceData } from "@/Functions/helper";
 import {
   movePiece,
   selectPiece,
+  updateAvailableDices,
   updateGameState,
 } from "@/Redux/slices/gameSlice";
 import u from "@/Styles/utilsClasses.module.scss";

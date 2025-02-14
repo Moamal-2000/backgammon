@@ -267,6 +267,8 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
     updatedBoardArea[index] = pieceData;
   });
 
+  console.log("updatedBoardArea", updatedBoardArea);
+
   return updatedBoardArea;
 }
 
@@ -304,38 +306,41 @@ export function calcValidDiceNumbers({
   playerTurn,
   diceMoves,
 }) {
+  const deadPieces = updatedBoardArea?.[0]?.deadPieces[playerTurn] || [];
+  const opponent = playerTurn === "white" ? "black" : "white";
+  const validDiceNumbers = new Set();
   const playerPieces = getPlayerPieces({
     boardArea: updatedBoardArea,
     playerTurn,
   });
 
-  const allAvailableMoves = playerPieces
-    .map((point) => point.availableMoves)
-    .reduce((acc, curr) => [...acc, ...curr], []);
+  playerPieces.forEach(({ place, availableMoves }) => {
+    diceMoves.forEach((diceMove) => {
+      const isValidMove = availableMoves.includes(
+        playerTurn === "black" ? place + diceMove : place - diceMove
+      );
+      if (isValidMove) validDiceNumbers.add(diceMove);
+    });
+  });
 
-  const allValidDiceNumbers = allAvailableMoves
-    .map((availableMove) => {
-      const validPoint = playerPieces.find((point) =>
-        point.availableMoves.includes(availableMove)
+  if (deadPieces.length > 0) {
+    diceMoves.forEach((diceMove) => {
+      const entryPoint = playerTurn === "white" ? 25 - diceMove : diceMove;
+      const entryPointData = updatedBoardArea.find(
+        ({ place }) => place === entryPoint
       );
 
-      return diceMoves.map((diceMove) => {
-        const expectedDiceMove =
-          Math.abs(validPoint?.place - availableMove) === diceMove;
+      const hasMoreThanPiece = entryPointData?.pieces?.length > 1;
+      const hasOpponentPiece = entryPointData?.pieces?.[0] === opponent;
+      const isPlaceEmpty = entryPointData?.pieces?.length === 0;
+      const isValidMove =
+        (!hasMoreThanPiece && hasOpponentPiece) ||
+        (hasMoreThanPiece && !hasOpponentPiece) ||
+        isPlaceEmpty;
 
-        const isWhitePlayer = playerTurn === "white";
-        const isDeadPiece = validPoint?.place === 0;
-        const validMove = validPoint.availableMoves.includes(25 - diceMove);
-        const whitePlayerCondition = isWhitePlayer && isDeadPiece && validMove;
+      if (isValidMove) validDiceNumbers.add(diceMove);
+    });
+  }
 
-        if (expectedDiceMove || whitePlayerCondition) return diceMove;
-      });
-    })
-    .flat(1);
-
-  const validDiceNumbersWithoutRepeat = [
-    ...new Set(allValidDiceNumbers),
-  ].filter((diceNumber) => diceNumber);
-
-  return validDiceNumbersWithoutRepeat;
+  return [...validDiceNumbers];
 }

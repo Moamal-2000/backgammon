@@ -63,6 +63,7 @@ const gameSlice = createSlice({
       const { from, playerTurn, restDiceMoves } = payload;
       const isBlackPlayer = playerTurn === "black";
       const diceMove = isBlackPlayer ? 25 - from.place : from.place;
+      const opponent = playerTurn === "white" ? "black" : "white";
 
       const fromPlace = state.boardArea.find(
         (point) => point.place === from.place
@@ -74,6 +75,8 @@ const gameSlice = createSlice({
         fromPlace.pieces.pop();
         state.outPieces[playerTurn].push(playerTurn);
       }
+
+      if (allMovesUsed) state.playerTurn = opponent;
 
       state.isBoardDataUpdated = false;
       state.isDiceThrew = !allMovesUsed;
@@ -87,7 +90,7 @@ const gameSlice = createSlice({
       if (isDiceThrew || !gameStart) return;
 
       // const diceNumbers = rollDice(numberOfDices);
-      const diceNumbers = [5, 5];
+      const diceNumbers = [2, 5];
       const isDouble = diceNumbers[0] === diceNumbers[1];
 
       if (isDouble) diceNumbers.push(...diceNumbers);
@@ -101,8 +104,9 @@ const gameSlice = createSlice({
       const { firstDice, secondDice } = getDiceNumbers(true);
       const wonPlayer = firstDice > secondDice ? "white" : "black";
 
-      state.playerTurn = "white";
-      state.diceMoves = [firstDice, secondDice];
+      state.playerTurn = "black";
+      // state.diceMoves = [firstDice, secondDice];
+      state.diceMoves = [1, 5];
       state.isBoardDataUpdated = false;
     },
     selectDeadPiece: (state, { payload }) => {
@@ -155,10 +159,10 @@ const gameSlice = createSlice({
 
       if (!shouldChangeTurn || isDiceThrew || !gameStart) return;
 
-      console.log(`No more moves, ${opponent} turn.`);
-      state.playerTurn = opponent;
-      state.isDiceThrew = false;
-      state.diceMoves = [];
+      // console.log(`No more moves, ${opponent} turn.`);
+      // state.playerTurn = opponent;
+      // state.isDiceThrew = false;
+      // state.diceMoves = [];
     },
     startTheGame: (state) => {
       state.gameStart = true;

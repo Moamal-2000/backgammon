@@ -67,6 +67,7 @@ const BackgammonBoard = () => {
         updateGameState({ key: "validDiceNumbers", value: validDiceNumbers })
       );
       dispatch(updateBoardArea({ updatedBoardArea }));
+      // dispatch(updateAvailableDices({ updatedBoardArea }));
       return;
     }
 
@@ -81,6 +82,10 @@ const BackgammonBoard = () => {
 
     dispatch(updateBoardArea({ updatedBoardArea }));
   }, [boardArea, isDiceThrew, isBoardDataUpdated, selectedPlace]);
+
+  // useEffect(() => {
+  //   console.log(boardArea);
+  // }, [boardArea])
 
   return (
     <div className={s.board}>
