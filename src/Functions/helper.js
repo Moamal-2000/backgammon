@@ -31,7 +31,7 @@ export function getPieces(i) {
 }
 
 export function getBoardArea() {
-  const deadPieces = { black: [], white: [] };
+  const deadPieces = { black: ["black"], white: ["white"] };
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {
@@ -118,7 +118,7 @@ export function getPlaceData({
   const unSelectPlace = fromPlaceData.place === selectedPlace;
   const isSamePieceColor = toPlaceData.pieces?.[0] === playerTurn;
   const playerHasDeadPieces = boardArea[0].deadPieces[playerTurn].length > 0;
-  const allPiecesInInnerHome = areAllPiecesInInnerHome(boardArea, playerTurn);
+  const allPiecesInInnerHome = areAllPiecesInHome(boardArea, playerTurn);
   const isAllDiceMovesUsed = diceMoves.length === 0;
   const placeHasPiece = fromPlaceData.pieces.length > 0;
   const homeSideRange =
@@ -203,7 +203,7 @@ export function isValidMove({
   return forwardMove && validDiceMove && validPlace;
 }
 
-export function areAllPiecesInInnerHome(boardArea, playerTurn) {
+export function areAllPiecesInHome(boardArea, playerTurn) {
   if (!playerTurn) return false;
 
   const innerHomeRange =
@@ -248,6 +248,7 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
         placeData: availablePieces[i],
         availablePlace: availablePieces[i].place,
         playerTurn,
+        boardArea,
       });
 
       const availablePlace = updatedBoardArea[availableMove];
@@ -267,8 +268,6 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
     updatedBoardArea[index] = pieceData;
   });
 
-  console.log("updatedBoardArea", updatedBoardArea);
-
   return updatedBoardArea;
 }
 
@@ -277,14 +276,17 @@ export function getAvailableMove({
   placeData,
   availablePlace,
   playerTurn,
+  boardArea,
 }) {
   const isWhitePlayer = playerTurn === "white";
   const isSelectDeadPiece = placeData?.place === 0;
+  const shouldOutPiece = areAllPiecesInHome(boardArea, playerTurn);
+  const result = Math.abs(25 - availablePlace - diceMove);
 
-  if (isWhitePlayer && isSelectDeadPiece)
-    return Math.abs(25 - availablePlace - diceMove);
-
+  if (isWhitePlayer && isSelectDeadPiece) return result;
   if (isWhitePlayer) return availablePlace - diceMove;
+  if (shouldOutPiece && !isWhitePlayer)
+    if (diceMove + availablePlace === 25) return 0;
 
   return diceMove + availablePlace;
 }
@@ -308,21 +310,31 @@ export function calcValidDiceNumbers({
 }) {
   const deadPieces = updatedBoardArea?.[0]?.deadPieces[playerTurn] || [];
   const opponent = playerTurn === "white" ? "black" : "white";
+  const isBlackPlayer = playerTurn === "black";
   const validDiceNumbers = new Set();
   const playerPieces = getPlayerPieces({
     boardArea: updatedBoardArea,
     playerTurn,
   });
+  const shouldOutPiece = areAllPiecesInHome(updatedBoardArea, playerTurn);
 
   playerPieces.forEach(({ place, availableMoves }) => {
     diceMoves.forEach((diceMove) => {
-      const isValidMove = availableMoves.includes(
-        playerTurn === "black" ? place + diceMove : place - diceMove
-      );
+      let availableMove = undefined;
+
+      if (isBlackPlayer && !shouldOutPiece) {
+        availableMove = place + diceMove;
+      } else if (isBlackPlayer && shouldOutPiece) {
+        availableMove = Math.abs(place + diceMove);
+        if (availableMove === 25) availableMove = 0;
+      } else availableMove = place - diceMove;
+
+      const isValidMove = availableMoves.includes(availableMove);
       if (isValidMove) validDiceNumbers.add(diceMove);
     });
   });
 
+  // Calc available dices for the dead pieces for both players
   if (deadPieces.length > 0) {
     diceMoves.forEach((diceMove) => {
       const entryPoint = playerTurn === "white" ? 25 - diceMove : diceMove;

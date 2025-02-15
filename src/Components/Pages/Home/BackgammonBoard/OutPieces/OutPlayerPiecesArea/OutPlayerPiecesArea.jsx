@@ -1,4 +1,4 @@
-import { areAllPiecesInInnerHome, getRestMoves } from "@/Functions/helper";
+import { areAllPiecesInHome, getRestMoves } from "@/Functions/helper";
 import { checkWinner, outPiece } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./OutPlayerPiecesArea.module.scss";
@@ -9,7 +9,7 @@ const OutPlayerPiecesArea = ({ pieces, piecesColor }) => {
   );
   const dispatch = useDispatch();
 
-  const allPiecesInInnerHome = areAllPiecesInInnerHome(boardArea, playerTurn);
+  const allPiecesInInnerHome = areAllPiecesInHome(boardArea, playerTurn);
   const selectedPlaceData = boardArea.find(
     (point) => point.place === selectedPlace
   );
