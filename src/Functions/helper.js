@@ -31,7 +31,7 @@ export function getPieces(i) {
 }
 
 export function getBoardArea() {
-  const deadPieces = { black: ["black"], white: ["white"] };
+  const deadPieces = { black: [], white: [] };
 
   return Array.from({ length: 25 }, (_, i) => {
     const placeData = {
@@ -278,6 +278,7 @@ export function getAvailableMove({
   playerTurn,
   boardArea,
 }) {
+  //! noticed that the point 6 in white have an issue in the available dice
   const isWhitePlayer = playerTurn === "white";
   const isSelectDeadPiece = placeData?.place === 0;
   const shouldOutPiece = areAllPiecesInHome(boardArea, playerTurn);
@@ -309,7 +310,6 @@ export function calcValidDiceNumbers({
   diceMoves,
 }) {
   const deadPieces = updatedBoardArea?.[0]?.deadPieces[playerTurn] || [];
-  const opponent = playerTurn === "white" ? "black" : "white";
   const isBlackPlayer = playerTurn === "black";
   const validDiceNumbers = new Set();
   const playerPieces = getPlayerPieces({
@@ -334,25 +334,40 @@ export function calcValidDiceNumbers({
     });
   });
 
-  // Calc available dices for the dead pieces for both players
-  if (deadPieces.length > 0) {
-    diceMoves.forEach((diceMove) => {
-      const entryPoint = playerTurn === "white" ? 25 - diceMove : diceMove;
-      const entryPointData = updatedBoardArea.find(
-        ({ place }) => place === entryPoint
-      );
-
-      const hasMoreThanPiece = entryPointData?.pieces?.length > 1;
-      const hasOpponentPiece = entryPointData?.pieces?.[0] === opponent;
-      const isPlaceEmpty = entryPointData?.pieces?.length === 0;
-      const isValidMove =
-        (!hasMoreThanPiece && hasOpponentPiece) ||
-        (hasMoreThanPiece && !hasOpponentPiece) ||
-        isPlaceEmpty;
-
-      if (isValidMove) validDiceNumbers.add(diceMove);
+  // Calculate for dead pieces
+  if (deadPieces.length > 0)
+    calcDeadPiecesForAvailableDices({
+      diceMoves,
+      playerTurn,
+      updatedBoardArea,
+      validDiceNumbers,
     });
-  }
 
   return [...validDiceNumbers];
+}
+
+function calcDeadPiecesForAvailableDices({
+  diceMoves,
+  playerTurn,
+  updatedBoardArea,
+  validDiceNumbers,
+}) {
+  const opponent = playerTurn === "white" ? "black" : "white";
+
+  diceMoves.forEach((diceMove) => {
+    const entryPoint = playerTurn === "white" ? 25 - diceMove : diceMove;
+    const entryPointData = updatedBoardArea.find(
+      ({ place }) => place === entryPoint
+    );
+
+    const hasMoreThanPiece = entryPointData?.pieces?.length > 1;
+    const hasOpponentPiece = entryPointData?.pieces?.[0] === opponent;
+    const isPlaceEmpty = entryPointData?.pieces?.length === 0;
+    const isValidMove =
+      (!hasMoreThanPiece && hasOpponentPiece) ||
+      (hasMoreThanPiece && !hasOpponentPiece) ||
+      isPlaceEmpty;
+
+    if (isValidMove) validDiceNumbers.add(diceMove);
+  });
 }
