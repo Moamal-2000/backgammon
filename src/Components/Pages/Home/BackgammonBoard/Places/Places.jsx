@@ -4,7 +4,6 @@ import { getPlaceData } from "@/Functions/helper";
 import {
   movePiece,
   selectPiece,
-  updateAvailableDices,
   updateGameState,
 } from "@/Redux/slices/gameSlice";
 import u from "@/Styles/utilsClasses.module.scss";
@@ -12,9 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import HighlightPlace from "./HighlightPlace/HighlightPlace";
 import Pieces from "./Pieces/Pieces";
 import PlaceNumber from "./PlaceNumber/PlaceNumber";
-import s from "./PlacesWithPieces.module.scss";
+import s from "./Places.module.scss";
 
-const PlacesWithPieces = ({ placesData, placesSide }) => {
+const Places = ({ placesData, placesSide }) => {
   const {
     playerTurn,
     selectedPlace,
@@ -91,4 +90,4 @@ const PlacesWithPieces = ({ placesData, placesSide }) => {
   });
 };
 
-export default PlacesWithPieces;
+export default Places;

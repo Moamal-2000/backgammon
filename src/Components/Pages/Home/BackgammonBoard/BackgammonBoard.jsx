@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./BackgammonBoard.module.scss";
 import Bar from "./Bar/Bar";
 import Dice from "./Dice/Dice";
-import PlacesWithPieces from "./PlacesWithPieces/PlacesWithPieces";
+import Places from "./Places/Places";
 
 const BackgammonBoard = () => {
   const {
@@ -87,14 +87,11 @@ const BackgammonBoard = () => {
     <div className={s.board}>
       <div className={s.leftTable}>
         <div className={`${s.top} ${s.reverse}`}>
-          <PlacesWithPieces placesData={pieces.leftTop} placesSide="top" />
+          <Places placesData={pieces.leftTop} placesSide="top" />
         </div>
 
         <div className={s.bottom}>
-          <PlacesWithPieces
-            placesData={pieces.leftBottom}
-            placesSide="bottom"
-          />
+          <Places placesData={pieces.leftBottom} placesSide="bottom" />
         </div>
 
         <Dice showGameDices={showGameDices} number={diceMoves?.[0]} />
@@ -104,14 +101,11 @@ const BackgammonBoard = () => {
 
       <div className={s.rightTable}>
         <div className={`${s.top} ${s.reverse}`}>
-          <PlacesWithPieces placesData={pieces.rightTop} placesSide="top" />
+          <Places placesData={pieces.rightTop} placesSide="top" />
         </div>
 
         <div className={s.bottom}>
-          <PlacesWithPieces
-            placesData={pieces.rightBottom}
-            placesSide="bottom"
-          />
+          <Places placesData={pieces.rightBottom} placesSide="bottom" />
         </div>
 
         <Dice
