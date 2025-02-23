@@ -1,0 +1,45 @@
+$gap-between-pieces: 2px;
+$stack-margin: 25;
+
+.baseStack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-between-pieces;
+}
+
+.secondStack {
+  position: absolute;
+  left: 0;
+  bottom: $stack-margin + px;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-between-pieces;
+}
+
+.thirdStack {
+  position: absolute;
+  left: 0;
+  bottom: $stack-margin + px;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-between-pieces;
+}
+
+.fourthStack {
+  position: absolute;
+  left: 0;
+  bottom: $stack-margin + px;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-between-pieces;
+}
+
+.lastStack {
+  position: absolute;
+  left: 0;
+  bottom: $stack-margin + px;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-between-pieces;
+}
