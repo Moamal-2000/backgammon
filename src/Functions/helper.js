@@ -371,3 +371,13 @@ function calcDeadPiecesForAvailableDices({
     if (isValidMove) validDiceNumbers.add(diceMove);
   });
 }
+
+export function getStackedPieces(pieces) {
+  const baseStack = pieces.slice(0, 5);
+  const secondStack = pieces.slice(5, 9);
+  const thirdStack = pieces.slice(9, 12);
+  const fourthStack = pieces.slice(12, 14);
+  const lastStack = pieces.slice(14, 15);
+
+  return {baseStack, secondStack, thirdStack, fourthStack, lastStack};
+}

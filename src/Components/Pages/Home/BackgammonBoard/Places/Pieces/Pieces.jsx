@@ -1,14 +1,12 @@
 "use client";
 
+import { getStackedPieces } from "@/Functions/helper";
 import Piece from "./Piece/Piece";
 import s from "./Pieces.module.scss";
 
 const Pieces = ({ data, unavailableClass }) => {
-  const baseStack = data.pieces.slice(0, 5);
-  const secondStack = data.pieces.slice(5, 9);
-  const thirdStack = data.pieces.slice(9, 12);
-  const fourthStack = data.pieces.slice(12, 14);
-  const lastStack = data.pieces.slice(14, 15);
+  const { baseStack, secondStack, thirdStack, fourthStack, lastStack } =
+    getStackedPieces(data.pieces);
 
   return (
     <div className={s.baseStack}>
