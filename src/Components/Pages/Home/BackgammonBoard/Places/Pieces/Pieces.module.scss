@@ -1,5 +1,6 @@
 $gap-between-pieces: 2px;
 $stack-margin: 25;
+$stack-classes-names: second, third, fourth, last;
 
 .baseStack {
   position: relative;
@@ -8,38 +9,13 @@ $stack-margin: 25;
   gap: $gap-between-pieces;
 }
 
-.secondStack {
-  position: absolute;
-  left: 0;
-  bottom: $stack-margin + px;
-  display: flex;
-  flex-direction: column;
-  gap: $gap-between-pieces;
-}
-
-.thirdStack {
-  position: absolute;
-  left: 0;
-  bottom: $stack-margin + px;
-  display: flex;
-  flex-direction: column;
-  gap: $gap-between-pieces;
-}
-
-.fourthStack {
-  position: absolute;
-  left: 0;
-  bottom: $stack-margin + px;
-  display: flex;
-  flex-direction: column;
-  gap: $gap-between-pieces;
-}
-
-.lastStack {
-  position: absolute;
-  left: 0;
-  bottom: $stack-margin + px;
-  display: flex;
-  flex-direction: column;
-  gap: $gap-between-pieces;
+@each $class-name in $stack-classes-names {
+  .#{$class-name}Stack {
+    position: absolute;
+    left: 0;
+    bottom: $stack-margin + px;
+    display: flex;
+    flex-direction: column;
+    gap: $gap-between-pieces;
+  }
 }
