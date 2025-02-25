@@ -1,12 +1,12 @@
 "use client";
 
-import { getStackedPieces } from "@/Functions/helper";
+import { getStackData } from "@/Functions/helper";
 import Piece from "./Piece/Piece";
 import s from "./Pieces.module.scss";
 
 const Pieces = ({ data, unavailableClass }) => {
-  const { baseStack, secondStack, thirdStack, fourthStack, lastStack } =
-    getStackedPieces(data.pieces);
+  const { stacks, lastStackName } = getStackData(data.pieces);
+  const { baseStack, secondStack, thirdStack, fourthStack, lastStack } = stacks;
 
   return (
     <div className={s.baseStack}>
@@ -17,8 +17,9 @@ const Pieces = ({ data, unavailableClass }) => {
             data={data}
             piece={piece}
             isLastPiece={0 === index}
-            pieceOrder={index + 1}
             unavailableClass={unavailableClass}
+            lastStackName={lastStackName}
+            stackName="baseStack"
           />
         );
       })}
@@ -31,8 +32,9 @@ const Pieces = ({ data, unavailableClass }) => {
               data={data}
               piece={piece}
               isLastPiece={0 === index}
-              pieceOrder={index + 1}
               unavailableClass={unavailableClass}
+              lastStackName={lastStackName}
+              stackName="secondStack"
             />
           );
         })}
@@ -45,8 +47,9 @@ const Pieces = ({ data, unavailableClass }) => {
                 data={data}
                 piece={piece}
                 isLastPiece={0 === index}
-                pieceOrder={index + 1}
                 unavailableClass={unavailableClass}
+                lastStackName={lastStackName}
+                stackName="thirdStack"
               />
             );
           })}
@@ -59,8 +62,9 @@ const Pieces = ({ data, unavailableClass }) => {
                   data={data}
                   piece={piece}
                   isLastPiece={0 === index}
-                  pieceOrder={index + 1}
                   unavailableClass={unavailableClass}
+                  lastStackName={lastStackName}
+                  stackName="fourthStack"
                 />
               );
             })}
@@ -73,8 +77,9 @@ const Pieces = ({ data, unavailableClass }) => {
                     data={data}
                     piece={piece}
                     isLastPiece={0 === index}
-                    pieceOrder={index + 1}
                     unavailableClass={unavailableClass}
+                    lastStackName={lastStackName}
+                    stackName="lastStack"
                   />
                 );
               })}

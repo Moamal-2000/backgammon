@@ -372,12 +372,25 @@ function calcDeadPiecesForAvailableDices({
   });
 }
 
-export function getStackedPieces(pieces) {
-  const baseStack = pieces.slice(0, 5);
-  const secondStack = pieces.slice(5, 9);
-  const thirdStack = pieces.slice(9, 12);
-  const fourthStack = pieces.slice(12, 14);
-  const lastStack = pieces.slice(14, 15);
+export function getStackData(pieces) {
+  const stacks = {
+    baseStack: pieces.slice(0, 5),
+    secondStack: pieces.slice(5, 9),
+    thirdStack: pieces.slice(9, 12),
+    fourthStack: pieces.slice(12, 14),
+    lastStack: pieces.slice(14, 15),
+  };
 
-  return {baseStack, secondStack, thirdStack, fourthStack, lastStack};
+  const lastStackName = getLastStackName(stacks);
+
+  return { stacks, lastStackName };
+}
+
+export function getLastStackName(stacks) {
+  if (stacks.lastStack.length > 0) return "lastStack";
+  if (stacks.fourthStack.length > 0) return "fourthStack";
+  if (stacks.thirdStack.length > 0) return "thirdStack";
+  if (stacks.secondStack.length > 0) return "secondStack";
+  if (stacks.baseStack.length > 0) return "baseStack";
+  return "No stacks";
 }
