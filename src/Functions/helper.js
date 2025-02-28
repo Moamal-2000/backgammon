@@ -394,3 +394,20 @@ export function getLastStackName(stacks) {
   if (stacks.baseStack.length > 0) return "baseStack";
   return "No stacks";
 }
+
+export function calculateMovesToWin(boardArea, playerTurn) {
+  const playerPieces = getPlayerPieces({ boardArea, playerTurn });
+
+  const calcPoints = playerPieces.reduce((prevValue, point) => {
+    const amountOfPieces = point.pieces.length;
+
+    if (point.place === 0)
+      return point.deadPieces[playerTurn].length * 25 + prevValue;
+    if (playerTurn === "black")
+      return (25 - point?.place) * amountOfPieces + prevValue;
+
+    return point?.place * amountOfPieces + prevValue;
+  }, 0);
+
+  return calcPoints;
+}
