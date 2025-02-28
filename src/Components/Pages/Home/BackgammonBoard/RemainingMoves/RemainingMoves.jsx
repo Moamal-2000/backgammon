@@ -1,7 +1,7 @@
 "use client";
 
 import { calculateMovesToWin } from "@/Functions/helper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import s from "./RemainingMoves.module.scss";
 

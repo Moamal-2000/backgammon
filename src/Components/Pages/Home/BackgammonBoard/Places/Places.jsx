@@ -10,10 +10,9 @@ import u from "@/Styles/utilsClasses.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import HighlightPlace from "./HighlightPlace/HighlightPlace";
 import Pieces from "./Pieces/Pieces";
-import PlaceNumber from "./PlaceNumber/PlaceNumber";
 import s from "./Places.module.scss";
 
-const Places = ({ placesData, placesSide }) => {
+const Places = ({ placesData }) => {
   const {
     playerTurn,
     selectedPlace,
@@ -77,13 +76,6 @@ const Places = ({ placesData, placesSide }) => {
           data={data}
           boardArea={boardArea}
           selectedPlace={selectedPlace}
-        />
-
-        <PlaceNumber
-          data={data}
-          boardArea={boardArea}
-          selectedPlace={selectedPlace}
-          placesSide={placesSide}
         />
       </div>
     );
