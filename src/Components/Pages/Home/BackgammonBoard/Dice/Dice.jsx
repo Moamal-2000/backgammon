@@ -15,6 +15,7 @@ const Dice = ({ showGameDices, color, size = 50, number }) => {
   const showDiceClass = showGameDices && diceNumber ? s.showDice : "";
 
   if (showBeginDice) blackNoun = playerTurn === "black" ? "-black" : "";
+  if (number === undefined) return "";
 
   return (
     <Image
