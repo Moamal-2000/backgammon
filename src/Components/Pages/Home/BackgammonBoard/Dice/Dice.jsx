@@ -12,21 +12,25 @@ const Dice = ({ showGameDices, color, size = 50, number }) => {
   let blackNoun = color === "black" ? "-black" : "";
 
   const invalidClass = !isValidDice ? s.invalid : "";
-  const showDiceClass = showGameDices && diceNumber ? s.showDice : "";
 
   if (showBeginDice) blackNoun = playerTurn === "black" ? "-black" : "";
-  if (number === undefined) return "";
 
-  return (
-    <Image
-      className={`${s.dice} ${invalidClass} ${showDiceClass}`}
-      src={`/dice${number}${blackNoun}.png`}
-      alt={`dice ${diceNumber}`}
-      width={size}
-      height={size}
-      priority={true}
-    />
-  );
+  return [1, 2, 3, 4, 5, 6].map((numberInMap) => {
+    const showDiceClass =
+      showGameDices && diceNumber && numberInMap === number ? s.showDice : "";
+
+    return (
+      <Image
+        className={`${s.dice} ${invalidClass} ${showDiceClass}`}
+        src={`/dice${numberInMap}${blackNoun}.png`}
+        key={`${numberInMap}-dice`}
+        alt={`dice ${diceNumber}`}
+        width={size}
+        height={size}
+        priority={true}
+      />
+    );
+  });
 };
 
 export default Dice;
