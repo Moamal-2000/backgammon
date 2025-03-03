@@ -12,9 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./GameButtons.module.scss";
 
 const GameButtons = () => {
-  const { gameStart, winnerPlayer, validDiceNumbers } = useSelector(
-    (s) => s.game
-  );
+  const { gameStart, winnerPlayer, validDiceNumbers, isDiceThrew } =
+    useSelector((s) => s.game);
   const dispatch = useDispatch();
 
   function handleStartGame() {
@@ -62,7 +61,12 @@ const GameButtons = () => {
         Restart game
       </button>
 
-      <button className={s.throwButton} type="button" onClick={handleThrowDice}>
+      <button
+        className={s.throwButton}
+        type="button"
+        onClick={handleThrowDice}
+        disabled={isDiceThrew || !gameStart}
+      >
         Throw dice
       </button>
     </div>
