@@ -130,6 +130,10 @@ export function getPlaceData({
   const selectedPoint =
     playerTurn === "white" ? fromPlaceData.place : 25 - fromPlaceData.place;
   const hasAvailableOutPiece = diceMoves.includes(selectedPoint);
+  const hasNormalMove = selectedAvailableMoves.find((move) => move > 0);
+  const isInnerHomePiece = numberOfSelectedPiece !== 0;
+  const innerPiecesCondition =
+    !isInnerHomePiece || (isInnerHomePiece && hasNormalMove);
 
   // Main conditions
   const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
@@ -150,7 +154,8 @@ export function getPlaceData({
     isPlayerPiece &&
     isDiceThrew &&
     !playerHasDeadPieces &&
-    hasAvailableMove;
+    hasAvailableMove &&
+    innerPiecesCondition;
 
   const isCurrentMoveValid = isValidMove({
     fromPlaceData,
@@ -416,7 +421,7 @@ export function calculateMovesToWin(boardArea, playerTurn) {
 export function playSound(fileName, extension = "mp3") {
   const sound = new Audio(`/Sounds/Game/${fileName}.${extension}`);
   sound.play();
-  return sound
+  return sound;
 }
 
 export function preloadGameSounds() {
