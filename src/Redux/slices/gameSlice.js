@@ -120,6 +120,7 @@ const gameSlice = createSlice({
       const isSelectDeadPiece = selectedPlace === fromPlaceData.place;
 
       if (playerTurn !== pieceColor || !isDiceThrew) return;
+      if (selectDeadPiece) playSound("select");
 
       state.selectedPlace = isSelectDeadPiece ? null : fromPlaceData.place;
       state.deadPieceColor = isSelectDeadPiece ? null : pieceColor;
