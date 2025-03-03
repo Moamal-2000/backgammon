@@ -1,6 +1,6 @@
 "use client";
 
-import { getPlaceData } from "@/Functions/helper";
+import { getPlaceData, playSound } from "@/Functions/helper";
 import {
   movePiece,
   selectPiece,
@@ -45,16 +45,19 @@ const Places = ({ placesData }) => {
     });
 
     if (unSelectPlace) {
+      playSound("select");
       dispatch(updateGameState({ key: "selectedPlace", value: null }));
       return;
     }
 
     if (isCurrentMoveValid) {
+      playSound("select");
       dispatch(movePiece({ placeData: fromPlaceData.place, shouldEat, moves }));
       return;
     }
 
     if (canSelectPiece) {
+      playSound("select");
       dispatch(selectPiece({ placeData: fromPlaceData.place }));
     }
   }

@@ -1,6 +1,7 @@
 import {
   BACKGAMMON_DATA,
   DICE_NUMBERS,
+  GAME_SOUNDS,
   PLAYERS_HOME_SIDE,
 } from "@/Data/constants";
 
@@ -410,4 +411,16 @@ export function calculateMovesToWin(boardArea, playerTurn) {
   }, 0);
 
   return calcPoints;
+}
+
+export function playSound(fileName, extension = "mp3") {
+  const sound = new Audio(`/Sounds/Game/${fileName}.${extension}`);
+  sound.play();
+}
+
+export function preloadGameSounds() {
+  GAME_SOUNDS.forEach((fileName) => {
+    const audio = new Audio(`/Sounds/Game/${fileName}.mp3`);
+    audio.preload = "auto";
+  });
 }
