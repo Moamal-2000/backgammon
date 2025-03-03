@@ -1,5 +1,6 @@
 "use client";
 
+import { playSound } from "@/Functions/helper";
 import {
   checkPlayableOrChangeTurn,
   resetGameState,
@@ -17,10 +18,12 @@ const GameButtons = () => {
   const dispatch = useDispatch();
 
   function handleStartGame() {
+    playSound("click");
     dispatch(startTheGame());
   }
 
   function handleThrowDice() {
+    playSound("roll-dice");
     dispatch(throwDices({ numberOfDices: 2 }));
   }
 
@@ -32,7 +35,7 @@ const GameButtons = () => {
 
     if (shouldRestart || !showAlert) {
       dispatch(resetGameState());
-      setTimeout(handleStartGame, 0);
+      setTimeout(() => dispatch(startTheGame()), 0);
     }
   }
 

@@ -416,6 +416,7 @@ export function calculateMovesToWin(boardArea, playerTurn) {
 export function playSound(fileName, extension = "mp3") {
   const sound = new Audio(`/Sounds/Game/${fileName}.${extension}`);
   sound.play();
+  return sound
 }
 
 export function preloadGameSounds() {

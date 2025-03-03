@@ -3,6 +3,7 @@ import {
   calcValidDiceNumbers,
   getDiceNumbers,
   getRestMoves,
+  playSound,
   rollDice,
 } from "@/Functions/helper";
 import { createSlice } from "@reduxjs/toolkit";
@@ -107,6 +108,7 @@ const gameSlice = createSlice({
       state.playerTurn = wonPlayer;
       state.diceMoves = [firstDice, secondDice];
       state.isBoardDataUpdated = false;
+      playSound("roll-dice");
     },
     selectDeadPiece: (state, { payload }) => {
       const { pieceColor } = payload;
