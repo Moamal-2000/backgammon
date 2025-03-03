@@ -49,15 +49,15 @@ export function getBoardArea() {
 
 export const rollDice = (diceCount) => {
   const now = new Date().getTime();
-  const results = [];
+  const diceNumbers = [];
 
   for (let i = 0; i < diceCount; i++) {
     const offset = Math.pow(6, i);
-    const roll = Math.floor((now / offset) % 6) + 1;
-    results.push(roll);
+    const rollNumber = Math.floor((now / offset) % 6) + 1;
+    diceNumbers.push(rollNumber);
   }
 
-  return results;
+  return diceNumbers;
 };
 
 export function getRestMoves(moves, playedMove) {

@@ -94,9 +94,12 @@ const gameSlice = createSlice({
       const diceNumbers = rollDice(numberOfDices);
       const isDouble = diceNumbers[0] === diceNumbers[1];
 
-      if (isDouble) diceNumbers.push(...diceNumbers);
-      if (!showBeginDice) state.showBeginDice = true;
+      if (isDouble) {
+        diceNumbers.push(...diceNumbers);
+        playSound("double-dice");
+      }
 
+      if (!showBeginDice) state.showBeginDice = true;
       state.isDiceThrew = true;
       state.isBoardDataUpdated = false;
       state.diceMoves = diceNumbers;
