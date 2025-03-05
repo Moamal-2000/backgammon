@@ -130,10 +130,16 @@ export function getPlaceData({
   const selectedPoint =
     playerTurn === "white" ? fromPlaceData.place : 25 - fromPlaceData.place;
   const hasAvailableOutPiece = diceMoves.includes(selectedPoint);
-  const hasNormalMove = selectedAvailableMoves.find((move) => move > 0);
+  const hasNormalMove = selectedAvailableMoves.some((move) => move > 0);
   const isInnerHomePiece = numberOfSelectedPiece !== 0;
-  const innerPiecesCondition =
-    !isInnerHomePiece || (isInnerHomePiece && hasNormalMove);
+  const isBiggerOrEqualPlace = getIsBiggerOrEqualPlace(
+    diceMoves,
+    playerTurn,
+    fromPlaceData.place
+  );
+  const isNormalPiece = !isInnerHomePiece && hasNormalMove;
+  const isOutPiece = isInnerHomePiece && isBiggerOrEqualPlace;
+  const innerOrNormalPieceCase = isNormalPiece || isOutPiece;
 
   // Main conditions
   const shouldEat = !isSamePieceColor && toPlaceData.pieces.length === 1;
@@ -155,7 +161,7 @@ export function getPlaceData({
     isDiceThrew &&
     !playerHasDeadPieces &&
     hasAvailableMove &&
-    innerPiecesCondition;
+    innerOrNormalPieceCase;
 
   const isCurrentMoveValid = isValidMove({
     fromPlaceData,
@@ -181,6 +187,15 @@ export function getPlaceData({
     shouldOutPiece,
     isCurrentMoveValid,
   };
+}
+
+export function getIsBiggerOrEqualPlace(diceMoves, playerTurn, place) {
+  const isBiggerOrEqualPlace = diceMoves.some((move) => {
+    if (playerTurn === "black") return move <= 25 - place;
+    return move <= place;
+  });
+
+  return isBiggerOrEqualPlace;
 }
 
 export function isValidMove({
