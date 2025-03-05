@@ -299,7 +299,6 @@ export function getAvailableMove({
   playerTurn,
   boardArea,
 }) {
-  //! noticed that the point 6 in white have an issue in the available dice
   const isWhitePlayer = playerTurn === "white";
   const isSelectDeadPiece = placeData?.place === 0;
   const shouldOutPiece = areAllPiecesInHome(boardArea, playerTurn);
