@@ -1,6 +1,6 @@
 "use client";
 
-import { getStackData } from "@/Functions/helper";
+import { getStackData } from "@/Functions/player";
 import Piece from "./Piece/Piece";
 import s from "./Pieces.module.scss";
 

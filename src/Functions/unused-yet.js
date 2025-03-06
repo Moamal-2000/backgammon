@@ -12,3 +12,12 @@ export function getExpandedDiceMoves(diceMoves) {
 
   return [...new Set(result)];
 }
+
+export function getIsBiggerOrEqualPlace(diceMoves, playerTurn, place) {
+  const isBiggerOrEqualPlace = diceMoves.some((move) => {
+    if (playerTurn === "black") return move <= 25 - place;
+    return move <= place;
+  });
+
+  return isBiggerOrEqualPlace;
+}

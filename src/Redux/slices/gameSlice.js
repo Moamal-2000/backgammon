@@ -2,10 +2,10 @@ import { boardArea } from "@/Data/staticData";
 import {
   calcValidDiceNumbers,
   getDiceNumbers,
-  getRestMoves,
-  playSound,
   rollDice,
-} from "@/Functions/helper";
+} from "@/Functions/dice";
+import { getRestMoves } from "@/Functions/movement";
+import { playSound } from "@/Functions/sound";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

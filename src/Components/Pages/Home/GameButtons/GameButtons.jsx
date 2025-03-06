@@ -1,6 +1,6 @@
 "use client";
 
-import { playSound } from "@/Functions/helper";
+import { playSound } from "@/Functions/sound";
 import {
   checkPlayableOrChangeTurn,
   resetGameState,

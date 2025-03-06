@@ -1,6 +1,6 @@
 "use client";
 
-import { preloadGameSounds } from "@/Functions/helper";
+import { preloadGameSounds } from "@/Functions/sound";
 import { useEffect } from "react";
 import BackgammonBoard from "../BackgammonBoard/BackgammonBoard";
 import OutPieces from "../BackgammonBoard/OutPieces/OutPieces";

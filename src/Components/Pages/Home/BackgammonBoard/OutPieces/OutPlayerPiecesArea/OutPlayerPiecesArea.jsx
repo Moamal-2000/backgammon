@@ -1,4 +1,5 @@
-import { areAllPiecesInHome, getRestMoves } from "@/Functions/helper";
+import { getRestMoves } from "@/Functions/movement";
+import { areAllPiecesInHome } from "@/Functions/validation";
 import { checkWinner, outPiece } from "@/Redux/slices/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./OutPlayerPiecesArea.module.scss";

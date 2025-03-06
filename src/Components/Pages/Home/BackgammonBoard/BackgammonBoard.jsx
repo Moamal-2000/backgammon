@@ -1,11 +1,9 @@
 "use client";
 
-import {
-  areAllPiecesInHome,
-  calcAvailablePlaces,
-  getPiecesData,
-  getPlayerPieces,
-} from "@/Functions/helper";
+import { getPiecesData } from "@/Functions/board";
+import { calcAvailablePlaces } from "@/Functions/movement";
+import { getPlayerPieces } from "@/Functions/player";
+import { areAllPiecesInHome } from "@/Functions/validation";
 import {
   initializePlayerTurn,
   updateAvailableDices,

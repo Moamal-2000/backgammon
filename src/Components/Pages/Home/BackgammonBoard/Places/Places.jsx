@@ -1,6 +1,7 @@
 "use client";
 
-import { getPlaceData, playSound } from "@/Functions/helper";
+import { getPlaceData } from "@/Functions/movement";
+import { playSound } from "@/Functions/sound";
 import {
   movePiece,
   selectPiece,

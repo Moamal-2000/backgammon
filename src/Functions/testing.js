@@ -1,4 +1,4 @@
-import { getColor } from "./helper";
+import { getColor } from "./board";
 
 const BACKGAMMON_DATA = {
   numbersOfPieces: [

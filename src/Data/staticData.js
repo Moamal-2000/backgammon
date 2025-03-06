@@ -1,4 +1,4 @@
-import { getBoardArea } from "@/Functions/helper";
+import { getBoardArea } from "@/Functions/board";
 
 export const boardArea = getBoardArea();
 
