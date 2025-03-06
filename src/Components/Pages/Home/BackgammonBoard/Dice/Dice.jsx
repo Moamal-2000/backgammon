@@ -22,7 +22,7 @@ const Dice = ({ showGameDices, color, size = 50, number }) => {
     return (
       <Image
         className={`${s.dice} ${invalidClass} ${showDiceClass}`}
-        src={`/dice${numberInMap}${blackNoun}.png`}
+        src={`/Images/Dices/dice${numberInMap}${blackNoun}.png`}
         key={`${numberInMap}-dice`}
         alt={`dice ${diceNumber}`}
         width={size}
