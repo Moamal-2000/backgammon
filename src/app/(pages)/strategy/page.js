@@ -4,6 +4,15 @@ import s from "./StrategyCard.module.scss";
 
 export const metadata = {
   title: "Backgammon | Strategy",
+  icons: {
+    icon: [
+      {
+        url: "/Images/Favicon/four.png",
+        type: "image/png",
+        media: "(prefers-color-scheme: light)",
+      },
+    ],
+  },
 };
 
 const StrategyCard = () => {

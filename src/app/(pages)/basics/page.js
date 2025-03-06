@@ -3,6 +3,15 @@ import { BASICS_DATA } from "@/Data/staticData";
 
 export const metadata = {
   title: "Backgammon | Basics",
+  icons: {
+    icon: [
+      {
+        url: "/Images/Favicon/two.png",
+        type: "image/png",
+        media: "(prefers-color-scheme: light)",
+      },
+    ],
+  },
 };
 
 const BasicsCard = () => {
