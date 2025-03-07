@@ -1,6 +1,7 @@
 import { getPlayerPieces } from "./player";
 import {
   areAllPiecesInHome,
+  canDeadPieceMove,
   canMoveToPlace,
   canSelect,
   hasMoveOptions,
@@ -29,22 +30,12 @@ export function calcDeadPiecesForAvailableDices({
   updatedBoardArea,
   validDiceNumbers,
 }) {
-  const opponent = playerTurn === "white" ? "black" : "white";
-
   diceMoves.forEach((diceMove) => {
-    const entryPoint = playerTurn === "white" ? 25 - diceMove : diceMove;
-    const entryPointData = updatedBoardArea.find(
-      ({ place }) => place === entryPoint
-    );
-
-    const hasMoreThanPiece = entryPointData?.pieces?.length > 1;
-    const hasOpponentPiece = entryPointData?.pieces?.[0] === opponent;
-    const isPlaceEmpty = entryPointData?.pieces?.length === 0;
-    const isValidMove =
-      (!hasMoreThanPiece && hasOpponentPiece) ||
-      (hasMoreThanPiece && !hasOpponentPiece) ||
-      isPlaceEmpty ||
-      !hasMoreThanPiece;
+    const isValidMove = canDeadPieceMove({
+      playerTurn,
+      diceMove,
+      updatedBoardArea,
+    });
 
     if (isValidMove) validDiceNumbers.add(diceMove);
   });

@@ -95,3 +95,20 @@ export function canSelect(
     hasAvailableMove
   );
 }
+
+export function canDeadPieceMove({ playerTurn, diceMove, updatedBoardArea }) {
+  const opponent = playerTurn === "white" ? "black" : "white";
+  const point = playerTurn === "white" ? 25 - diceMove : diceMove;
+  const pointData = updatedBoardArea.find(({ place }) => place === point);
+
+  const hasMultiplePieces = pointData?.pieces?.length > 1;
+  const hasOpponentPiece = pointData?.pieces?.[0] === opponent;
+  const isPointEmpty = pointData?.pieces?.length === 0;
+
+  return (
+    (!hasMultiplePieces && hasOpponentPiece) ||
+    (hasMultiplePieces && !hasOpponentPiece) ||
+    isPointEmpty ||
+    !hasMultiplePieces
+  );
+}
