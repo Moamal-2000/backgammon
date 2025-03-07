@@ -43,7 +43,8 @@ export function calcDeadPiecesForAvailableDices({
     const isValidMove =
       (!hasMoreThanPiece && hasOpponentPiece) ||
       (hasMoreThanPiece && !hasOpponentPiece) ||
-      isPlaceEmpty;
+      isPlaceEmpty ||
+      !hasMoreThanPiece;
 
     if (isValidMove) validDiceNumbers.add(diceMove);
   });
