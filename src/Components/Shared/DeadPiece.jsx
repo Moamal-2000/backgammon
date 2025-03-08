@@ -8,17 +8,20 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
   const opponent = pieceColor === "black" ? "white" : "black";
   const style = { color: opponent, [position]: "180px" };
 
-  const { boardArea, deadPieceColor, selectedPlace } = useSelector(
+  const dispatch = useDispatch();
+  const { boardArea, deadPieceColor, selectedPlace, playerTurn } = useSelector(
     (s) => s.game
   );
+
   const fromPlaceData = boardArea[0];
   const isSameColor = pieceColor === deadPieceColor;
   const selectedAvailableMoves = boardArea[fromPlaceData.place]?.availableMoves;
   const hasAvailableMove = selectedAvailableMoves?.length > 0;
-  const isSelectDeadPiece = selectedPlace === fromPlaceData.place;
+  const hasSelectDeadPiece = selectedPlace === fromPlaceData.place;
+  const isPlayerPiece = pieceColor === playerTurn;
 
-  const unavailableClass = !hasAvailableMove ? u.unavailable : "";
-  const dispatch = useDispatch();
+  const unavailableClass =
+    !hasAvailableMove || !isPlayerPiece ? u.unavailable : "";
 
   function handlePieceClick() {
     dispatch(selectDeadPiece({ pieceColor }));
@@ -29,7 +32,7 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
       {pieces?.map((piece, index) => {
         const isLastPiece = index + 1 === pieces.length;
         const selectClass =
-          isSelectDeadPiece && isLastPiece && isSameColor && hasAvailableMove
+          hasSelectDeadPiece && isLastPiece && isSameColor && hasAvailableMove
             ? u.select
             : "";
 
