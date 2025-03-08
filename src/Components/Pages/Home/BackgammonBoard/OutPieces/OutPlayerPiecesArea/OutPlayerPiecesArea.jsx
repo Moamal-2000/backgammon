@@ -42,11 +42,15 @@ const OutPlayerPiecesArea = ({ pieces, piecesColor }) => {
   }
 
   return (
-    <div className={`${s.piecesArea} ${activeClass}`} onClick={handleOutPiece}>
+    <div
+      className={`${s.piecesArea} ${activeClass}`}
+      onClick={handleOutPiece}
+      data-type={`${piecesColor} out pieces area`}
+    >
       {pieces.map((_, index) => (
         <div
           className={`${s.piece} ${s[piecesColor]}`}
-          data-sort={pieces.length - index}
+          data-type={`${piecesColor} out piece`}
           key={index}
         />
       ))}

@@ -73,6 +73,7 @@ const Places = ({ placesData }) => {
         className={`${s.place} ${s[data.placeColor]} ${unavailableClass}`}
         key={data.place}
         onClick={() => handlePlaceClick(data)}
+        data-type="point"
       >
         <Pieces data={data} unavailableClass={unavailableClass} />
 

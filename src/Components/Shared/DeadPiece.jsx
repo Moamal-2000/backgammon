@@ -42,6 +42,7 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
             style={style}
             key={`${piece}-${index}`}
             onClick={handlePieceClick}
+            data-type={`${pieceColor} dead piece`}
           />
         );
       })}

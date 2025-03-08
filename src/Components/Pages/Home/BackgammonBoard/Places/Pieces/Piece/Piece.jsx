@@ -19,7 +19,7 @@ const Piece = ({
     isLastPiece && isAtLastStack ? selectClass : ""
   }`;
 
-  return <div className={classes} />;
+  return <div className={classes} data-type="piece" />;
 };
 
 export default Piece;
