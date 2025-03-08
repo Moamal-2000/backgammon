@@ -68,12 +68,12 @@ export function isValidMove({
   return forwardMove && validDiceMove && validPlace;
 }
 
-export function hasMoveOptions(
+export function hasMoveOptions({
   boardArea,
   fromPlaceData,
   diceMoves,
-  playerTurn
-) {
+  playerTurn,
+}) {
   const selectedAvailableMoves =
     boardArea[fromPlaceData.place]?.availableMoves || [];
   const selectedPoint =
@@ -82,18 +82,34 @@ export function hasMoveOptions(
   return selectedAvailableMoves.length > 0 || diceMoves.includes(selectedPoint);
 }
 
-export function canSelect(
+export function canSelect({
   fromPlaceData,
   isDiceThrew,
   playerHasDeadPieces,
-  hasAvailableMove
-) {
+  hasAvailableMove,
+  playerTurn,
+  allPiecesInInnerHome,
+}) {
+  const isHomePiece = getIsHomePiece(playerTurn, fromPlaceData);
+  const hasValidMove = fromPlaceData?.availableMoves.some(
+    (availableMove) => availableMove > 0
+  );
+
+  if (isHomePiece && !allPiecesInInnerHome && !hasValidMove) return false;
+
   return (
     fromPlaceData.pieces.length > 0 &&
     isDiceThrew &&
     !playerHasDeadPieces &&
     hasAvailableMove
   );
+}
+
+export function getIsHomePiece(playerTurn, fromPlaceData) {
+  return [1, 2, 3, 4, 5, 6].some((point) => {
+    const playerPoint = playerTurn === "black" ? 25 - point : point;
+    return fromPlaceData?.place === playerPoint;
+  });
 }
 
 export function canDeadPieceMove({ playerTurn, diceMove, updatedBoardArea }) {

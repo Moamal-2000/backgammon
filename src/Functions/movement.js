@@ -75,18 +75,20 @@ export function getPlaceData({
     !isAllDiceMovesUsed &&
     placeHasPieces;
 
-  const hasAvailableMove = hasMoveOptions(
+  const hasAvailableMove = hasMoveOptions({
     boardArea,
     fromPlaceData,
     diceMoves,
-    playerTurn
-  );
-  const canSelectPiece = canSelect(
+    playerTurn,
+  });
+  const canSelectPiece = canSelect({
     fromPlaceData,
     isDiceThrew,
     playerHasDeadPieces,
-    hasAvailableMove
-  );
+    hasAvailableMove,
+    playerTurn,
+    allPiecesInInnerHome,
+  });
 
   const isCurrentMoveValid = isValidMove({
     fromPlaceData,
