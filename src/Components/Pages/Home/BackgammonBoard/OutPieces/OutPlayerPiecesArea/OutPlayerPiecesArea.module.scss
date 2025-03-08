@@ -14,6 +14,7 @@
   &.active {
     animation: border-glow .8s infinite alternate ease-in-out;
     filter: blur(.5);
+    cursor: pointer;
   }
 }
 
@@ -25,7 +26,6 @@
   height: 50px;
   border-radius: 50%;
   border: solid 2px #6b6b6b;
-  cursor: pointer;
   user-select: none;
   z-index: 1;
 
