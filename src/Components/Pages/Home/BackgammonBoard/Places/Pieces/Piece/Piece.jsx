@@ -19,7 +19,18 @@ const Piece = ({
     isLastPiece && isAtLastStack ? selectClass : ""
   }`;
 
-  return <div className={classes} data-type="piece" />;
+  function handleDragStart(e) {
+    e.dataTransfer.setData("text/plain", JSON.stringify(data));
+  }
+
+  return (
+    <div
+      className={classes}
+      draggable={true}
+      onDragStart={handleDragStart}
+      data-type="piece"
+    />
+  );
 };
 
 export default Piece;

@@ -13,9 +13,22 @@ const BackgammonGame = () => {
     preloadGameSounds();
   }, []);
 
+  function handleDrop(e) {
+    e.preventDefault();
+    const stringData = e.dataTransfer.getData("text/plain");
+    const draggedPieceData = JSON.parse(stringData);
+    const elementType = e.target?.dataset?.type;
+
+    if (!elementType) return;
+  }
+
   return (
     <>
-      <div className={s.backgammon}>
+      <div
+        className={s.backgammon}
+        onDrop={handleDrop}
+        onDragOver={(event) => event.preventDefault()}
+      >
         <div className={s.backgammonWrapper}>
           <TurnTracker />
           <BackgammonBoard />
