@@ -137,13 +137,13 @@ export function shouldDragPiece({
   boardArea,
   pieceType,
 }) {
+  if (!gameStart && playerTurn !== piece) return false;
+
   const deadPiecesPoint = boardArea.find((point) => point.place === 0);
   const playerDeadPieces = deadPiecesPoint?.deadPieces?.[playerTurn];
 
   const hasDeadPiece = playerDeadPieces?.length > 0;
-  const hasValidMove = data.availableMoves.some(
-    (availableMove) => availableMove > 0
-  );
+  const hasAvailableMove = data.availableMoves.length > 0;
 
-  return gameStart && playerTurn === piece && hasValidMove && !hasDeadPiece;
+  return hasAvailableMove && !hasDeadPiece;
 }
