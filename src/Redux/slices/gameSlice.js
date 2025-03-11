@@ -9,10 +9,10 @@ import { playSound } from "@/Functions/sound";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  boardArea,
   winners: { black: 0, white: 0 },
   outPieces: { black: [], white: [] },
   selectedPlace: null,
-  boardArea,
   isBoardDataUpdated: false,
   showBeginDice: false,
   isDiceThrew: false,

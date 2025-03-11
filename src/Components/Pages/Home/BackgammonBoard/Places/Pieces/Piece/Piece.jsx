@@ -1,5 +1,6 @@
 "use client";
 
+import { shouldDragPiece } from "@/Functions/validation";
 import u from "@/Styles/utilsClasses.module.scss";
 import { useSelector } from "react-redux";
 
@@ -11,7 +12,9 @@ const Piece = ({
   lastStackName,
   stackName,
 }) => {
-  const { selectedPlace } = useSelector((s) => s.game);
+  const { selectedPlace, gameStart, playerTurn, boardArea } = useSelector(
+    (s) => s.game
+  );
 
   const isAtLastStack = stackName === lastStackName;
   const selectClass = data.place === selectedPlace ? u.select : "";
@@ -20,6 +23,17 @@ const Piece = ({
   }`;
 
   function handleDragStart(e) {
+    const shouldDrag = shouldDragPiece({
+      data,
+      gameStart,
+      playerTurn,
+      piece,
+      boardArea,
+      pieceType: "normal",
+    });
+
+    if (!shouldDrag) e.preventDefault();
+
     e.dataTransfer.setData("text/plain", JSON.stringify(data));
   }
 
