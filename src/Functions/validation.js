@@ -88,14 +88,14 @@ export function canSelect({
   playerHasDeadPieces,
   hasAvailableMove,
   playerTurn,
-  e,
+  allPiecesInInnerHome,
 }) {
   const isHomePiece = getIsHomePiece(playerTurn, fromPlaceData);
   const hasValidMove = fromPlaceData?.availableMoves.some(
     (availableMove) => availableMove > 0
   );
 
-  if (isHomePiece && !e && !hasValidMove) return false;
+  if (isHomePiece && !hasValidMove && !allPiecesInInnerHome) return false;
 
   return (
     fromPlaceData.pieces.length > 0 &&
