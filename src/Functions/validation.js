@@ -145,5 +145,7 @@ export function shouldDragPiece({
   const hasDeadPiece = playerDeadPieces?.length > 0;
   const hasAvailableMove = data.availableMoves.length > 0;
 
+  if (pieceType === "dead" && hasAvailableMove) return true;
+
   return hasAvailableMove && !hasDeadPiece;
 }

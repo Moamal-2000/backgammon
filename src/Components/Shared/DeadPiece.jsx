@@ -1,5 +1,6 @@
 "use client";
 
+import { shouldDragPiece } from "@/Functions/validation";
 import { selectDeadPiece } from "@/Redux/slices/gameSlice";
 import u from "@/Styles/utilsClasses.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +10,8 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
   const style = { color: opponent, [position]: "180px" };
 
   const dispatch = useDispatch();
-  const { boardArea, deadPieceColor, selectedPlace, playerTurn } = useSelector(
-    (s) => s.game
-  );
+  const { boardArea, deadPieceColor, selectedPlace, playerTurn, gameStart } =
+    useSelector((s) => s.game);
 
   const fromPlaceData = boardArea[0];
   const isSameColor = pieceColor === deadPieceColor;
@@ -36,13 +36,30 @@ const DeadPiece = ({ pieceColor, pieces, position }) => {
             ? u.select
             : "";
 
+        function handleDragStart(e) {
+          const shouldDrag = shouldDragPiece({
+            data: fromPlaceData,
+            gameStart,
+            playerTurn,
+            piece: pieceColor,
+            boardArea,
+            pieceType: "dead",
+          });
+
+          if (!shouldDrag) e.preventDefault();
+
+          e.dataTransfer.setData("text/plain", JSON.stringify(fromPlaceData));
+        }
+
         return (
           <div
             className={`${u.piece} ${u[piece]} ${selectClass} ${unavailableClass}`}
             style={style}
             key={`${piece}-${index}`}
             onClick={handlePieceClick}
+            onDragStart={handleDragStart}
             data-type={`${pieceColor} dead piece`}
+            draggable={true}
           />
         );
       })}
