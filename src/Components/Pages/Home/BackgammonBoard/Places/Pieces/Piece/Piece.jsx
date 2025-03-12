@@ -32,7 +32,10 @@ const Piece = ({
       pieceType: "normal",
     });
 
-    if (!shouldDrag) e.preventDefault();
+    if (!shouldDrag) {
+      e.preventDefault();
+      return false;
+    }
 
     e.dataTransfer.setData("text/plain", JSON.stringify(data));
   }
