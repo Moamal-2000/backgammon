@@ -84,7 +84,7 @@ export function getPlaceData({
   const canSelectPiece = canSelect({
     fromPlaceData,
     isDiceThrew,
-    playerHasDeadPieces,
+    boardArea,
     hasAvailableMove,
     playerTurn,
     allPiecesInInnerHome,

@@ -85,15 +85,19 @@ export function hasMoveOptions({
 export function canSelect({
   fromPlaceData,
   isDiceThrew,
-  playerHasDeadPieces,
   hasAvailableMove,
   playerTurn,
   allPiecesInInnerHome,
+  boardArea,
 }) {
   const isHomePiece = getIsHomePiece(playerTurn, fromPlaceData);
   const hasValidMove = fromPlaceData?.availableMoves.some(
     (availableMove) => availableMove > 0
   );
+
+  const deadPiecesPoint = boardArea.find((point) => point.place === 0);
+  const playerDeadPiece = deadPiecesPoint?.deadPieces?.[playerTurn];
+  const playerHasDeadPieces = playerDeadPiece?.length > 0;
 
   if (isHomePiece && !hasValidMove && !allPiecesInInnerHome) return false;
 

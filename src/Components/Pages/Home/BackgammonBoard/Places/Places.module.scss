@@ -25,3 +25,38 @@
 .place.white::before {
   border-color: #d9ad7a #d9ad7a #f5ebd0 #d9ad7a;
 }
+
+.place.hasMove::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: -16px;
+  z-index: 100;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ffda36bb;
+  transition: background-color .1s ease;
+}
+
+.place:hover.hasMove::after {
+  background-color: #ffda36;
+}
+
+.place.hasMove.selected::after {
+  background-color: #ffda36;
+  outline: dashed 2px #ffda36;
+  outline-offset: 2px;
+  animation: infinite-rotation 4s linear infinite;
+}
+
+@keyframes infinite-rotation {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}

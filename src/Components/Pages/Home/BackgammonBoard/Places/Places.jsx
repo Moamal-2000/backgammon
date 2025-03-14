@@ -2,6 +2,7 @@
 
 import { getPlaceData } from "@/Functions/movement";
 import { playSound } from "@/Functions/sound";
+import { areAllPiecesInHome, canSelect } from "@/Functions/validation";
 import {
   movePiece,
   selectPiece,
@@ -66,14 +67,29 @@ const Places = ({ placesData }) => {
   return placesData.map((data) => {
     const selectedAvailableMoves = boardArea[data.place]?.availableMoves;
     const hasAvailableMove = selectedAvailableMoves?.length > 0;
+    const isPlaceSelected = selectedPlace === data.place;
+    const isPlaceSelectable = canSelect({
+      fromPlaceData: data,
+      allPiecesInInnerHome: areAllPiecesInHome(boardArea, playerTurn),
+      isDiceThrew,
+      hasAvailableMove,
+      playerTurn,
+      boardArea,
+    });
+
+    const selectedClass = isPlaceSelected ? s.selected : "";
+    const hasMoveClass = isPlaceSelectable ? s.hasMove : "";
     const unavailableClass = !hasAvailableMove ? u.unavailable : "";
+
+    const classes = `${s.place} ${
+      s[data.placeColor]
+    } ${unavailableClass} ${hasMoveClass} ${selectedClass}`;
 
     return (
       <div
-        className={`${s.place} ${s[data.placeColor]} ${unavailableClass}`}
+        className={classes}
         key={data.place}
         onClick={() => handlePlaceClick(data)}
-        data-type="point"
       >
         <Pieces data={data} unavailableClass={unavailableClass} />
 
