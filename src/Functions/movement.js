@@ -117,6 +117,7 @@ export function getPlaceData({
 }
 
 export function getAvailableMove({
+  diceMoves,
   diceMove,
   placeData,
   availablePlace,
@@ -127,13 +128,40 @@ export function getAvailableMove({
   const isSelectDeadPiece = placeData?.place === 0;
   const shouldOutPiece = areAllPiecesInHome(boardArea, playerTurn);
   const result = Math.abs(25 - availablePlace - diceMove);
+  const lastEmptyPlace = getLastEmptyPlace(boardArea, playerTurn);
+  const isAfterEmptyPlace = placeData.place === lastEmptyPlace - 1;
+  const canBearOffWithDice = diceMoves.includes(lastEmptyPlace);
 
   if (isWhitePlayer && isSelectDeadPiece) return result;
-  if (isWhitePlayer) return availablePlace - diceMove;
-  if (shouldOutPiece && !isWhitePlayer)
-    if (diceMove + availablePlace === 25) return 0;
+
+  // For white piece calculation
+  if (isWhitePlayer) {
+    if (isAfterEmptyPlace && canBearOffWithDice) return 0;
+  }
+
+  // For Black piece calculation
+  if (shouldOutPiece) {
+    if (diceMove + availablePlace === 25 && !isWhitePlayer) return 0;
+  }
 
   return diceMove + availablePlace;
+}
+
+export function getLastEmptyPlace(boardArea, playerTurn) {
+  const isWhitePlayer = playerTurn === "white";
+  const [start, end] = isWhitePlayer ? [1, 7] : [-6];
+  const playerHomePlaces = boardArea.slice(start, end);
+  let emptyPlace = null;
+
+  if (isWhitePlayer) playerHomePlaces.reverse();
+
+  for (let i = 0; i < playerHomePlaces.length; i++) {
+    const placeData = playerHomePlaces[i];
+    const isEmptyPlace = placeData.pieces.length === 0;
+
+    if (isEmptyPlace) emptyPlace = placeData.place;
+    else return emptyPlace;
+  }
 }
 
 export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
@@ -152,6 +180,7 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
 
     for (let j = 0; j < diceMoves.length; j++) {
       const availableMove = getAvailableMove({
+        diceMoves,
         diceMove: diceMoves[j],
         placeData: availablePieces[i],
         availablePlace: availablePieces[i].place,
