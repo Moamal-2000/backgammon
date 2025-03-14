@@ -36,8 +36,8 @@ const gameSlice = createSlice({
       const { selectedPlace, playerTurn, deadPieceColor, diceMoves } = state;
       const opponent = playerTurn === "white" ? "black" : "white";
       const isDeadPiece = !!deadPieceColor;
-      const whiteOrBlackMoves = deadPieceColor === "white" ? 25 - moves : moves;
-      const restDiceMoves = getRestMoves(diceMoves, whiteOrBlackMoves);
+      const whiteOrBlackMove = deadPieceColor === "white" ? 25 - moves : moves;
+      const restDiceMoves = getRestMoves(diceMoves, whiteOrBlackMove);
 
       const fromPlace = state.boardArea.find(
         (point) => point.place === selectedPlace

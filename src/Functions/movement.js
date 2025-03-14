@@ -8,17 +8,17 @@ import {
   isValidMove,
 } from "./validation";
 
-export function getRestMoves(moves, playedMove) {
+export function getRestMoves(diceMoves, playedMove) {
   const restMoves = [];
   let isPlayedMoveRemoved = false;
 
-  for (let i = 0; i < moves.length; i++) {
-    if (moves[i] === playedMove && !isPlayedMoveRemoved) {
+  for (let i = 0; i < diceMoves.length; i++) {
+    if (diceMoves[i] === playedMove && !isPlayedMoveRemoved) {
       isPlayedMoveRemoved = true;
       continue;
     }
 
-    restMoves.push(moves[i]);
+    restMoves.push(diceMoves[i]);
   }
 
   return restMoves;
