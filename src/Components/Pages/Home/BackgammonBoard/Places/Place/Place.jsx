@@ -1,6 +1,5 @@
-import { getPlaceData } from "@/Functions/movement";
+import { getPlaceClasses, getPlaceData } from "@/Functions/movement";
 import { playSound } from "@/Functions/sound";
-import { areAllPiecesInHome, canSelect } from "@/Functions/validation";
 import {
   movePiece,
   selectPiece,
@@ -62,25 +61,15 @@ const Place = ({ data }) => {
     }
   }
 
-  const selectedAvailableMoves = boardArea[data.place]?.availableMoves;
-  const hasAvailableMove = selectedAvailableMoves?.length > 0;
-  const isPlaceSelected = selectedPlace === data.place;
-  const isPlaceSelectable = canSelect({
-    fromPlaceData: data,
-    allPiecesInInnerHome: areAllPiecesInHome(boardArea, playerTurn),
-    isDiceThrew,
-    hasAvailableMove,
-    playerTurn,
+  const { classes, unavailableClass } = getPlaceClasses({
+    utilsCssModule: u,
+    componentCssModule: s,
     boardArea,
+    data,
+    selectedPlace,
+    playerTurn,
+    isDiceThrew,
   });
-
-  const selectedClass = isPlaceSelected ? s.selected : "";
-  const hasMoveClass = isPlaceSelectable ? s.hasMove : "";
-  const unavailableClass = !hasAvailableMove ? u.unavailable : "";
-
-  const classes = `${s.place} ${
-    s[data.placeColor]
-  } ${unavailableClass} ${hasMoveClass} ${selectedClass}`;
 
   return (
     <div className={classes} onClick={() => handlePlaceClick(data)}>

@@ -178,3 +178,35 @@ export function calcAvailablePlaces({ boardArea, diceMoves, playerTurn }) {
 
   return updatedBoardArea;
 }
+
+export function getPlaceClasses({
+  utilsCssModule,
+  componentCssModule,
+  boardArea,
+  data,
+  selectedPlace,
+  playerTurn,
+  isDiceThrew,
+}) {
+  const selectedAvailableMoves = boardArea[data.place]?.availableMoves;
+  const hasAvailableMove = selectedAvailableMoves?.length > 0;
+  const isPlaceSelected = selectedPlace === data.place;
+  const isPlaceSelectable = canSelect({
+    fromPlaceData: data,
+    allPiecesInInnerHome: areAllPiecesInHome(boardArea, playerTurn),
+    isDiceThrew,
+    hasAvailableMove,
+    playerTurn,
+    boardArea,
+  });
+
+  const selectedClass = isPlaceSelected ? componentCssModule.selected : "";
+  const hasMoveClass = isPlaceSelectable ? componentCssModule.hasMove : "";
+  const unavailableClass = !hasAvailableMove ? utilsCssModule.unavailable : "";
+
+  const classes = `${componentCssModule.place} ${
+    componentCssModule[data.placeColor]
+  } ${unavailableClass} ${hasMoveClass} ${selectedClass}`;
+
+  return { classes, unavailableClass };
+}
